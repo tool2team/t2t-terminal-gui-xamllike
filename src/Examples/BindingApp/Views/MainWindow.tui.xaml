@@ -1,0 +1,37 @@
+<Window x:Class="BindingApp.Views.MainWindow"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="Root"
+        Title="Self-Binding Demo - Binding, No ViewModel"
+        Width="Dim.Fill()"
+        Height="Dim.Fill()">
+
+  <Label X="2" Y="1"
+         Text="Self-Binding Demo (Binding to View Properties)" />
+
+  <Label X="2" Y="3"
+         Text="{Bind WelcomeMessage}" />
+
+  <Label X="2" Y="5"
+         Text="Your name:" />
+
+  <TextField x:Name="TxtUserName"
+             X="15" Y="5" 
+             Width="20"
+             Text="{Bind UserName, Mode=TwoWay}" />
+
+  <Label X="2" Y="7"
+         Text="{Bind CounterMessage}" />
+
+  <Button X="2" Y="9"
+          Text="Increment Counter"
+          Accepting="OnIncrementClicked" />
+
+  <Button X="25" Y="9"
+          Text="Reset"
+          Accepting="OnResetClicked" />
+
+  <Button X="Pos.Right(Root) - 10" Y="Pos.Bottom(Root) - 3"
+          Text="Exit"
+          Accepting="OnExitClicked" />
+
+</Window>

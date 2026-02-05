@@ -1,0 +1,65 @@
+<Window x:Class="CommunityMvvmApp.Views.MainWindow"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="Root"
+        x:DataType="CommunityMvvmApp.ViewModels.MainViewModel"
+        Title="CommunityMvvm Demo - CommunityToolkit.Mvvm"
+        Width="Dim.Fill()"
+        Height="Dim.Fill()">
+
+  <Label X="2" Y="1"
+         Text="Demo with CommunityToolkit.Mvvm" />
+
+  <Label X="2" Y="3"
+         Text="{Bind WelcomeMessage}" />
+
+  <Label x:Name="LblPrompt"
+         X="2" Y="5"
+         Text="Your name:" />
+
+  <TextField x:Name="TxtUserName"
+             X="15" Y="5" 
+             Width="25"
+             Text="{Bind UserName, TwoWay}" />
+
+  <Label X="2" Y="7"
+         Text="{Bind CounterMessage}" />
+
+  <Button X="2" Y="9"
+          Text="Increment"
+          Enabled="{Bind IsEnabled}"
+          Accepting="OnIncrementClicked" />
+
+  <Button X="16" Y="9"
+          Text="Reset All"
+          Accepting="OnResetClicked" />
+
+  <Button X="30" Y="9"
+          Text="Save Profile"
+          Enabled="{Bind IsSaveEnabled}"
+          Accepting="OnSaveClicked" />
+
+  <Button X="47" Y="9"
+          Text="Load Data"
+          Enabled="{Bind IsEnabled}"
+          Accepting="OnLoadDataClicked" />
+
+  <Label X="2" Y="11"
+         Text="Select an item:" />
+
+  <OptionSelector X="2" Y="12"
+                  Width="40" Height="4"
+                  Value="{Bind Role}"
+				  x:Type="CommunityMvvmApp.Models.UserRole"/>
+
+  <Button X="49" Y="13"
+          Text="Toggle Enable"
+          Accepting="OnToggleClicked" />
+
+  <Label X="2" Y="17"
+         Text="{Bind Status}" />
+
+  <Button X="Pos.Right(Root) - 10" Y="Pos.Bottom(Root) - 3"
+          Text="Exit"
+          Accepting="OnExitClicked" />
+
+</Window>

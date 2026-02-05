@@ -1,0 +1,39 @@
+<Window x:Class="SimpleApp.Views.MainWindow"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="Root"
+        Title="Simple Demo - No Binding, No ViewModel"
+        Width="Dim.Fill()"
+        Height="Dim.Fill()">
+
+  <Label X="2" Y="1"
+         Text="Simple Demo (No Binding, No ViewModel)" />
+
+  <Label x:Name="LblWelcome"
+         X="2" Y="3"
+         Text="Welcome, Anonymous!" />
+
+  <Label X="2" Y="5"
+         Text="Your name:" />
+
+  <TextField x:Name="TxtUserName"
+             X="15" Y="5" 
+             Width="20"
+             TextChanged="OnUserNameChanged" />
+
+  <Label x:Name="LblCounter"
+         X="2" Y="7"
+         Text="Button clicked 0 time(s)" />
+
+  <Button X="2" Y="9"
+          Text="Increment Counter"
+          Accepting="OnIncrementClicked" />
+
+  <Button X="25" Y="9"
+          Text="Reset"
+          Accepting="OnResetClicked" />
+
+  <Button X="Pos.Right(Root) - 10" Y="Pos.Bottom(Root) - 3"
+          Text="Exit"
+          Accepting="OnExitClicked" />
+
+</Window>

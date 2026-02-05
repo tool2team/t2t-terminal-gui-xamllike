@@ -1,0 +1,52 @@
+<Window x:Class="MvvmApp.Views.MainWindow"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="Root"
+        x:DataType="MvvmApp.ViewModels.MainViewModel"
+        Title="MVVM Demo - Custom ViewModels"
+        Width="Dim.Fill()"
+        Height="Dim.Fill()">
+
+  <Label X="2" Y="1"
+         Text="MVVM Demo with Custom ViewModels" />
+
+  <Label X="2" Y="3"
+         Text="{Bind WelcomeMessage}" />
+
+  <Label X="2" Y="5"
+         Text="Your name:" />
+
+  <TextField x:Name="TxtUserName"
+             X="15" Y="5" 
+             Width="25"
+             Text="{Bind UserName, TwoWay}"
+			 Enabled="{Bind IsEnabled}" />
+
+  <Label X="2" Y="7"
+         Text="{Bind CounterMessage}" />
+
+<Button X="2" Y="9"
+        Text="Increment"
+        Enabled="{Bind IsEnabled}"
+        Accepting="OnIncrementClicked" />
+
+  <Button X="16" Y="9"
+          Text="Reset"
+          Accepting="OnResetClicked" />
+
+  <Button X="26" Y="9"
+          Text="Save Profile"
+          Enabled="{Bind IsSaveEnabled}"
+          Accepting="OnSaveClicked" />
+
+  <Button X="43" Y="9"
+          Text="Toggle Enable"
+          Accepting="OnToggleClicked" />
+
+  <Label X="2" Y="11"
+         Text="{Bind Status}" />
+
+  <Button X="Pos.Right(Root) - 10" Y="Pos.Bottom(Root) - 3"
+          Text="Exit"
+          Accepting="OnExitClicked" />
+
+</Window>
