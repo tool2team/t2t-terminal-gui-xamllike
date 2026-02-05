@@ -1,199 +1,259 @@
 # Terminal.Gui.XamlLike
 
-Un générateur de source (Source Generator) pour **Terminal.Gui v2** qui permet d'utiliser une syntaxe XAML-like pour définir les interfaces utilisateur de terminal.
+A source generator to create Terminal.Gui interfaces with XAML-like syntax.
 
-## ✨ Fonctionnalités
+## 🚀 Features
 
-- 🏗️ **Génération de code statique** - Aucun runtime XAML, code C# généré à la compilation
-- ⚡ **Compatible AOT/Trimming** - Fonctionne avec les optimisations .NET modernes
-- 🔄 **MVVM avec bindings** - Support des bindings OneWay et TwoWay avec `INotifyPropertyChanged`
-- 🎯 **Terminal.Gui v2** - Ciblé exclusivement pour l'API Terminal.Gui v2
-- 🔧 **Diagnostics intégrés** - Erreurs de build claires pour les problèmes de syntaxe
+- ✅ **Familiar XAML-like syntax** for .NET developers
+- ✅ **Full MVVM support** with data binding
+- ✅ **Two-way binding** (TwoWay) for user input
+- ✅ **Computed properties** with automatic updates
+- ✅ **`x:DataType` attribute** for simplified syntax
+- ✅ **Code generation** at compile time via Source Generators
+- ✅ **Compatible with Terminal.Gui v2**
 
-## 🚀 Installation
+## 📦 Installation
 
-1. Ajoutez le package NuGet à votre projet :
+*Coming soon: NuGet Package*
+
+For now, clone the repository and add a project reference:
+
 ```xml
-<ProjectReference Include="Terminal.Gui.XamlLike" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+<ItemGroup>
+  <ProjectReference Include="..\..\Terminal.Gui.XamlLike\Terminal.Gui.XamlLike.csproj" 
+                    OutputItemType="Analyzer" 
+                    ReferenceOutputAssembly="false" />
+</ItemGroup>
 ```
 
-2. Incluez vos fichiers `.tui.xaml` :
-```xml
-<AdditionalFiles Include="Views/**/*.tui.xaml" />
-```
+## 🎯 Quick Start
 
-## � Samples et Exemples
-
-Ce projet inclut **3 projets d'exemple** dans le dossier `src/samples/` :
-
-### 🎯 [SimpleApp](src/samples/SimpleApp/) - Sans ViewModel
-- **Architecture** : Logique directe dans les vues
-- **Idéal pour** : Applications simples, prototypes, apprentissage
-- **Fonctionnalités** : Compteur, saisie utilisateur, gestion d'événements
-
-### 🏗️ [MvvmApp](src/samples/MvvmApp/) - MVVM Custom
-- **Architecture** : ViewModels personnalisés avec `INotifyPropertyChanged`
-- **Idéal pour** : Applications moyennes, besoins MVVM spécifiques
-- **Fonctionnalités** : BaseViewModel, RelayCommand, bindings avancés
-
-### ⚡ [CommunityMvvmApp](src/samples/CommunityMvvmApp/) - CommunityToolkit.Mvvm
-- **Architecture** : CommunityToolkit.Mvvm avec source generators
-- **Idéal pour** : Applications complexes, MVVM moderne
-- **Fonctionnalités** : `[ObservableProperty]`, `[RelayCommand]`, async commands
-
-```bash
-# Exécuter les exemples
-cd src/samples/SimpleApp && dotnet run
-cd src/samples/MvvmApp && dotnet run  
-cd src/samples/CommunityMvvmApp && dotnet run
-```
-
-> 📚 Voir [src/samples/README.md](src/samples/README.md) pour un guide complet des exemples.
-
-## 📝 Exemple d'usage rapide
-
-### 1. Créer un fichier XAML (`MainView.tui.xaml`)
+### 1. Create a `.tui.xaml` file
 
 ```xml
 <Window x:Class="MyApp.Views.MainView"
         x:Name="Root"
-        Title="Mon App"
+        x:DataType="MyApp.ViewModels.MainViewModel"
+        Title="My Application"
         Width="Dim.Fill()"
         Height="Dim.Fill()">
 
-  <Label x:Name="LblStatus"
-         X="1" Y="1"
-         Text="{Bind Status}" />
+  <Label Text="{Bind WelcomeMessage}" />
 
-  <TextField x:Name="TxtName"
-             X="1" Y="3"
-             Width="30"
-             Text="{Bind UserName, Mode=TwoWay}" />
+  <TextField Text="{Bind UserName, Mode=TwoWay}" 
+             TextChanged="OnUserNameChanged" />
 
-  <Button x:Name="BtnSave"
-          X="1" Y="5"
-          Text="Sauvegarder"
+  <Button Text="Save" 
           Clicked="OnSaveClicked" />
+
 </Window>
 ```
 
-### 2. Créer la classe partielle (`MainView.cs`)
+### 2. Create the ViewModel
 
 ```csharp
-public partial class MainView : Window
+using System.ComponentModel;
+
+namespace MyApp.ViewModels
 {
-    public MainViewModel Vm { get; }
-
-    public MainView()
+    public class MainViewModel : INotifyPropertyChanged
     {
-        Vm = new MainViewModel();
-        InitializeComponent(); // Généré automatiquement
-    }
+        private string _userName = "";
 
-    private void OnSaveClicked(object? sender, EventArgs e)
-    {
-        // Logique de sauvegarde
-        Vm.Status = "Sauvegardé !";
-    }
+        public string UserName
+        {
+            get => _userName;
+            set
+            {
+                if (_userName != value)
+                {
+                    _userName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UserName)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WelcomeMessage)));
+                }
+            }
+        }
 
-    partial void InitializeComponent(); // Implémenté par le générateur
+        public string WelcomeMessage => 
+            string.IsNullOrEmpty(UserName) ? "Hello!" : $"Hello, {UserName}!";
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+    }
 }
 ```
 
-### 3. Créer le ViewModel
+### 3. Create the code-behind
 
 ```csharp
-public class MainViewModel : INotifyPropertyChanged
+using Terminal.Gui;
+
+namespace MyApp.Views
 {
-    private string _status = "Prêt";
-    private string _userName = "";
-
-    public string Status
+    public partial class MainView : Window
     {
-        get => _status;
-        set => SetProperty(ref _status, value);
-    }
+        public MainViewModel ViewModel { get; }
 
-    public string UserName
-    {
-        get => _userName;
-        set => SetProperty(ref _userName, value);
-    }
+        public MainView()
+        {
+            ViewModel = new MainViewModel();
+            InitializeComponent(); // Auto-generated
+        }
 
-    // INotifyPropertyChanged implementation...
+        private void OnUserNameChanged(object? sender, EventArgs e) { }
+
+        private void OnSaveClicked(object? sender, EventArgs e)
+        {
+            // Save logic
+        }
+    }
 }
 ```
 
-## 📋 Contrôles supportés
+### 4. Build and Run
 
-| Élément XAML | Type Terminal.Gui | Description |
-|--------------|-------------------|-------------|
-| `Window` | `Terminal.Gui.Window` | Fenêtre principale |
-| `Label` | `Terminal.Gui.Label` | Texte d'affichage |
-| `Button` | `Terminal.Gui.Button` | Bouton cliquable |
-| `TextField` | `Terminal.Gui.TextField` | Champ de saisie |
-| `TextView` | `Terminal.Gui.TextView` | Zone de texte multiligne |
-| `CheckBox` | `Terminal.Gui.CheckBox` | Case à cocher |
-| `ListView` | `Terminal.Gui.ListView` | Liste d'éléments |
-| `FrameView` | `Terminal.Gui.FrameView` | Conteneur avec bordure |
+The code is automatically generated at compile time. The generated file (`MainView.tui.xaml.g.cs`) contains:
+- Fields for named controls
+- The `InitializeComponent()` method
+- Automatic binding code
 
-## 🔗 Bindings de données
+## 📚 Documentation
 
-### OneWay (VM → UI)
+- [📖 Quick Reference](docs/QUICK_REFERENCE.md) - Quick syntax guide and cheat sheet
+- [🔧 Binding Implementation](docs/BINDING_IMPLEMENTATION.md) - Technical details
+- [📝 Changelog](docs/CHANGELOG.md) - Version history and changes
+
+## 🎨 Examples
+
+The repository contains three examples:
+
+### SimpleApp - No ViewModel
+Simple application without binding, manual UI management.
+
+```bash
+cd samples/SimpleApp
+dotnet run
+```
+
+### MvvmApp - Custom MVVM
+MVVM application with custom ViewModels.
+
+```bash
+cd samples/MvvmApp
+dotnet run
+```
+
+### CommunityMvvmApp - CommunityToolkit.Mvvm
+Application using CommunityToolkit.Mvvm with source generators.
+
+```bash
+cd samples/CommunityMvvmApp
+dotnet run
+```
+
+## 🔑 Key Concepts
+
+### x:DataType Attribute
+
+Specifies the ViewModel type for simplified bindings (like MAUI):
+
 ```xml
+<!-- With x:DataType (RECOMMENDED - like MAUI) -->
+<Window x:DataType="MyApp.ViewModels.MainViewModel">
+  <!-- {Bind Status} resolves to ViewModel.Status -->
+  <Label Text="{Bind Status}" />
+</Window>
+
+<!-- Without x:DataType - explicit path -->
+<Window>
+  <Label Text="{Bind ViewModel.Status}" />
+</Window>
+```
+
+The generator automatically finds the property with the specified type in your view class.
+
+### Binding Modes
+
+| Mode | Description |
+|------|-------------|
+| `OneWay` (default) | Data flows from ViewModel to UI only |
+| `TwoWay` | Data flows in both directions |
+
+```xml
+<!-- Read-only -->
 <Label Text="{Bind Status}" />
-<Label Text="{Bind User.Name}" /> <!-- Propriétés imbriquées -->
-```
 
-### TwoWay (VM ↔ UI)
-```xml
+<!-- Two-way -->
 <TextField Text="{Bind UserName, Mode=TwoWay}" />
-<CheckBox Checked="{Bind IsEnabled, Mode=TwoWay}" />
 ```
 
-**Contrôles supportant TwoWay :**
-- `TextField.Text` → événement `TextChanged`
-- `TextView.Text` → événement `TextChanged`  
-- `CheckBox.Checked` → événement `Toggled`
+### Supported Controls
 
-## ⚡ Performance
+- `Window` - Main window
+- `Label` - Text label
+- `Button` - Button
+- `TextField` - Text input field
+- `TextView` - Multiline text area
+- `CheckBox` - Checkbox
+- `OptionSelector` - Option selector
+- `FrameView` - Container with border
+- And more...
 
-- **Pas de réflexion** - Tout est généré statiquement
-- **Invalidation ciblée** - Seuls les contrôles affectés sont mis à jour via `SetNeedsDisplay()`
-- **AOT Compatible** - Fonctionne avec Native AOT
-- **Trimming friendly** - Aucune dépendance runtime cachée
 
-## 🛠️ Configuration requise
+## 🛠️ Development
 
-- **.NET 6.0+** (pour le développement)
-- **Terminal.Gui v2.x**
-- **C# 10+** (pour les records et nullable)
+### Prerequisites
 
-## 📚 Documentation complète
+- .NET 8.0 SDK or higher
+- Terminal.Gui v2 (included via NuGet)
 
-- [Format XAML détaillé](docs/format.md)
-- [Système de refresh et binding](docs/refresh.md)
+### Build the project
 
-## 🐛 Diagnostics
+```bash
+dotnet build
+```
 
-Le générateur fournit des erreurs de compilation claires :
+### Run tests
 
-- `TUI001` : Fichier XAML vide
-- `TUI003` : Attribut `x:Class` manquant  
-- `TUI004` : Type de contrôle inconnu
-- `TUI005` : Expression de binding invalide
-- `TUI006` : Binding TwoWay non supporté
-- `TUI007` : Contrôle avec binding sans `x:Name`
+```bash
+dotnet test
+```
 
-## 💡 Exemple complet
+## 🤝 Contributing
 
-Voir le projet [SampleApp](src/SampleApp/) pour un exemple complet fonctionnel.
+Contributions are welcome! Feel free to:
 
-## 🤝 Contribution
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Les contributions sont les bienvenues ! Veuillez ouvrir une issue avant de soumettre des changements majeurs.
+## 📝 Current Limitations
 
-## 📄 Licence
+- No reusable styles
+- No data templates
+- No resource system
+- No value converters for bindings
 
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-XAML Like for Terminal UI v2
+## 🗺️ Roadmap
+
+- [ ] XAML styles support
+- [ ] Data templates
+- [ ] Resource system
+- [ ] Value converters
+- [ ] Support for more Terminal.Gui controls
+- [ ] IntelliSense for `.tui.xaml` files
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui) - TUI framework for .NET
+- .NET MAUI/Xamarin.Forms community for MVVM pattern inspiration
+
+---
+
+**Note**: This project is under active development. The API may change.
+
