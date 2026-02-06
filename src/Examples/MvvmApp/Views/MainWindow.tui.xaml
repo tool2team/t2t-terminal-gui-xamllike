@@ -16,9 +16,9 @@
          Text="Your name:" />
 
   <TextField x:Name="TxtUserName"
-             X="15" Y="5" 
-             Width="25"
-             Text="{Bind UserName, TwoWay}"
+			 X="15" Y="5" 
+			 Width="25"
+			 Text="{Bind UserName, Mode=TwoWay}"
 			 Enabled="{Bind IsEnabled}" />
 
   <Label X="2" Y="7"

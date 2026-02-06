@@ -30,6 +30,7 @@ public class MainViewModel : BaseViewModel
             if (SetProperty(ref _userName, value))
             {
                 OnPropertyChanged(nameof(WelcomeMessage));
+                OnPropertyChanged(nameof(IsSaveEnabled));
                 ((RelayCommand)SaveCommand).RaiseCanExecuteChanged();
             }
         }

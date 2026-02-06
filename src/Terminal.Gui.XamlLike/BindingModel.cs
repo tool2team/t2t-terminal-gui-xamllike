@@ -44,7 +44,7 @@ namespace Terminal.Gui.XamlLike
         for (int i = 1; i < parts.Length; i++)
         {
             var part = parts[i].Trim();
-            if (part.StartsWith("Mode=") || part.StartsWith("mode="))
+            if (part.StartsWith("Mode=", System.StringComparison.OrdinalIgnoreCase))
             {
                 var modeValue = part.Substring(5).Trim();
                 if (System.Enum.TryParse<BindingMode>(modeValue, true, out var parsedMode))
