@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <!-- x:Name attribute -->
+  <xs:attribute name="Name" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>Unique identifier for the control, accessible in code-behind</xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
+  <!-- x:Class attribute -->
+  <xs:attribute name="Class" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>Full qualified class name (e.g., "MyApp.Views.MainView")</xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
+  <!-- x:DataType attribute -->
+  <xs:attribute name="DataType" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>ViewModel type for simplified bindings (e.g., "MyApp.ViewModels.MainViewModel")</xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
+  <!-- x:Type attribute -->
+  <xs:attribute name="Type" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>Generic type parameter for controls like OptionSelector&lt;T&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
+</xs:schema>

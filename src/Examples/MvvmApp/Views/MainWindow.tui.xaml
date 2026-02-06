@@ -1,10 +1,11 @@
 <Window x:Class="MvvmApp.Views.MainWindow"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Name="Root"
-        x:DataType="MvvmApp.ViewModels.MainViewModel"
-        Title="MVVM Demo - Custom ViewModels"
-        Width="Dim.Fill()"
-        Height="Dim.Fill()">
+		xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		x:Name="Root"
+		x:DataType="MvvmApp.ViewModels.MainViewModel"
+		Title="MVVM Demo - Custom ViewModels"
+		Width="Dim.Fill()"
+		Height="Dim.Fill()">
 
   <Label X="2" Y="1"
          Text="MVVM Demo with Custom ViewModels" />

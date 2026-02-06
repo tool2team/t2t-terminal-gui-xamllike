@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://schemas.gui-cs.github.io/tui/2026/xaml"
+           xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           elementFormDefault="qualified">
+
+  <!-- Import XAML namespace for x:Name, x:Class, etc. -->
+  <xs:import namespace="http://schemas.microsoft.com/winfx/2006/xaml" 
+             schemaLocation="xaml-2006.xsd"/>
+
+  <!-- Common attributes for all controls -->
+  <xs:attributeGroup name="CommonAttributes">
+    <xs:attribute name="X" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Horizontal position (e.g., "2", "Pos.Center()")</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Y" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Vertical position (e.g., "5", "Pos.Bottom(Root) - 3")</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Width" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Width dimension (e.g., "20", "Dim.Fill()")</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Height" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Height dimension (e.g., "10", "Dim.Fill()")</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Enabled" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Enabled state (true/false or binding)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Visible" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Visibility state (true/false or binding)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute ref="x:Name"/>
+    <xs:attribute ref="x:Type"/>
+  </xs:attributeGroup>
+
+  <!-- Window element -->
+  <xs:element name="Window">
+    <xs:annotation>
+      <xs:documentation>Main window container. See Terminal.Gui.Views.Window</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Label"/>
+        <xs:element ref="Button"/>
+        <xs:element ref="TextField"/>
+        <xs:element ref="TextView"/>
+        <xs:element ref="CheckBox"/>
+        <xs:element ref="OptionSelector"/>
+        <xs:element ref="ListView"/>
+        <xs:element ref="FrameView"/>
+      </xs:choice>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Title" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Window title</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute ref="x:Class"/>
+      <xs:attribute ref="x:DataType"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Label element -->
+  <xs:element name="Label">
+    <xs:annotation>
+      <xs:documentation>Text label control. See Terminal.Gui.Views.Label</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Display text or binding (e.g., "{Bind Status}")</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Button element -->
+  <xs:element name="Button">
+    <xs:annotation>
+      <xs:documentation>Clickable button control. See Terminal.Gui.Views.Button</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Button text</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Accepting" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for button click (Terminal.Gui v2)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Clicked" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for button click (legacy)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- TextField element -->
+  <xs:element name="TextField">
+    <xs:annotation>
+      <xs:documentation>Single-line text input field. See Terminal.Gui.Views.TextField</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Text content or binding (e.g., "{Bind UserName, Mode=TwoWay}")</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TextChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for text changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- TextView element -->
+  <xs:element name="TextView">
+    <xs:annotation>
+      <xs:documentation>Multi-line text area. See Terminal.Gui.Views.TextView</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Text content or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TextChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for text changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- CheckBox element -->
+  <xs:element name="CheckBox">
+    <xs:annotation>
+      <xs:documentation>Checkbox control. See Terminal.Gui.Views.CheckBox</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Checkbox label</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Checked" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Checked state or binding (e.g., "{Bind IsEnabled, Mode=TwoWay}")</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Toggled" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for state changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- OptionSelector element -->
+  <xs:element name="OptionSelector">
+    <xs:annotation>
+      <xs:documentation>Generic option selector. See Terminal.Gui.Views.OptionSelector&lt;T&gt;</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Value" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected value or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SelectedItemChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for selection changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ListView element -->
+  <xs:element name="ListView">
+    <xs:annotation>
+      <xs:documentation>List view control. See Terminal.Gui.Views.ListView</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="SelectedItem" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected item index or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SelectedItemChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for selection changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- FrameView element -->
+  <xs:element name="FrameView">
+    <xs:annotation>
+      <xs:documentation>Container with border. See Terminal.Gui.Views.FrameView</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Label"/>
+        <xs:element ref="Button"/>
+        <xs:element ref="TextField"/>
+        <xs:element ref="TextView"/>
+        <xs:element ref="CheckBox"/>
+        <xs:element ref="OptionSelector"/>
+        <xs:element ref="ListView"/>
+      </xs:choice>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Title" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Frame title</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
