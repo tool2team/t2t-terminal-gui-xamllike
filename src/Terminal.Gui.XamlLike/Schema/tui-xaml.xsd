@@ -99,6 +99,11 @@
           <xs:documentation>Button text</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="Command" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>ICommand binding (e.g., "{Bind SaveCommand}")</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="Accepting" type="xs:string">
         <xs:annotation>
           <xs:documentation>Event handler for button click (Terminal.Gui v2)</xs:documentation>

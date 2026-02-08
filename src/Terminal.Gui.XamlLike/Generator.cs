@@ -436,8 +436,24 @@ namespace Terminal.Gui.XamlLike
                     var fieldName = control.GetFieldName();
                     var binding = property.Binding;
 
-                    // Initial sync
-                    AppendLine($"{fieldName}.{property.PropertyName} = {binding.SourceExpression};");
+                    if (property.IsCommand)
+                    {
+                        // Command binding - wire up Accepting event to invoke command
+                        AppendLine($"// Wire up command: {binding.SourceExpression}");
+                        AppendLine($"{fieldName}.Accepting += (s, e) => {{");
+                        _indentLevel++;
+                        AppendLine($"if ({binding.SourceExpression}?.CanExecute(null) == true)");
+                        _indentLevel++;
+                        AppendLine($"{binding.SourceExpression}.Execute(null);");
+                        _indentLevel--;
+                        _indentLevel--;
+                        AppendLine("};");
+                    }
+                    else
+                    {
+                        // Regular property binding - direct assignment
+                        AppendLine($"{fieldName}.{property.PropertyName} = {binding.SourceExpression};");
+                    }
                 }
             }
 
@@ -467,6 +483,29 @@ namespace Terminal.Gui.XamlLike
                 }
             }
 
+            // Generate Command.CanExecuteChanged handlers
+            foreach (var control in bindings)
+            {
+                foreach (var property in control.BoundProperties.Where(p => p.IsCommand))
+                {
+                    var fieldName = control.GetFieldName();
+                    var binding = property.Binding;
+                    AppendLine($"// Subscribe to CanExecuteChanged for {fieldName}");
+                    AppendLine($"if ({binding.SourceExpression} != null)");
+                    AppendLine("{");
+                    _indentLevel++;
+                    AppendLine($"{binding.SourceExpression}.CanExecuteChanged += (s, e) => {{");
+                    _indentLevel++;
+                    AppendLine($"{fieldName}.Enabled = {binding.SourceExpression}.CanExecute(null);");
+                    _indentLevel--;
+                    AppendLine("};");
+                    AppendLine($"// Set initial Enabled state");
+                    AppendLine($"{fieldName}.Enabled = {binding.SourceExpression}.CanExecute(null);");
+                    _indentLevel--;
+                    AppendLine("}");
+                }
+            }
+
             _indentLevel--;
             AppendLine("}");
 
@@ -487,6 +526,10 @@ namespace Terminal.Gui.XamlLike
             {
                 foreach (var property in control.BoundProperties)
                 {
+                    // Skip Commands - they don't need PropertyChanged updates
+                    if (property.IsCommand)
+                        continue;
+
                     // Extract the property name from the source expression
                     // For "ViewModel.Status" -> use "Status"
                     // For "Status" -> use "Status"

@@ -26,41 +26,41 @@
          Text="{Bind CounterMessage}" />
 
   <Button X="2" Y="9"
-          Text="Increment"
-          Enabled="{Bind IsEnabled}"
-          Accepting="OnIncrementClicked" />
+		  Text="Increment"
+		  Enabled="{Bind IsEnabled}"
+		  Command="{Bind IncrementCommand}" />
 
   <Button X="16" Y="9"
-          Text="Reset All"
-          Accepting="OnResetClicked" />
+		  Text="Reset All"
+		  Command="{Bind ResetCommand}" />
 
   <Button X="30" Y="9"
-          Text="Save Profile"
-          Enabled="{Bind IsSaveEnabled}"
-          Accepting="OnSaveClicked" />
+		  Text="Save Profile"
+		  Enabled="{Bind IsEnabled}"
+		  Command="{Bind SaveProfileCommand}" />
 
   <Button X="47" Y="9"
-          Text="Load Data"
-          Enabled="{Bind IsEnabled}"
-          Accepting="OnLoadDataClicked" />
+		  Text="Load Data"
+		  Enabled="{Bind IsEnabled}"
+		  Command="{Bind LoadDataCommand}" />
 
   <Label X="2" Y="11"
-         Text="Select an item:" />
+		 Text="Select an item:" />
 
   <OptionSelector X="2" Y="12"
-                  Width="40" Height="4"
-                  Value="{Bind Role}"
+				  Width="40" Height="4"
+				  Value="{Bind Role}"
 				  x:Type="CommunityMvvmApp.Models.UserRole"/>
 
   <Button X="49" Y="13"
-          Text="Toggle Enable"
-          Accepting="OnToggleClicked" />
+		  Text="Toggle Enable"
+		  Command="{Bind ToggleCommand}" />
 
   <Label X="2" Y="17"
-         Text="{Bind Status}" />
+		 Text="{Bind Status}" />
 
   <Button X="Pos.Right(Root) - 10" Y="Pos.Bottom(Root) - 3"
-          Text="Exit"
-          Accepting="OnExitClicked" />
+		  Text="Exit"
+		  Command="{Bind ExitCommand}" />
 
 </Window>

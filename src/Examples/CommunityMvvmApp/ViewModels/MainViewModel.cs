@@ -2,6 +2,7 @@ using CommunityMvvmApp.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Terminal.Gui.Input;
+using Terminal.Gui.App;
 
 namespace CommunityMvvmApp.ViewModels;
 
@@ -10,6 +11,12 @@ namespace CommunityMvvmApp.ViewModels;
 /// </summary>
 public partial class MainViewModel : ObservableObject
 {
+    private readonly IApplication _application;
+
+    public MainViewModel(IApplication application)
+    {
+        _application = application ?? throw new ArgumentNullException(nameof(application));
+    }
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsSaveEnabled))]
     private string _userName = string.Empty;
@@ -82,19 +89,20 @@ public partial class MainViewModel : ObservableObject
     private async Task SaveProfile()
     {
         Status = $"Saving profile for {UserName}...";
-        
+
         // Simulate async operation
         await Task.Delay(1500);
-        
+
         Status = $"Profile saved successfully! Counter: {Counter}, Role: {Role}";
     }
 
     private bool CanSaveProfile() => IsEnabled && !string.IsNullOrWhiteSpace(UserName);
 
     [RelayCommand]
-    private void ToggleEnabled()
+    private void Toggle()
     {
         IsEnabled = !IsEnabled;
+        Status = IsEnabled ? "Controls enabled" : "Controls disabled";
     }
 
     [RelayCommand]
@@ -107,7 +115,7 @@ public partial class MainViewModel : ObservableObject
         {
             // Simulate data loading
             await Task.Delay(2000);
-            
+
             Counter = new Random().Next(1, 50);
             UserName = $"User{Counter}";
             Status = "Data loaded successfully!";
@@ -120,5 +128,12 @@ public partial class MainViewModel : ObservableObject
         {
             IsEnabled = true;
         }
+    }
+
+    [RelayCommand]
+    private void Exit()
+    {
+        Status = "Exiting application...";
+        _application.RequestStop();
     }
 }

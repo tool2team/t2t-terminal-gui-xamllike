@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.4990" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

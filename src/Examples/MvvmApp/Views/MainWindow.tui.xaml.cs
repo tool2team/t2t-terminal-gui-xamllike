@@ -8,54 +8,16 @@ namespace MvvmApp.Views;
 /// </summary>
 public partial class MainWindow : Window
 {
-    public MainViewModel ViewModel { get; }
+    internal MainViewModel ViewModel { get; }
 
     public MainWindow(MainViewModel viewModel)
     {
         ViewModel = viewModel;
         InitializeComponent();
-        
+
         TxtUserName.SetFocus();
     }
 
-    /// <summary>
-    /// Handle increment button click
-    /// </summary>
-    private void OnIncrementClicked(object? sender, EventArgs e)
-    {
-        ViewModel.IncrementCommand.Execute(null);
-    }
-
-    /// <summary>
-    /// Handle reset button click
-    /// </summary>
-    private void OnResetClicked(object? sender, EventArgs e)
-    {
-        ViewModel.ResetCommand.Execute(null);
-    }
-
-    /// <summary>
-    /// Handle save button click
-    /// </summary>
-    private void OnSaveClicked(object? sender, EventArgs e)
-    {
-        if (ViewModel.SaveCommand.CanExecute(null))
-            ViewModel.SaveCommand.Execute(null);
-    }
-
-    /// <summary>
-    /// Handle toggle button click
-    /// </summary>
-    private void OnToggleClicked(object? sender, EventArgs e)
-    {
-        ViewModel.ToggleEnabled();
-    }
-
-    /// <summary>
-    /// Handle exit button click
-    /// </summary>
-    private void OnExitClicked(object? sender, EventArgs e)
-    {
-        App?.RequestStop();
-    }
+    // Note: All button actions are now handled via Commands in the ViewModel
+    // No event handlers needed in code-behind for pure MVVM approach
 }

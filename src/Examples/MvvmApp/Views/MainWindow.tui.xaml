@@ -28,26 +28,26 @@
 <Button X="2" Y="9"
         Text="Increment"
         Enabled="{Bind IsEnabled}"
-        Accepting="OnIncrementClicked" />
+        Command="{Bind IncrementCommand}" />
 
   <Button X="16" Y="9"
           Text="Reset"
-          Accepting="OnResetClicked" />
+          Command="{Bind ResetCommand}" />
 
   <Button X="26" Y="9"
           Text="Save Profile"
           Enabled="{Bind IsSaveEnabled}"
-          Accepting="OnSaveClicked" />
+          Command="{Bind SaveCommand}" />
 
   <Button X="43" Y="9"
           Text="Toggle Enable"
-          Accepting="OnToggleClicked" />
+          Command="{Bind ToggleCommand}" />
 
   <Label X="2" Y="11"
          Text="{Bind Status}" />
 
   <Button X="Pos.Right(Root) - 10" Y="Pos.Bottom(Root) - 3"
           Text="Exit"
-          Accepting="OnExitClicked" />
+          Command="{Bind ExitCommand}" />
 
 </Window>

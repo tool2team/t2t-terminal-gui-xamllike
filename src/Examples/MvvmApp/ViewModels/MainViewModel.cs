@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using Terminal.Gui.App;
 
 namespace MvvmApp.ViewModels;
 
@@ -7,17 +8,22 @@ namespace MvvmApp.ViewModels;
 /// </summary>
 public class MainViewModel : BaseViewModel
 {
+    private readonly IApplication _application;
     private string _userName = string.Empty;
     private int _counter = 0;
     private string _status = "Ready";
     private bool _isEnabled = true;
 
-    public MainViewModel()
+    public MainViewModel(IApplication application)
     {
+        _application = application ?? throw new ArgumentNullException(nameof(application));
+
         // Initialize commands
         IncrementCommand = new RelayCommand(ExecuteIncrement, CanExecuteIncrement);
         ResetCommand = new RelayCommand(ExecuteReset);
         SaveCommand = new RelayCommand(ExecuteSave, CanExecuteSave);
+        ToggleCommand = new RelayCommand(ExecuteToggle);
+        ExitCommand = new RelayCommand(ExecuteExit);
     }
 
     #region Properties
@@ -84,6 +90,8 @@ public class MainViewModel : BaseViewModel
     public ICommand IncrementCommand { get; }
     public ICommand ResetCommand { get; }
     public ICommand SaveCommand { get; }
+    public ICommand ToggleCommand { get; }
+    public ICommand ExitCommand { get; }
 
     private void ExecuteIncrement()
     {
@@ -120,14 +128,16 @@ public class MainViewModel : BaseViewModel
         return IsEnabled && !string.IsNullOrWhiteSpace(UserName);
     }
 
-    #endregion
-
-    #region Public Methods
-
-    public void ToggleEnabled()
+    private void ExecuteToggle()
     {
         IsEnabled = !IsEnabled;
         Status = IsEnabled ? "Controls enabled" : "Controls disabled";
+    }
+
+    private void ExecuteExit()
+    {
+        Status = "Exiting application...";
+        _application.RequestStop();
     }
 
     #endregion
