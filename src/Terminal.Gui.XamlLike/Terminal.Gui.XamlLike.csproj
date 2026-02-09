@@ -9,13 +9,14 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>T2t.Terminal.Gui.XamlLike</PackageId>
-    <PackageVersion>1.0.2</PackageVersion>
+    <PackageVersion>1.0.3</PackageVersion>
     <PackageDescription>Source generator for Terminal.Gui v2 XAML-like syntax with IntelliSense support via XSD schemas</PackageDescription>
     <PackageTags>sourcegen;terminal-ui;xaml;codegen;intellisense;xsd</PackageTags>
     <RepositoryUrl>https://github.com/tool2team/t2t-terminal-gui-xamllike</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/tool2team/t2t-terminal-gui-xamllike</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,10 +31,12 @@
     <!-- XSD Schemas for IntelliSense -->
     <None Include="Schema\tui-xaml.xsd" Pack="true" PackagePath="schemas\" />
     <None Include="Schema\xaml-2006.xsd" Pack="true" PackagePath="schemas\" />
-    <None Include="Schema\README.md" Pack="true" PackagePath="schemas\" />
 
     <!-- MSBuild props file for automatic schema integration -->
     <None Include="build\Terminal.Gui.XamlLike.props" Pack="true" PackagePath="build\" />
+
+    <!-- Package README for NuGet.org -->
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
