@@ -8,12 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Terminal.Gui.XamlLike\Terminal.Gui.XamlLike.csproj" OutputItemType="Analyzer" />
+	<ProjectReference Include="..\..\Terminal.Gui.XamlLike\Terminal.Gui.XamlLike.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 
-    <ItemGroup>
-	    <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.4990" />
-    </ItemGroup>
+  <!-- Import XSD schemas for IntelliSense (for development with ProjectReference) -->
+  <Import Project="..\..\Terminal.Gui.XamlLike\build\Terminal.Gui.XamlLike.props" />
+
+	<ItemGroup>
+		<PackageReference Include="Terminal.Gui" Version="2.0.0-develop.4990" />
+	</ItemGroup>
 	
   <ItemGroup>
     <AdditionalFiles Include="**/*.tui.xaml" />

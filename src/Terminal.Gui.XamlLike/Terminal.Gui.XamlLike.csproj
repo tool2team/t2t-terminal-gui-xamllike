@@ -10,8 +10,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Terminal.Gui.XamlLike</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
-    <PackageDescription>Source generator for Terminal.Gui v2 XAML-like syntax</PackageDescription>
-    <PackageTags>sourcegen;terminal-ui;xaml;codegen</PackageTags>
+    <PackageDescription>Source generator for Terminal.Gui v2 XAML-like syntax with IntelliSense support via XSD schemas</PackageDescription>
+    <PackageTags>sourcegen;terminal-ui;xaml;codegen;intellisense;xsd</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +20,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Source Generator DLL -->
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers\dotnet\cs\$(AssemblyName).dll" Visible="false" />
+
+    <!-- XSD Schemas for IntelliSense -->
+    <None Include="Schema\tui-xaml.xsd" Pack="true" PackagePath="schemas\" />
+    <None Include="Schema\xaml-2006.xsd" Pack="true" PackagePath="schemas\" />
+    <None Include="Schema\README.md" Pack="true" PackagePath="schemas\" />
+
+    <!-- MSBuild props file for automatic schema integration -->
+    <None Include="build\Terminal.Gui.XamlLike.props" Pack="true" PackagePath="build\" />
   </ItemGroup>
 
 </Project>

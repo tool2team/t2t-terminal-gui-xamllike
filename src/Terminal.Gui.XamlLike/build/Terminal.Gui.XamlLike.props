@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- 
+    This file is automatically imported when the Terminal.Gui.XamlLike package is installed.
+    It makes XSD schemas available to Visual Studio for IntelliSense support.
+  -->
+  <ItemGroup>
+    <!-- Copy XSD schemas to project for IntelliSense -->
+    <None Include="$(MSBuildThisFileDirectory)..\schemas\tui-xaml.xsd">
+      <Link>Schemas\tui-xaml.xsd</Link>
+      <Visible>false</Visible>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\schemas\xaml-2006.xsd">
+      <Link>Schemas\xaml-2006.xsd</Link>
+      <Visible>false</Visible>
+    </None>
+  </ItemGroup>
+</Project>

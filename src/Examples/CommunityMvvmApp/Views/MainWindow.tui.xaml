@@ -1,11 +1,11 @@
 <Window x:Class="CommunityMvvmApp.Views.MainWindow"
-        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Name="Root"
-        x:DataType="CommunityMvvmApp.ViewModels.MainViewModel"
-        Title="CommunityMvvm Demo - CommunityToolkit.Mvvm"
-        Width="Dim.Fill()"
-        Height="Dim.Fill()">
+		xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		x:Name="Root"
+		x:DataType="CommunityMvvmApp.ViewModels.MainViewModel"
+		Title="CommunityMvvm Demo - CommunityToolkit.Mvvm"
+		Width="Dim.Fill()"
+		Height="Dim.Fill()">
 
   <Label X="2" Y="1"
          Text="Demo with CommunityToolkit.Mvvm" />

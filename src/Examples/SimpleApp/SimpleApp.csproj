@@ -11,6 +11,9 @@
     <ProjectReference Include="..\..\Terminal.Gui.XamlLike\Terminal.Gui.XamlLike.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 
+  <!-- Import XSD schemas for IntelliSense (for development with ProjectReference) -->
+  <Import Project="..\..\Terminal.Gui.XamlLike\build\Terminal.Gui.XamlLike.props" />
+
   <ItemGroup>
     <AdditionalFiles Include="**/*.tui.xaml" />
   </ItemGroup>
