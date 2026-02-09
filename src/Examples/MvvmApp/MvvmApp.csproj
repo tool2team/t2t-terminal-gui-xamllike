@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <!-- Import XSD schemas for IntelliSense (for development with ProjectReference) -->
-  <Import Project="..\..\Terminal.Gui.XamlLike\build\Terminal.Gui.XamlLike.props" />
+  <Import Project="..\..\Terminal.Gui.XamlLike\build\T2t.Terminal.Gui.XamlLike.props" />
 
   <ItemGroup>
     <AdditionalFiles Include="**/*.tui.xaml" />

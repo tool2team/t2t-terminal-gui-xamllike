@@ -17,6 +17,9 @@
     <PackageProjectUrl>https://github.com/tool2team/t2t-terminal-gui-xamllike</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <!-- Suppress warning for source generators (no lib assemblies needed) -->
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +36,7 @@
     <None Include="Schema\xaml-2006.xsd" Pack="true" PackagePath="schemas\" />
 
     <!-- MSBuild props file for automatic schema integration -->
-    <None Include="build\Terminal.Gui.XamlLike.props" Pack="true" PackagePath="build\" />
+    <None Include="build\T2t.Terminal.Gui.XamlLike.props" Pack="true" PackagePath="build\" />
 
     <!-- Package README for NuGet.org -->
     <None Include="README.md" Pack="true" PackagePath="\" />
