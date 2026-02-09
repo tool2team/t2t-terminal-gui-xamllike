@@ -129,6 +129,11 @@
           <xs:documentation>Text content or binding (e.g., "{Bind UserName, Mode=TwoWay}")</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="ReadOnly" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Whether the field is read-only (true/false or binding)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="TextChanged" type="xs:string">
         <xs:annotation>
           <xs:documentation>Event handler for text changes</xs:documentation>

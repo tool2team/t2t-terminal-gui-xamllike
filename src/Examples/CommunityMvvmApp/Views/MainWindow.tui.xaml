@@ -18,9 +18,10 @@
          Text="Your name:" />
 
   <TextField x:Name="TxtUserName"
-             X="15" Y="5" 
-             Width="25"
-             Text="{Bind UserName, Mode=TwoWay}" />
+			 X="15" Y="5" 
+			 Width="25"
+			 Text="{Bind UserName, Mode=TwoWay}"
+			 ReadOnly="{Bind IsReadOnly}" />
 
   <Label X="2" Y="7"
          Text="{Bind CounterMessage}" />
@@ -57,7 +58,10 @@
 		  Command="{Bind ToggleCommand}" />
 
   <Label X="2" Y="17"
-		 Text="{Bind Status}" />
+		 Text="{Bind StatusMessage}" />
+
+  <Label X="2" Y="18"
+		 Text="{Bind EnabledMessage}" />
 
   <Button X="Pos.Right(Root) - 10" Y="Pos.Bottom(Root) - 3"
 		  Text="Exit"

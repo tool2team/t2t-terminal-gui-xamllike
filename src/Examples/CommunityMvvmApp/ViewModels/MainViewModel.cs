@@ -19,42 +19,34 @@ public partial class MainViewModel : ObservableObject
     }
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsSaveEnabled))]
+    [NotifyPropertyChangedFor(nameof(WelcomeMessage))]
+    [NotifyCanExecuteChangedFor(nameof(SaveProfileCommand))]
     private string _userName = string.Empty;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CounterMessage))]
+    [NotifyCanExecuteChangedFor(nameof(IncrementCommand))]
     private int _counter = 0;
 
     [ObservableProperty]
-    private string _status = "Ready";
+    private string _statusMessage = "Ready";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsSaveEnabled))]
+    [NotifyPropertyChangedFor(nameof(EnabledMessage))]
+    [NotifyPropertyChangedFor(nameof(IsReadOnly))]
+    [NotifyCanExecuteChangedFor(nameof(IncrementCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SaveProfileCommand))]
     private bool _isEnabled = true;
 
     public bool IsSaveEnabled => IsEnabled && !string.IsNullOrWhiteSpace(UserName);
 
+    public string EnabledMessage => IsEnabled ? "Controls enabled" : "Controls disabled";
+
+    public bool IsReadOnly => !IsEnabled;
+
     [ObservableProperty]
     private UserRole _role = UserRole.Guest;
-
-    // Computed properties using partial method generation
-    partial void OnUserNameChanged(string value)
-    {
-        OnPropertyChanged(nameof(WelcomeMessage));
-        SaveProfileCommand.NotifyCanExecuteChanged();
-    }
-
-    partial void OnCounterChanged(int value)
-    {
-        OnPropertyChanged(nameof(CounterMessage));
-        IncrementCommand.NotifyCanExecuteChanged();
-    }
-
-    partial void OnIsEnabledChanged(bool value)
-    {
-        IncrementCommand.NotifyCanExecuteChanged();
-        SaveProfileCommand.NotifyCanExecuteChanged();
-        Status = value ? "Controls enabled" : "Controls disabled";
-    }
 
     // Computed properties
     public string WelcomeMessage => 
@@ -68,10 +60,10 @@ public partial class MainViewModel : ObservableObject
     private void Increment(CommandEventArgs args)
     {
         Counter++;
-        Status = $"Counter incremented to {Counter}";
-        
+        StatusMessage = $"Counter incremented to {Counter}";
+
         if (Counter >= 99)
-            Status += " (Maximum reached!)";
+            StatusMessage += " (Maximum reached!)";
     }
 
     private bool CanIncrement() => IsEnabled && Counter < 99;
@@ -82,18 +74,18 @@ public partial class MainViewModel : ObservableObject
         Counter = 0;
         UserName = string.Empty;
         Role = UserRole.Guest;
-        Status = "All values reset";
+        StatusMessage = "All values reset";
     }
 
     [RelayCommand(CanExecute = nameof(CanSaveProfile))]
     private async Task SaveProfile()
     {
-        Status = $"Saving profile for {UserName}...";
+        StatusMessage = $"Saving profile for {UserName}...";
 
         // Simulate async operation
         await Task.Delay(1500);
 
-        Status = $"Profile saved successfully! Counter: {Counter}, Role: {Role}";
+        StatusMessage = $"Profile saved successfully! Counter: {Counter}, Role: {Role}";
     }
 
     private bool CanSaveProfile() => IsEnabled && !string.IsNullOrWhiteSpace(UserName);
@@ -102,13 +94,12 @@ public partial class MainViewModel : ObservableObject
     private void Toggle()
     {
         IsEnabled = !IsEnabled;
-        Status = IsEnabled ? "Controls enabled" : "Controls disabled";
     }
 
     [RelayCommand]
     private async Task LoadData()
     {
-        Status = "Loading data...";
+        StatusMessage = "Loading data...";
         IsEnabled = false;
 
         try
@@ -118,11 +109,11 @@ public partial class MainViewModel : ObservableObject
 
             Counter = new Random().Next(1, 50);
             UserName = $"User{Counter}";
-            Status = "Data loaded successfully!";
+            StatusMessage = "Data loaded successfully!";
         }
         catch (Exception ex)
         {
-            Status = $"Error loading data: {ex.Message}";
+            StatusMessage = $"Error loading data: {ex.Message}";
         }
         finally
         {
@@ -133,7 +124,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void Exit()
     {
-        Status = "Exiting application...";
+        StatusMessage = "Exiting application...";
         _application.RequestStop();
     }
 }
