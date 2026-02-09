@@ -29,31 +29,10 @@ jobs:
 
       - name: Pack
         run: |
-          dotnet pack Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj -c Release -o ./nupkgs --no-build -v minimal
+          dotnet pack Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj -c Release -o ./nupkgs --no-build
 
       - name: List packages
         run: ls -la ./nupkgs || true
-
-      - name: Check for generated .nupkg files
-        run: |
-          echo "Looking for .nupkg files in ./nupkgs"
-          ls -la ./nupkgs || true
-          shopt -s nullglob || true
-          files=(./nupkgs/*.nupkg)
-          if [ ${#files[@]} -eq 0 ]; then
-            echo "No .nupkg found in ./nupkgs"
-            echo "Contents of ./nupkgs for debugging:"
-            ls -la ./nupkgs || true
-            exit 1
-          fi
-          echo "Found nupkg(s):"
-          printf "%s\n" "${files[@]}"
-
-      - name: Upload nupkgs for debugging
-        uses: actions/upload-artifact@v4
-        with:
-          name: terminal-gui-xamllike-pack
-          path: ./nupkgs
 
       - name: Publish to NuGet
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
