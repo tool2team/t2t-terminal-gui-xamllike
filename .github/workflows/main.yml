@@ -30,9 +30,25 @@ jobs:
       - name: Build
         run: dotnet build src/Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj -c Release --no-restore
 
+      - name: Extract version from tag
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" =~ ^refs/tags/v(.*)$ ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+          else
+            VERSION="1.0.0-dev.$(date +%s)"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+
       - name: Pack
         run: |
-          dotnet pack src/Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj -c Release -o ./nupkgs --no-build -v minimal
+          dotnet pack src/Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj \
+            -c Release \
+            -o ./nupkgs \
+            --no-build \
+            -p:PackageVersion=${{ steps.version.outputs.version }} \
+            -v minimal
 
       - name: List packages
         run: ls -la ./nupkgs || true
@@ -65,6 +81,7 @@ jobs:
           echo "GITHUB_SHA        = $GITHUB_SHA"
           echo "github.ref_name   = ${{ github.ref_name }}"
           echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
+          echo "Extracted version = ${{ steps.version.outputs.version }}"
 
       - name: Publish to NuGet
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
