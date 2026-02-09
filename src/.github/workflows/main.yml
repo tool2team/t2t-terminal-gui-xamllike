@@ -1,0 +1,64 @@
+name: CI - Pack and Publish NuGet
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch: {}
+
+jobs:
+  build-and-pack:
+    name: Build, Pack and Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          # Use the .NET 10 SDK
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore src/Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj
+
+      - name: Build
+        run: dotnet build src/Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj -c Release --no-restore
+
+      - name: Pack
+        run: |
+          dotnet pack src/Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj -c Release -o ./nupkgs --no-build -v minimal
+
+      - name: List packages
+        run: ls -la ./nupkgs || true
+
+      - name: Check for generated .nupkg files
+        run: |
+          echo "Looking for .nupkg files in ./nupkgs"
+          ls -la ./nupkgs || true
+          shopt -s nullglob || true
+          files=(./nupkgs/*.nupkg)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No .nupkg found in ./nupkgs"
+            echo "Contents of ./nupkgs for debugging:"
+            ls -la ./nupkgs || true
+            exit 1
+          fi
+          echo "Found nupkg(s):"
+          printf "%s\n" "${files[@]}"
+
+      - name: Upload nupkgs for debugging
+        uses: actions/upload-artifact@v4
+        with:
+          name: terminal-gui-xamllike-pack
+          path: ./nupkgs
+
+      - name: Publish to NuGet
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          echo "Publishing packages to NuGet.org"
+          dotnet nuget push ./nupkgs/*.nupkg -k "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json --skip-duplicate
