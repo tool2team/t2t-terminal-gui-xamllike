@@ -55,6 +55,14 @@ jobs:
           name: terminal-gui-xamllike-pack
           path: ./nupkgs
 
+      - name: Diagnostic - GitHub event and ref
+        run: |
+          echo "GITHUB_EVENT_NAME = $GITHUB_EVENT_NAME"
+          echo "GITHUB_REF        = $GITHUB_REF"
+          echo "GITHUB_SHA        = $GITHUB_SHA"
+          echo "github.ref_name   = ${{ github.ref_name }}"
+          echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
+
       - name: Publish to NuGet
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         env:
