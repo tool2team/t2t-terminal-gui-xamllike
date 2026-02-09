@@ -1,0 +1,43 @@
+name: CI - Pack and Publish NuGet
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch: {}
+
+jobs:
+  build-and-pack:
+    name: Build, Pack and Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          # Use the latest SDK available on the runner (adjust if you need a specific preview)
+          dotnet-version: 'latest'
+
+      - name: Restore
+        run: dotnet restore Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj
+
+      - name: Build
+        run: dotnet build Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj -c Release --no-restore
+
+      - name: Pack
+        run: |
+          dotnet pack Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj -c Release -o ./nupkgs --no-build
+
+      - name: List packages
+        run: ls -la ./nupkgs || true
+
+      - name: Publish to NuGet
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          echo "Publishing packages to NuGet.org"
+          dotnet nuget push ./nupkgs/*.nupkg -k "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json --skip-duplicate

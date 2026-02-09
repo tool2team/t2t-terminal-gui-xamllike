@@ -8,7 +8,7 @@
     <IsRoslynComponent>true</IsRoslynComponent>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>Terminal.Gui.XamlLike</PackageId>
+    <PackageId>T2t.Terminal.Gui.XamlLike</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
     <PackageDescription>Source generator for Terminal.Gui v2 XAML-like syntax with IntelliSense support via XSD schemas</PackageDescription>
     <PackageTags>sourcegen;terminal-ui;xaml;codegen;intellisense;xsd</PackageTags>
