@@ -10,6 +10,7 @@ A source generator to create Terminal.Gui interfaces with XAML-like syntax.
 - ✅ **Computed properties** with automatic updates
 - ✅ **`x:DataType` attribute** for simplified syntax
 - ✅ **Code generation** at compile time via Source Generators
+- ✅ **IntelliSense support** for `.tui.xaml` files via XSD schema
 - ✅ **Compatible with Terminal.Gui v2**
 
 ## 📦 Installation
@@ -242,7 +243,6 @@ Contributions are welcome! Feel free to:
 - [ ] Resource system
 - [ ] Value converters
 - [ ] Support for more Terminal.Gui controls
-- [ ] IntelliSense for `.tui.xaml` files
 
 ## 📄 License
 
