@@ -45,22 +45,68 @@
     <xs:attribute ref="x:Type"/>
   </xs:attributeGroup>
 
+  <!-- Container Views Choice Group -->
+  <xs:group name="ContainerViews">
+    <xs:choice>
+      <!-- Basic Controls -->
+      <xs:element ref="Label"/>
+      <xs:element ref="Button"/>
+      <xs:element ref="TextField"/>
+      <xs:element ref="TextView"/>
+      <xs:element ref="CheckBox"/>
+      <!-- Selectors -->
+      <xs:element ref="OptionSelector"/>
+      <xs:element ref="FlagSelector"/>
+      <xs:element ref="ComboBox"/>
+      <xs:element ref="ListView"/>
+      <!-- Containers -->
+      <xs:element ref="FrameView"/>
+      <xs:element ref="TabView"/>
+      <xs:element ref="Tab"/>
+      <xs:element ref="Dialog"/>
+      <!-- Data Entry -->
+      <xs:element ref="DateField"/>
+      <xs:element ref="TimeField"/>
+      <xs:element ref="DatePicker"/>
+      <xs:element ref="TextValidateField"/>
+      <xs:element ref="NumericUpDown"/>
+      <!-- Visual Elements -->
+      <xs:element ref="ProgressBar"/>
+      <xs:element ref="Line"/>
+      <xs:element ref="SpinnerView"/>
+      <xs:element ref="ColorPicker"/>
+      <xs:element ref="ColorPicker16"/>
+      <!-- Data Display -->
+      <xs:element ref="TableView"/>
+      <xs:element ref="TreeView"/>
+      <xs:element ref="GraphView"/>
+      <xs:element ref="CharMap"/>
+      <xs:element ref="HexView"/>
+      <!-- Navigation -->
+      <xs:element ref="MenuBar"/>
+      <xs:element ref="Menu"/>
+      <xs:element ref="StatusBar"/>
+      <xs:element ref="Bar"/>
+      <xs:element ref="Shortcut"/>
+      <!-- Dialogs -->
+      <xs:element ref="OpenDialog"/>
+      <xs:element ref="SaveDialog"/>
+      <xs:element ref="FileDialog"/>
+      <!-- Advanced -->
+      <xs:element ref="Wizard"/>
+      <xs:element ref="WizardStep"/>
+      <xs:element ref="ScrollBar"/>
+      <xs:element ref="LinearRange"/>
+    </xs:choice>
+  </xs:group>
+
   <!-- Window element -->
   <xs:element name="Window">
     <xs:annotation>
       <xs:documentation>Main window container. See Terminal.Gui.Views.Window</xs:documentation>
     </xs:annotation>
     <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="Label"/>
-        <xs:element ref="Button"/>
-        <xs:element ref="TextField"/>
-        <xs:element ref="TextView"/>
-        <xs:element ref="CheckBox"/>
-        <xs:element ref="OptionSelector"/>
-        <xs:element ref="ListView"/>
-        <xs:element ref="FrameView"/>
-      </xs:choice>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
       <xs:attribute name="Title" type="xs:string">
         <xs:annotation>
@@ -233,19 +279,713 @@
       <xs:documentation>Container with border. See Terminal.Gui.Views.FrameView</xs:documentation>
     </xs:annotation>
     <xs:complexType mixed="true">
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="Label"/>
-        <xs:element ref="Button"/>
-        <xs:element ref="TextField"/>
-        <xs:element ref="TextView"/>
-        <xs:element ref="CheckBox"/>
-        <xs:element ref="OptionSelector"/>
-        <xs:element ref="ListView"/>
-      </xs:choice>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
       <xs:attribute name="Title" type="xs:string">
         <xs:annotation>
           <xs:documentation>Frame title</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Bar element -->
+  <xs:element name="Bar">
+    <xs:annotation>
+      <xs:documentation>Horizontally or vertically oriented container for Shortcuts. See Terminal.Gui.Views.Bar</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Shortcut"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Orientation" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Horizontal or Vertical orientation</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- CharMap element -->
+  <xs:element name="CharMap">
+    <xs:annotation>
+      <xs:documentation>Scrollable map of Unicode codepoints. See Terminal.Gui.Views.CharMap</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="StartCodePoint" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Starting Unicode code point</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ColorPicker element -->
+  <xs:element name="ColorPicker">
+    <xs:annotation>
+      <xs:documentation>Color picker supporting RGB, HSL, and HSV color models. See Terminal.Gui.Views.ColorPicker</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="SelectedColor" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected color or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ColorChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for color changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ColorPicker16 element -->
+  <xs:element name="ColorPicker16">
+    <xs:annotation>
+      <xs:documentation>Simple color picker for legacy 16 ANSI colors. See Terminal.Gui.Views.ColorPicker16</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="SelectedColor" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected color or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ColorChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for color changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ComboBox element -->
+  <xs:element name="ComboBox">
+    <xs:annotation>
+      <xs:documentation>Drop-down list of items. See Terminal.Gui.Views.ComboBox</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Current text or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SelectedItem" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected item or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SelectedItemChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for selection changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- DateField element -->
+  <xs:element name="DateField">
+    <xs:annotation>
+      <xs:documentation>Date editing field with specialized cursor behavior. See Terminal.Gui.Views.DateField</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Date" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Date value or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Format" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Date format string</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="DateChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for date changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- DatePicker element -->
+  <xs:element name="DatePicker">
+    <xs:annotation>
+      <xs:documentation>Visual calendar for date selection. See Terminal.Gui.Views.DatePicker</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Date" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected date or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="DateChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for date changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Dialog element -->
+  <xs:element name="Dialog">
+    <xs:annotation>
+      <xs:documentation>Modal dialog window with buttons. See Terminal.Gui.Views.Dialog</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Title" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Dialog title</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute ref="x:Class"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- FileDialog element -->
+  <xs:element name="FileDialog">
+    <xs:annotation>
+      <xs:documentation>Base class for file dialogs. See Terminal.Gui.Views.FileDialog</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Directory" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Current directory</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="FileName" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected file name</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- FlagSelector element -->
+  <xs:element name="FlagSelector">
+    <xs:annotation>
+      <xs:documentation>Multi-select flag selector. See Terminal.Gui.Views.FlagSelector</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Value" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected flags value or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="FlagsChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for flag changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- GraphView element -->
+  <xs:element name="GraphView">
+    <xs:annotation>
+      <xs:documentation>Graph display with flexible scaling and scrolling. See Terminal.Gui.Views.GraphView</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Title" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Graph title</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- HexView element -->
+  <xs:element name="HexView">
+    <xs:annotation>
+      <xs:documentation>Hex editor with hex and ASCII views. See Terminal.Gui.Views.HexView</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Source" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Data source stream or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Line element -->
+  <xs:element name="Line">
+    <xs:annotation>
+      <xs:documentation>Single line drawing element. See Terminal.Gui.Views.Line</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Orientation" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Horizontal or Vertical</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="LineStyle" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Line drawing style</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- LinearRange element -->
+  <xs:element name="LinearRange">
+    <xs:annotation>
+      <xs:documentation>Linear range control for typed options. See Terminal.Gui.Views.LinearRange</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Value" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Current value or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ValueChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for value changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Menu element -->
+  <xs:element name="Menu">
+    <xs:annotation>
+      <xs:documentation>Vertical menu container. See Terminal.Gui.Views.Menu</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="MenuItem"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="CommonAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- MenuBar element -->
+  <xs:element name="MenuBar">
+    <xs:annotation>
+      <xs:documentation>Horizontal menu bar. See Terminal.Gui.Views.MenuBar</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="MenuBarItem"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="CommonAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- MenuBarItem element -->
+  <xs:element name="MenuBarItem">
+    <xs:annotation>
+      <xs:documentation>Menu bar item with popover menu. See Terminal.Gui.Views.MenuBarItem</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Menu item text</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="HotKey" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Hot key for activation</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- MenuItem element -->
+  <xs:element name="MenuItem">
+    <xs:annotation>
+      <xs:documentation>Menu item with title and action. See Terminal.Gui.Views.MenuItem</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Menu item text</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="HotKey" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Hot key for activation</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Help" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Help text</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Action" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Action to execute</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- NumericUpDown element -->
+  <xs:element name="NumericUpDown">
+    <xs:annotation>
+      <xs:documentation>Numeric up/down control. See Terminal.Gui.Views.NumericUpDown</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Value" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Numeric value or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Minimum" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Minimum value</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Maximum" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Maximum value</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Increment" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Increment amount</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ValueChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for value changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- OpenDialog element -->
+  <xs:element name="OpenDialog">
+    <xs:annotation>
+      <xs:documentation>File open dialog. See Terminal.Gui.Views.OpenDialog</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Directory" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Current directory</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="FileName" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected file name</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="AllowMultipleSelection" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Allow multiple file selection</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- SaveDialog element -->
+  <xs:element name="SaveDialog">
+    <xs:annotation>
+      <xs:documentation>File save dialog. See Terminal.Gui.Views.SaveDialog</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Directory" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Current directory</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="FileName" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>File name to save</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ProgressBar element -->
+  <xs:element name="ProgressBar">
+    <xs:annotation>
+      <xs:documentation>Progress indicator. See Terminal.Gui.Views.ProgressBar</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Value" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Current progress value or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Minimum" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Minimum value</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Maximum" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Maximum value</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ScrollBar element -->
+  <xs:element name="ScrollBar">
+    <xs:annotation>
+      <xs:documentation>Scroll bar control. See Terminal.Gui.Views.ScrollBar</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Orientation" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Horizontal or Vertical</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Value" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Current scroll position</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Shortcut element -->
+  <xs:element name="Shortcut">
+    <xs:annotation>
+      <xs:documentation>Command shortcut with key binding. See Terminal.Gui.Views.Shortcut</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Shortcut text</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Help" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Help text</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Key" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Key binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Action" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Action to execute</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- SpinnerView element -->
+  <xs:element name="SpinnerView">
+    <xs:annotation>
+      <xs:documentation>Spinning activity indicator. See Terminal.Gui.Views.SpinnerView</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Style" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Spinner style</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="IsSpinning" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Whether the spinner is active</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- StatusBar element -->
+  <xs:element name="StatusBar">
+    <xs:annotation>
+      <xs:documentation>Status bar at bottom of screen. See Terminal.Gui.Views.StatusBar</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Shortcut"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="CommonAttributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Tab element -->
+  <xs:element name="Tab">
+    <xs:annotation>
+      <xs:documentation>Single tab in a TabView. See Terminal.Gui.Views.Tab</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Tab title</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- TableView element -->
+  <xs:element name="TableView">
+    <xs:annotation>
+      <xs:documentation>Tabular data display with infinite scrolling. See Terminal.Gui.Views.TableView</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Table" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Data table source or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SelectedRow" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected row index or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- TabView element -->
+  <xs:element name="TabView">
+    <xs:annotation>
+      <xs:documentation>Tab container control. See Terminal.Gui.Views.TabView</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Tab"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="SelectedTab" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected tab index or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- TextValidateField element -->
+  <xs:element name="TextValidateField">
+    <xs:annotation>
+      <xs:documentation>Text field with input validation. See Terminal.Gui.Views.TextValidateField</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Text content or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ValidationPattern" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Regular expression for validation</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TextChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for text changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- TimeField element -->
+  <xs:element name="TimeField">
+    <xs:annotation>
+      <xs:documentation>Time editing field with specialized cursor behavior. See Terminal.Gui.Views.TimeField</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Time" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Time value or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Format" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Time format string</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimeChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for time changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- TreeView element -->
+  <xs:element name="TreeView">
+    <xs:annotation>
+      <xs:documentation>Hierarchical tree view control. See Terminal.Gui.Views.TreeView</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="TreeSource" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Tree data source or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SelectedObject" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected item or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SelectionChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for selection changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Wizard element -->
+  <xs:element name="Wizard">
+    <xs:annotation>
+      <xs:documentation>Multi-step wizard dialog. See Terminal.Gui.Views.Wizard</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="WizardStep"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Title" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Wizard title</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- WizardStep element -->
+  <xs:element name="WizardStep">
+    <xs:annotation>
+      <xs:documentation>Single step in a wizard. See Terminal.Gui.Views.WizardStep</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Title" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Step title</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="HelpText" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Help text for the step</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
