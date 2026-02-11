@@ -10,9 +10,10 @@ namespace Terminal.Gui.XamlLike
         /// <summary>
         /// Maps XAML element names to Terminal.Gui control types
         /// </summary>
-        public static readonly Dictionary<string, ControlMapping> ControlMappings = new Dictionary<string, ControlMapping>
+        public static readonly Dictionary<string, ControlMapping> ControlMappings = new()
         {
             ["Window"] = new ControlMapping("Terminal.Gui.Views.Window", "Terminal.Gui.Views", isContainer: true),
+            ["View"] = new ControlMapping("Terminal.Gui.ViewBase.View", "Terminal.Gui.ViewBase", isContainer: true),
             ["Label"] = new ControlMapping("Terminal.Gui.Views.Label", "Terminal.Gui.Views"),
             ["Button"] = new ControlMapping("Terminal.Gui.Views.Button", "Terminal.Gui.Views"),
             ["TextField"] = new ControlMapping("Terminal.Gui.Views.TextField", "Terminal.Gui.Views"),
@@ -31,11 +32,12 @@ namespace Terminal.Gui.XamlLike
         /// Maps XAML event names to Terminal.Gui event names by control type
         /// NOTE: These mappings may need adjustment based on actual Terminal.Gui v2 API
         /// </summary>
-        public static readonly Dictionary<string, Dictionary<string, EventMapping>> EventMappings = new Dictionary<string, Dictionary<string, EventMapping>>
+        public static readonly Dictionary<string, Dictionary<string, EventMapping>> EventMappings = new()
         {
             ["Button"] = new Dictionary<string, EventMapping>
             {
-                ["Accepting"] = new EventMapping("Accepting", "System.EventHandler<System.EventArgs>", "Button accepting event in v2")
+                ["Accepting"] = new EventMapping("Accepting", "System.EventHandler<System.EventArgs>", "Button accepting event"),
+                ["Clicked"] = new EventMapping("Clicked", "System.EventHandler<System.EventArgs>", "Button click event (legacy)", isObsolete: true, replacementEvent: "Accepting")
             },
             ["TextField"] = new Dictionary<string, EventMapping>
             {
@@ -44,7 +46,8 @@ namespace Terminal.Gui.XamlLike
             },
             ["CheckBox"] = new Dictionary<string, EventMapping>
             {
-                ["Toggled"] = new EventMapping("Toggled", "System.EventHandler", "Toggle state change event")
+                ["ValueChanged"] = new EventMapping("ValueChanged", "System.EventHandler", "Value change event"),
+                ["Toggled"] = new EventMapping("Toggled", "System.EventHandler", "Toggle state change event (legacy)", isObsolete: true, replacementEvent: "ValueChanged")
             },
             ["OptionSelector"] = new Dictionary<string, EventMapping>
             {
@@ -52,7 +55,8 @@ namespace Terminal.Gui.XamlLike
             },
             ["ListView"] = new Dictionary<string, EventMapping>
             {
-                ["SelectedItemChanged"] = new EventMapping("SelectedItemChanged", "System.EventHandler", "Selection change event"),
+                ["ValueChanged"] = new EventMapping("ValueChanged", "System.EventHandler", "Selection change event"),
+                ["SelectedItemChanged"] = new EventMapping("SelectedItemChanged", "System.EventHandler", "Selection change event (legacy)", isObsolete: true, replacementEvent: "ValueChanged"),
                 ["OpenSelectedItem"] = new EventMapping("OpenSelectedItem", "System.EventHandler", "Item activation event")
             },
             ["Window"] = new Dictionary<string, EventMapping>
@@ -65,7 +69,7 @@ namespace Terminal.Gui.XamlLike
         /// <summary>
         /// Maps properties that support TwoWay binding
         /// </summary>
-        public static readonly Dictionary<string, Dictionary<string, TwoWayBinding>> TwoWayBindings = new Dictionary<string, Dictionary<string, TwoWayBinding>>
+        public static readonly Dictionary<string, Dictionary<string, TwoWayBinding>> TwoWayBindings = new()
         {
             ["TextField"] = new Dictionary<string, TwoWayBinding>
             {
@@ -77,14 +81,14 @@ namespace Terminal.Gui.XamlLike
             },
             ["CheckBox"] = new Dictionary<string, TwoWayBinding>
             {
-                ["Checked"] = new TwoWayBinding("Checked", "Toggled", "bool", "Checked state with toggle notification")
+                ["Checked"] = new TwoWayBinding("Checked", "ValueChanged", "bool", "Checked state with value change notification")
             }
         };
 
         /// <summary>
         /// Common property mappings that may need special handling
         /// </summary>
-        public static readonly Dictionary<string, PropertyMapping> PropertyMappings = new Dictionary<string, PropertyMapping>
+        public static readonly Dictionary<string, PropertyMapping> PropertyMappings = new()
         {
             ["X"] = new PropertyMapping("X", "Pos", "Terminal.Gui.Views.Pos", "Horizontal position"),
             ["Y"] = new PropertyMapping("Y", "Pos", "Terminal.Gui.Views.Pos", "Vertical position"),
@@ -102,10 +106,10 @@ namespace Terminal.Gui.XamlLike
         /// <summary>
         /// Gets the full type name for a control, with optional generic type parameter
         /// </summary>
-        public static string GetControlTypeName(string elementName, string? genericType = null)
+        public static string? GetFullTypeName(string elementName, string? genericType = null)
         {
             if (!ControlMappings.TryGetValue(elementName, out var mapping))
-                return $"Terminal.Gui.Views.{elementName}";
+                return null; // Type not found - caller should generate diagnostic
 
             var typeName = mapping.FullTypeName;
 
@@ -155,11 +159,35 @@ namespace Terminal.Gui.XamlLike
             PropertyMappings.TryGetValue(propertyName, out var mapping) ? mapping : null;
 
         /// <summary>
+        /// Checks if an attribute name is a known event for any control type
+        /// </summary>
+        public static bool IsKnownEvent(string eventName)
+        {
+            foreach (var controlEvents in EventMappings.Values)
+            {
+                if (controlEvents.ContainsKey(eventName))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Determines if a property value needs special expression handling
         /// </summary>
         public static bool IsExpressionProperty(string propertyName) => propertyName switch
         {
             "X" or "Y" or "Width" or "Height" => true,
+            _ => false
+        };
+
+        /// <summary>
+        /// Determines if a property should be treated as a boolean value
+        /// </summary>
+        public static bool IsBooleanProperty(string propertyName) => propertyName switch
+        {
+            "Enabled" or "Visible" or "ReadOnly" or "Checked" or "IsSpinning" or "AllowMultipleSelection" => true,
             _ => false
         };
 
@@ -209,13 +237,24 @@ namespace Terminal.Gui.XamlLike
         public string EventName { get; }
         public string DelegateType { get; }
         public string Description { get; }
+        public bool IsObsolete { get; }
+        public string? ReplacementEvent { get; }
 
-        public EventMapping(string eventName, string delegateType, string description)
+        public EventMapping(string eventName, string delegateType, string description, bool isObsolete = false, string? replacementEvent = null)
         {
             EventName = eventName;
             DelegateType = delegateType;
             Description = description;
+            IsObsolete = isObsolete;
+            ReplacementEvent = replacementEvent;
         }
+
+        /// <summary>
+        /// Gets the obsolete message if this event is obsolete
+        /// </summary>
+        public string? GetObsoleteMessage() => IsObsolete && ReplacementEvent != null
+            ? $"Use '{ReplacementEvent}' instead"
+            : null;
     }
 
     /// <summary>

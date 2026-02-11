@@ -45,6 +45,12 @@
     <xs:attribute ref="x:Type"/>
   </xs:attributeGroup>
 
+  <!-- Root element attributes for classes with code-behind -->
+  <xs:attributeGroup name="RootElementAttributes">
+    <xs:attribute ref="x:Class"/>
+    <xs:attribute ref="x:DataType"/>
+  </xs:attributeGroup>
+
   <!-- Container Views Choice Group -->
   <xs:group name="ContainerViews">
     <xs:choice>
@@ -57,7 +63,6 @@
       <!-- Selectors -->
       <xs:element ref="OptionSelector"/>
       <xs:element ref="FlagSelector"/>
-      <xs:element ref="ComboBox"/>
       <xs:element ref="ListView"/>
       <!-- Containers -->
       <xs:element ref="FrameView"/>
@@ -108,13 +113,24 @@
     <xs:complexType mixed="true">
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attributeGroup ref="RootElementAttributes"/>
       <xs:attribute name="Title" type="xs:string">
         <xs:annotation>
           <xs:documentation>Window title</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute ref="x:Class"/>
-      <xs:attribute ref="x:DataType"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- View element -->
+  <xs:element name="View">
+    <xs:annotation>
+      <xs:documentation>Base view container. Can contain any Terminal.Gui controls. See Terminal.Gui.ViewBase.View</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attributeGroup ref="RootElementAttributes"/>
     </xs:complexType>
   </xs:element>
 
@@ -260,12 +276,12 @@
     </xs:annotation>
     <xs:complexType>
       <xs:attributeGroup ref="CommonAttributes"/>
-      <xs:attribute name="SelectedItem" type="xs:string">
+      <xs:attribute name="Value" type="xs:string">
         <xs:annotation>
           <xs:documentation>Selected item index or binding</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="SelectedItemChanged" type="xs:string">
+      <xs:attribute name="ValueChanged" type="xs:string">
         <xs:annotation>
           <xs:documentation>Event handler for selection changes</xs:documentation>
         </xs:annotation>
@@ -362,31 +378,6 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- ComboBox element -->
-  <xs:element name="ComboBox">
-    <xs:annotation>
-      <xs:documentation>Drop-down list of items. See Terminal.Gui.Views.ComboBox</xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:attributeGroup ref="CommonAttributes"/>
-      <xs:attribute name="Text" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Current text or binding</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
-      <xs:attribute name="SelectedItem" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Selected item or binding</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
-      <xs:attribute name="SelectedItemChanged" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Event handler for selection changes</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
-    </xs:complexType>
-  </xs:element>
-
   <!-- DateField element -->
   <xs:element name="DateField">
     <xs:annotation>
@@ -440,12 +431,12 @@
     <xs:complexType mixed="true">
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attributeGroup ref="RootElementAttributes"/>
       <xs:attribute name="Title" type="xs:string">
         <xs:annotation>
           <xs:documentation>Dialog title</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute ref="x:Class"/>
     </xs:complexType>
   </xs:element>
 

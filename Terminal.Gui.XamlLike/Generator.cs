@@ -47,8 +47,9 @@ namespace Terminal.Gui.XamlLike
         {
             // Add diagnostic to verify generator is running
             context.ReportDiagnostic(Diagnostic.Create(
-                new DiagnosticDescriptor("TG001", "Generator Debug", $"Processing file: {filePath}", "Debug", DiagnosticSeverity.Info, true), 
-                Location.None));
+                TuiDiagnostics.GeneratorProcessingFile, 
+                Location.None,
+                filePath));
 
             // Parse the XAML content
             var parseResult = XamlParser.Parse(content, filePath);
@@ -81,11 +82,19 @@ namespace Terminal.Gui.XamlLike
             var dataTypePropertyName = ResolveDataTypeToPropertyName(compilation, document!);
 
             // Generate the C# code
-            var generatedCode = GenerateCode(document!, dataTypePropertyName);
+            var diagnostics = new List<Diagnostic>();
+            var generatedCode = GenerateCode(document!, dataTypePropertyName, diagnostics);
+
+            // Report any diagnostics that occurred during code generation
+            foreach (var diagnostic in diagnostics)
+            {
+                context.ReportDiagnostic(diagnostic);
+            }
 
             context.ReportDiagnostic(Diagnostic.Create(
-                new DiagnosticDescriptor("TG002", "Generator Debug", $"Generated code length: {generatedCode.Length}", "Debug", DiagnosticSeverity.Info, true), 
-                Location.None));
+                TuiDiagnostics.GeneratorCodeLength, 
+                Location.None,
+                generatedCode.Length));
 
             // Add the generated source
             var sourceText = SourceText.From(generatedCode, Encoding.UTF8);
@@ -132,10 +141,10 @@ namespace Terminal.Gui.XamlLike
             return null;
         }
 
-        private static string GenerateCode(XamlDocument document, string? resolvedDataTypePropertyName)
+        private static string GenerateCode(XamlDocument document, string? resolvedDataTypePropertyName, List<Diagnostic> diagnostics)
         {
             var emitter = new CodeEmitter();
-            return emitter.GenerateClass(document, resolvedDataTypePropertyName);
+            return emitter.GenerateClass(document, resolvedDataTypePropertyName, diagnostics);
         }
     }
 
@@ -144,18 +153,20 @@ namespace Terminal.Gui.XamlLike
     /// </summary>
     public sealed class CodeEmitter
     {
-        private readonly StringBuilder _code = new StringBuilder();
+        private readonly StringBuilder _code = new();
         private int _indentLevel = 0;
         private string? _dataTypePropertyName;
-        private Dictionary<XamlElement, string> _elementToFieldName = new Dictionary<XamlElement, string>();
+        private Dictionary<XamlElement, string> _elementToFieldName = new();
         private int _anonymousControlCounter = 0;
+        private List<Diagnostic>? _diagnostics;
 
-        public string GenerateClass(XamlDocument document, string? resolvedDataTypePropertyName)
+        public string GenerateClass(XamlDocument document, string? resolvedDataTypePropertyName, List<Diagnostic> diagnostics)
         {
             _code.Clear();
             _indentLevel = 0;
             _elementToFieldName.Clear(); // Reset for each document
             _anonymousControlCounter = 0; // Reset counter
+            _diagnostics = diagnostics; // Store diagnostic list
 
             var className = document.ClassName;
             var namespaceName = GetNamespace(className!);
@@ -185,8 +196,29 @@ namespace Terminal.Gui.XamlLike
                 _indentLevel++;
             }
 
-            // Class declaration
-            AppendLine($"partial class {simpleClassName}");
+            // Determine base class from root element (use full name for inheritance)
+            var rootElementType = Mappings.GetFullTypeName(document.RootElement.Name);
+
+            if (rootElementType == null)
+            {
+                _diagnostics?.Add(Diagnostic.Create(
+                    TuiDiagnostics.UnknownRootElementType,
+                    Location.None,
+                    document.RootElement.Name
+                ));
+                rootElementType = "object"; // Fallback to allow compilation to continue
+            }
+
+            if (!Mappings.IsContainer(document.RootElement.Name))
+            {
+                _diagnostics?.Add(Diagnostic.Create(
+                    TuiDiagnostics.RootElementNotContainer,
+                    Location.None,
+                    document.RootElement.Name
+                ));
+            }
+            // Class declaration with base class
+            AppendLine($"partial class {simpleClassName} : {rootElementType}");
             AppendLine("{");
             _indentLevel++;
 
@@ -232,7 +264,16 @@ namespace Terminal.Gui.XamlLike
             // Generate field if element has explicit x:Name
             if (!string.IsNullOrEmpty(element.XName))
             {
-                var typeName = Mappings.GetControlTypeName(element.Name, element.XType);
+                var typeName = Mappings.GetFullTypeName(element.Name, element.XType);
+                if (typeName == null)
+                {
+                    _diagnostics?.Add(Diagnostic.Create(
+                        TuiDiagnostics.UnknownControlTypeInGeneration,
+                        Location.None,
+                        element.Name
+                    ));
+                    typeName = "object"; // Fallback
+                }
                 AppendLine($"private {typeName} {element.XName} = null!;");
             }
 
@@ -255,7 +296,16 @@ namespace Terminal.Gui.XamlLike
             {
                 if (!control.HasExplicitName)
                 {
-                    var typeName = Mappings.GetControlTypeName(control.ElementName, control.GenericType);
+                    var typeName = Mappings.GetFullTypeName(control.ElementName, control.GenericType);
+                    if (typeName == null)
+                    {
+                        _diagnostics?.Add(Diagnostic.Create(
+                            TuiDiagnostics.UnknownControlTypeInGeneration,
+                            Location.None,
+                            control.ElementName
+                        ));
+                        typeName = "object";
+                    }
                     AppendLine($"private {typeName} {control.GetFieldName()} = null!;");
                 }
             }
@@ -273,7 +323,16 @@ namespace Terminal.Gui.XamlLike
                     var fieldName = GenerateAnonymousFieldName(element.Name);
                     _elementToFieldName[element] = fieldName;
 
-                    var typeName = Mappings.GetControlTypeName(element.Name, element.XType);
+                    var typeName = Mappings.GetFullTypeName(element.Name, element.XType);
+                    if (typeName == null)
+                    {
+                        _diagnostics?.Add(Diagnostic.Create(
+                            TuiDiagnostics.UnknownControlTypeInGeneration,
+                            Location.None,
+                            element.Name
+                        ));
+                        typeName = "object";
+                    }
                     AppendLine($"private {typeName} {fieldName} = null!;");
                 }
             }
@@ -315,7 +374,17 @@ namespace Terminal.Gui.XamlLike
         private void GenerateElementCode(XamlElement element, bool isRoot = false)
         {
             // Get control type name with optional generic type
-            var typeName = Mappings.GetControlTypeName(element.Name, element.XType);
+            var typeName = Mappings.GetFullTypeName(element.Name, element.XType);
+
+            if (typeName == null)
+            {
+                _diagnostics?.Add(Diagnostic.Create(
+                    TuiDiagnostics.UnknownControlTypeInGeneration,
+                    Location.None,
+                    element.Name
+                ));
+                typeName = "object"; // Fallback to allow generation to continue
+            }
 
             // Determine the variable name to use
             string variableName;
@@ -374,6 +443,22 @@ namespace Terminal.Gui.XamlLike
             {
                 var xamlEventName = kvp.Key;
                 var handlerName = kvp.Value;
+
+                // Check if event is obsolete
+                var eventMapping = Mappings.GetEventMapping(element.Name, xamlEventName);
+                if (eventMapping?.IsObsolete == true)
+                {
+                    // Emit diagnostic and skip code generation
+                    var obsoleteMessage = eventMapping.GetObsoleteMessage() ?? "";
+                    _diagnostics?.Add(Diagnostic.Create(
+                        TuiDiagnostics.ObsoleteEvent,
+                        Location.None,
+                        xamlEventName,
+                        element.Name,
+                        obsoleteMessage
+                    ));
+                    continue; // Skip generating code for obsolete event
+                }
 
                 // Map XAML event name to actual Terminal.Gui event name
                 AppendLine($"{variableName}.{xamlEventName} += {handlerName};");
@@ -698,6 +783,18 @@ namespace Terminal.Gui.XamlLike
                 }
 
                 // If not numeric, treat as expression
+                return value;
+            }
+
+            // Check if property is boolean (case-insensitive)
+            if (Mappings.IsBooleanProperty(propName))
+            {
+                // Parse boolean values (case-insensitive)
+                if (bool.TryParse(value, out var boolValue))
+                {
+                    return boolValue ? "true" : "false";
+                }
+                // If not a valid boolean, treat as expression
                 return value;
             }
 

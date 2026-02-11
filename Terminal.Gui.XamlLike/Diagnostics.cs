@@ -146,21 +146,93 @@ public static class TuiDiagnostics
         description: "x:Name values must be unique within each XAML file to avoid naming conflicts in generated code.");
 
     /// <summary>
+    /// Obsolete event used
+    /// </summary>
+    public static readonly DiagnosticDescriptor ObsoleteEvent = new(
+        id: "TUI012",
+        title: "Obsolete event",
+        messageFormat: "Event '{0}' on control '{1}' is obsolete. {2}. The event will not be generated.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true,
+        description: "This event has been deprecated in Terminal.Gui v2 and will not be included in the generated code. Please migrate to the recommended event.");
+
+    /// <summary>
     /// Invalid property value
     /// </summary>
     public static readonly DiagnosticDescriptor InvalidPropertyValue = new(
-        id: "TUI012",
+        id: "TUI013",
         title: "Invalid property value",
         messageFormat: "Invalid value '{1}' for property '{0}'. {2}.",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Warning,
         isEnabledByDefault: true,
         description: "The property value may not be compatible with the expected type or format.");
+
+    /// <summary>
+    /// Generator debug - Processing file
+    /// </summary>
+    public static readonly DiagnosticDescriptor GeneratorProcessingFile = new(
+        id: "TUI014",
+        title: "Generator Debug",
+        messageFormat: "Processing file: {0}",
+        category: "Debug",
+        defaultSeverity: DiagnosticSeverity.Info,
+        isEnabledByDefault: true,
+        description: "Informational message indicating which file is being processed by the generator.");
+
+    /// <summary>
+    /// Generator debug - Generated code length
+    /// </summary>
+    public static readonly DiagnosticDescriptor GeneratorCodeLength = new(
+        id: "TUI015",
+        title: "Generator Debug",
+        messageFormat: "Generated code length: {0}",
+        category: "Debug",
+        defaultSeverity: DiagnosticSeverity.Info,
+        isEnabledByDefault: true,
+        description: "Informational message showing the length of generated code.");
+
+    /// <summary>
+    /// Unknown root element type
+    /// </summary>
+    public static readonly DiagnosticDescriptor UnknownRootElementType = new(
+        id: "TUI016",
+        title: "Unknown root element type",
+        messageFormat: "Element '{0}' is not a recognized Terminal.Gui control type. Add it to Mappings.ControlMappings.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true,
+        description: "The root element must be a valid Terminal.Gui control type.");
+
+    /// <summary>
+    /// Root element must be a container
+    /// </summary>
+    public static readonly DiagnosticDescriptor RootElementNotContainer = new(
+        id: "TUI017",
+        title: "Root element type must be a container",
+        messageFormat: "Element '{0}' is not a container type",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true,
+        description: "The root element must be a container control that can have children (Window, View, FrameView, etc.).");
+
+    /// <summary>
+    /// Unknown control type in code generation
+    /// </summary>
+    public static readonly DiagnosticDescriptor UnknownControlTypeInGeneration = new(
+        id: "TUI018",
+        title: "Unknown control type",
+        messageFormat: "Element '{0}' is not a recognized Terminal.Gui control type. Add it to Mappings.ControlMappings.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true,
+        description: "The control type is not recognized during code generation.");
 }
 
     public static class DiagnosticExtensions
     {
         public static TuiDiagnostic Create(this DiagnosticDescriptor descriptor, string filePath, params object[] args) =>
-            new TuiDiagnostic(descriptor, filePath, string.Format(descriptor.MessageFormat.ToString(), args));
+            new(descriptor, filePath, string.Format(descriptor.MessageFormat.ToString(), args));
     }
 }

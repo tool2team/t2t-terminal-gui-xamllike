@@ -108,7 +108,7 @@ namespace Terminal.Gui.XamlLike
         private static void ValidateElement(XamlElement element, string filePath, List<TuiDiagnostic> diagnostics, string? dataType = null)
         {
             // Validate control type exists
-            var controlType = Mappings.GetControlTypeName(element.Name);
+            var controlType = Mappings.GetFullTypeName(element.Name);
             if (!IsKnownControlType(element.Name))
             {
                 diagnostics.Add(TuiDiagnostics.UnknownControlType.Create(filePath, element.Name));
@@ -146,11 +146,12 @@ namespace Terminal.Gui.XamlLike
             {
                 var eventName = kvp.Key;
                 var handlerName = kvp.Value;
-                
+
                 if (!IsKnownEventName(element.Name, eventName))
                 {
                     diagnostics.Add(TuiDiagnostics.UnknownEvent.Create(filePath, element.Name, eventName));
                 }
+                // Note: Obsolete event diagnostic is emitted during code generation in Generator.cs
 
                 if (string.IsNullOrWhiteSpace(handlerName))
                 {
@@ -177,37 +178,15 @@ namespace Terminal.Gui.XamlLike
         /// <summary>
         /// Checks if a control type is known/supported
         /// </summary>
-        private static bool IsKnownControlType(string controlName) => controlName switch
-        {
-            "Window" => true,
-            "Label" => true,
-            "Button" => true,
-            "TextField" => true,
-            "TextView" => true,
-            "CheckBox" => true,
-            "OptionSelector" => true,
-            "ListView" => true,
-            "FrameView" => true,
-            "ScrollView" => true,
-            "TabView" => true,
-            "MenuBar" => true,
-            "StatusBar" => true,
-            _ => false
-        };
+        private static bool IsKnownControlType(string controlName) =>
+            Mappings.ControlMappings.ContainsKey(controlName);
 
         /// <summary>
         /// Checks if an event name is known for a control type
         /// </summary>
-        private static bool IsKnownEventName(string controlName, string eventName) => controlName switch
-        {
-            "Button" => eventName == "Accepting",
-            "TextField" => eventName == "TextChanged" || eventName == "Accept",
-            "CheckBox" => eventName == "Toggled",
-            "OptionSelector" => eventName == "SelectedItemChanged",
-            "ListView" => eventName == "SelectedItemChanged" || eventName == "OpenSelectedItem",
-            "Window" => eventName == "Loaded" || eventName == "Closing",
-            _ => false
-        };
+        private static bool IsKnownEventName(string controlName, string eventName) =>
+            Mappings.EventMappings.TryGetValue(controlName, out var events) && 
+            events.ContainsKey(eventName);
     }
 
     /// <summary>
@@ -221,13 +200,13 @@ namespace Terminal.Gui.XamlLike
 
         private ParseResult() { }
 
-        public static ParseResult<T> Success(T value) => new ParseResult<T>
+        public static ParseResult<T> Success(T value) => new()
         {
             IsSuccess = true,
             Value = value
         };
 
-        public static ParseResult<T> CreateError(DiagnosticDescriptor descriptor, string filePath, string? message = null) => new ParseResult<T>
+        public static ParseResult<T> CreateError(DiagnosticDescriptor descriptor, string filePath, string? message = null) => new()
         {
             IsSuccess = false,
             Error = TuiDiagnostic.Create(descriptor, filePath, message)
@@ -251,7 +230,7 @@ namespace Terminal.Gui.XamlLike
         }
 
         public static TuiDiagnostic Create(DiagnosticDescriptor descriptor, string filePath, string? message = null) =>
-            new TuiDiagnostic(descriptor, filePath, message);
+            new(descriptor, filePath, message);
 
         public Diagnostic ToDiagnostic() =>
             Diagnostic.Create(Descriptor, Location.None, Message ?? Descriptor.MessageFormat);

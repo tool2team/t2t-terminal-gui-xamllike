@@ -32,28 +32,6 @@ namespace Terminal.Gui.XamlLike
     /// </summary>
     public class XamlElement
     {
-        /// <summary>
-        /// Known Terminal.Gui v2 event names (whitelist)
-        /// </summary>
-        private static readonly HashSet<string> KnownEvents = new HashSet<string>
-        {
-            "Accepted", "Accepting", "Activating", "AdvancingFocus", "BorderStyleChanged",
-            "CanFocusChanged", "ClearedViewport", "ClearingViewport", "CommandNotBound",
-            "ContentSizeChanged", "ContentSizeChanging", "Disposing", "DrawComplete",
-            "DrawingContent", "DrawingSubViews", "DrawingText", "DrewText", "EnabledChanged",
-            "FocusedChanged", "FrameChanged", "GettingAttributeForRole", "GettingScheme",
-            "HandlingHotKey", "HasFocusChanged", "HasFocusChanging", "HeightChanged",
-            "HeightChanging", "HotKeyChanged", "Initialized", "KeyDown", "KeyDownNotHandled",
-            "MouseEnter", "MouseEvent", "MouseHoldRepeatChanged", "MouseHoldRepeatChanging",
-            "MouseLeave", "MouseStateChanged", "Removed", "SchemeChanged", "SchemeChanging",
-            "SchemeNameChanged", "SchemeNameChanging", "SubViewAdded", "SubViewLayout",
-            "SubViewRemoved", "SubViewsLaidOut", "SuperViewChanged", "SuperViewChanging",
-            "TextChanged", "TitleChanged", "TitleChanging", "ViewportChanged", "VisibleChanged",
-            "VisibleChanging", "WidthChanged", "WidthChanging",
-            // Legacy/common event names for compatibility
-            "Clicked", "Toggled", "SelectedItemChanged"
-        };
-
         public string Name { get; }
         public Dictionary<string, string> Attributes { get; }
         public List<XamlElement> Children { get; }
@@ -140,9 +118,9 @@ namespace Terminal.Gui.XamlLike
         value.Contains("(") && value.Contains(")");
 
     /// <summary>
-    /// Checks if an attribute name represents an event (uses whitelist of known Terminal.Gui events)
+    /// Checks if an attribute name represents an event (uses Mappings.EventMappings)
     /// </summary>
-    private static bool IsEventAttribute(string attributeName) => KnownEvents.Contains(attributeName);
+    private static bool IsEventAttribute(string attributeName) => Mappings.IsKnownEvent(attributeName);
 }
 
     /// <summary>
