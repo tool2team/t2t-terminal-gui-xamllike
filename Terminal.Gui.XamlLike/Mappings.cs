@@ -25,7 +25,10 @@ namespace Terminal.Gui.XamlLike
             ["ScrollView"] = new ControlMapping("Terminal.Gui.Views.ScrollView", "Terminal.Gui.Views", isContainer: true),
             ["TabView"] = new ControlMapping("Terminal.Gui.Views.TabView", "Terminal.Gui.Views", isContainer: true),
             ["MenuBar"] = new ControlMapping("Terminal.Gui.Views.MenuBar", "Terminal.Gui.Views"),
-            ["StatusBar"] = new ControlMapping("Terminal.Gui.Views.StatusBar", "Terminal.Gui.Views")
+            ["MenuBarItem"] = new ControlMapping("Terminal.Gui.Views.MenuBarItem", "Terminal.Gui.Views", isContainer: true),
+            ["MenuItem"] = new ControlMapping("Terminal.Gui.Views.MenuItem", "Terminal.Gui.Views"),
+            ["StatusBar"] = new ControlMapping("Terminal.Gui.Views.StatusBar", "Terminal.Gui.Views", isContainer: true),
+            ["Shortcut"] = new ControlMapping("Terminal.Gui.Views.Shortcut", "Terminal.Gui.Views")
         };
 
         /// <summary>
@@ -67,6 +70,24 @@ namespace Terminal.Gui.XamlLike
             {
                 ["Loaded"] = new EventMapping("Loaded", "System.EventHandler", "Window loaded event"),
                 ["Closing"] = new EventMapping("Closing", "System.EventHandler", "Window closing event")
+            },
+            ["Shortcut"] = new Dictionary<string, EventMapping>
+            {
+                ["Accepting"] = new EventMapping("Accepting", "System.EventHandler<Terminal.Gui.Input.CommandEventArgs>", "Shortcut accepting event"),
+                ["Accepted"] = new EventMapping("Accepted", "System.EventHandler<Terminal.Gui.Input.CommandEventArgs>", "Shortcut accepted event"),
+                ["OrientationChanging"] = new EventMapping("OrientationChanging", "System.EventHandler<Terminal.Gui.App.ValueChangingEventArgs<Terminal.Gui.ViewBase.Orientation>>", "Orientation changing event"),
+                ["OrientationChanged"] = new EventMapping("OrientationChanged", "System.EventHandler<Terminal.Gui.App.ValueChangedEventArgs<Terminal.Gui.ViewBase.Orientation>>", "Orientation changed event")
+            },
+            ["MenuItem"] = new Dictionary<string, EventMapping>
+            {
+                ["Accepting"] = new EventMapping("Accepting", "System.EventHandler<Terminal.Gui.Input.CommandEventArgs>", "MenuItem accepting event"),
+                ["Accepted"] = new EventMapping("Accepted", "System.EventHandler<Terminal.Gui.Input.CommandEventArgs>", "MenuItem accepted event")
+            },
+            ["MenuBarItem"] = new Dictionary<string, EventMapping>
+            {
+                ["Accepting"] = new EventMapping("Accepting", "System.EventHandler<Terminal.Gui.Input.CommandEventArgs>", "MenuBarItem accepting event"),
+                ["Accepted"] = new EventMapping("Accepted", "System.EventHandler<Terminal.Gui.Input.CommandEventArgs>", "MenuBarItem accepted event"),
+                ["PopoverMenuOpenChanged"] = new EventMapping("PopoverMenuOpenChanged", "System.EventHandler", "Popover menu open state changed event")
             }
         };
 
@@ -90,21 +111,62 @@ namespace Terminal.Gui.XamlLike
         };
 
         /// <summary>
-        /// Common property mappings that may need special handling
+        /// Maps properties by control type, with common properties shared across controls
         /// </summary>
-        public static readonly Dictionary<string, PropertyMapping> PropertyMappings = new()
+        public static readonly Dictionary<string, Dictionary<string, PropertyMapping>> PropertyMappings = new()
         {
-            ["X"] = new PropertyMapping("X", "Pos", "Terminal.Gui.Views.Pos", "Horizontal position"),
-            ["Y"] = new PropertyMapping("Y", "Pos", "Terminal.Gui.Views.Pos", "Vertical position"),
-            ["Width"] = new PropertyMapping("Width", "Dim", "Terminal.Gui.Views.Dim", "Width dimension"),
-            ["Height"] = new PropertyMapping("Height", "Dim", "Terminal.Gui.Views.Dim", "Height dimension"),
-            ["Text"] = new PropertyMapping("Text", "string", "ustring", "Text content"),
-            ["Title"] = new PropertyMapping("Title", "string", "ustring", "Title text"),
-            ["Checked"] = new PropertyMapping("Checked", "bool", "bool", "Checked state"),
-            ["Enabled"] = new PropertyMapping("Enabled", "bool", "bool", "Enabled state"),
-            ["Visible"] = new PropertyMapping("Visible", "bool", "bool", "Visibility state"),
-            ["SelectedItem"] = new PropertyMapping("SelectedItem", "int", "int", "Selected item index"),
-            ["Options"] = new PropertyMapping("Options", "string[]", "string[]", "Option selector items")
+            ["Common"] = new Dictionary<string, PropertyMapping>
+            {
+                ["X"] = new PropertyMapping("X", "Terminal.Gui.Views.Pos", "Horizontal position"),
+                ["Y"] = new PropertyMapping("Y", "Terminal.Gui.Views.Pos", "Vertical position"),
+                ["Width"] = new PropertyMapping("Width", "Terminal.Gui.Views.Dim", "Width dimension"),
+                ["Height"] = new PropertyMapping("Height", "Terminal.Gui.Views.Dim", "Height dimension"),
+                ["Text"] = new PropertyMapping("Text", "ustring", "Text content"),
+                ["Title"] = new PropertyMapping("Title", "ustring", "Title text"),
+                ["Enabled"] = new PropertyMapping("Enabled", "bool", "Enabled state"),
+                ["Visible"] = new PropertyMapping("Visible", "bool", "Visibility state")
+            },
+            ["TextField"] = new Dictionary<string, PropertyMapping>
+            {
+                ["ReadOnly"] = new PropertyMapping("ReadOnly", "bool", "Read-only state")
+            },
+            ["CheckBox"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Checked"] = new PropertyMapping("Checked", "bool", "Checked state")
+            },
+            ["OptionSelector"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Options"] = new PropertyMapping("Options", "string[]", "Option selector items")
+            },
+            ["ListView"] = new Dictionary<string, PropertyMapping>
+            {
+                ["SelectedItem"] = new PropertyMapping("SelectedItem", "int", "Selected item index"),
+                ["AllowMultipleSelection"] = new PropertyMapping("AllowMultipleSelection", "bool", "Allow multiple selection")
+            },
+            ["SpinnerView"] = new Dictionary<string, PropertyMapping>
+            {
+                ["IsSpinning"] = new PropertyMapping("IsSpinning", "bool", "Spinner active state")
+            },
+            ["Shortcut"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Key"] = new PropertyMapping("Key", "Terminal.Gui.Input.Key", "Key binding (e.g., Key.F1, Key.Q.WithCtrl)"),
+                ["HelpText"] = new PropertyMapping("HelpText", "ustring", "Help text displayed in the middle of the Shortcut"),
+                ["Text"] = new PropertyMapping("Text", "ustring", "Alias for HelpText - Help text displayed in the middle"),
+                ["BindKeyToApplication"] = new PropertyMapping("BindKeyToApplication", "bool", "Whether key is bound to application (HotKeyBindings) or view (KeyBindings)"),
+                ["AlignmentModes"] = new PropertyMapping("AlignmentModes", "Terminal.Gui.ViewBase.AlignmentModes", "Alignment mode for the Shortcut content (StartToEnd or EndToStart)"),
+                ["MinimumKeyTextSize"] = new PropertyMapping("MinimumKeyTextSize", "int", "Minimum size of the key text for alignment purposes"),
+                ["ForceFocusColors"] = new PropertyMapping("ForceFocusColors", "bool", "Force focus colors"),
+                ["Orientation"] = new PropertyMapping("Orientation", "Terminal.Gui.ViewBase.Orientation", "Orientation of the Shortcut (Horizontal or Vertical)")
+            },
+            ["MenuItem"] = new Dictionary<string, PropertyMapping>
+            {
+                ["HotKey"] = new PropertyMapping("HotKey", "Terminal.Gui.Input.Key", "Hot key for activation")
+            },
+            ["MenuBarItem"] = new Dictionary<string, PropertyMapping>
+            {
+                ["HotKey"] = new PropertyMapping("HotKey", "Terminal.Gui.Input.Key", "Hot key for activation"),
+                ["PopoverMenuOpen"] = new PropertyMapping("PopoverMenuOpen", "bool", "Whether the popover menu is open")
+            }
         };
 
         /// <summary>
@@ -157,10 +219,28 @@ namespace Terminal.Gui.XamlLike
             GetTwoWayBinding(controlName, propertyName) != null;
 
         /// <summary>
-        /// Gets property mapping information
+        /// Gets property mapping information by property name only (searches all controls and Common)
         /// </summary>
-        public static PropertyMapping? GetPropertyMapping(string propertyName) =>
-            PropertyMappings.TryGetValue(propertyName, out var mapping) ? mapping : null;
+        public static PropertyMapping? GetPropertyMapping(string propertyName)
+        {
+            // Check Common properties first
+            if (PropertyMappings.TryGetValue("Common", out var commonProperties) &&
+                commonProperties.TryGetValue(propertyName, out var commonMapping))
+            {
+                return commonMapping;
+            }
+
+            // Search in all control-specific properties
+            foreach (var controlProperties in PropertyMappings.Values)
+            {
+                if (controlProperties.TryGetValue(propertyName, out var mapping))
+                {
+                    return mapping;
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Checks if an attribute name is a known event for any control type
@@ -178,40 +258,51 @@ namespace Terminal.Gui.XamlLike
         }
 
         /// <summary>
-        /// Determines if a property value needs special expression handling
-        /// </summary>
-        public static bool IsExpressionProperty(string propertyName) => propertyName switch
-        {
-            "X" or "Y" or "Width" or "Height" => true,
-            _ => false
-        };
-
-        /// <summary>
         /// Determines if a property should be treated as a boolean value
         /// </summary>
-        public static bool IsBooleanProperty(string propertyName) => propertyName switch
+        public static bool IsBooleanProperty(string propertyName)
         {
-            "Enabled" or "Visible" or "ReadOnly" or "Checked" or "IsSpinning" or "AllowMultipleSelection" => true,
-            _ => false
-        };
+            var mapping = GetPropertyMapping(propertyName);
+            return mapping?.TargetType == "bool";
+        }
 
         /// <summary>
         /// Determines if a property should be treated as a numeric value (not quoted)
         /// </summary>
-        public static bool IsNumericProperty(string propertyName) => propertyName switch
+        public static bool IsNumericProperty(string propertyName)
         {
-            "SelectedItem" => true,
-            _ => false
-        };
+            var mapping = GetPropertyMapping(propertyName);
+            return mapping?.TargetType == "int";
+        }
 
         /// <summary>
         /// Determines if a property expects an array type
         /// </summary>
-        public static bool IsArrayProperty(string propertyName) => propertyName switch
+        public static bool IsArrayProperty(string propertyName)
         {
-            "Options" => true,
-            _ => false
-        };
+            var mapping = GetPropertyMapping(propertyName);
+            return mapping?.TargetType.EndsWith("[]") ?? false;
+        }
+
+        /// <summary>
+        /// Determines if a property is a Terminal.Gui type that needs full namespace qualification
+        /// </summary>
+        public static bool IsTerminalGuiType(string propertyName)
+        {
+            var mapping = GetPropertyMapping(propertyName);
+            if (mapping == null) return false;
+
+            return mapping.TargetType.StartsWith("Terminal.Gui.");
+        }
+
+        /// <summary>
+        /// Gets the fully qualified type name for a property
+        /// </summary>
+        public static string? GetFullyQualifiedType(string propertyName)
+        {
+            var mapping = GetPropertyMapping(propertyName);
+            return mapping?.TargetType;
+        }
     }
 
     /// <summary>
@@ -286,14 +377,12 @@ namespace Terminal.Gui.XamlLike
     public class PropertyMapping
     {
         public string PropertyName { get; }
-        public string XamlType { get; }
         public string TargetType { get; }
         public string Description { get; }
 
-        public PropertyMapping(string propertyName, string xamlType, string targetType, string description)
+        public PropertyMapping(string propertyName, string targetType, string description)
         {
             PropertyName = propertyName;
-            XamlType = xamlType;
             TargetType = targetType;
             Description = description;
         }

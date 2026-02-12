@@ -640,7 +640,10 @@
     <xs:annotation>
       <xs:documentation>Menu bar item with popover menu. See Terminal.Gui.Views.MenuBarItem</xs:documentation>
     </xs:annotation>
-    <xs:complexType>
+    <xs:complexType mixed="true">
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="MenuItem"/>
+      </xs:sequence>
       <xs:attributeGroup ref="CommonAttributes"/>
       <xs:attribute name="Text" type="xs:string">
         <xs:annotation>
@@ -650,6 +653,31 @@
       <xs:attribute name="HotKey" type="xs:string">
         <xs:annotation>
           <xs:documentation>Hot key for activation</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Command" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>ICommand binding (e.g., "{Bind FileCommand}")</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="PopoverMenuOpen" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Whether the popover menu is open (true/false or binding)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Accepting" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for menu item activation</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Accepted" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler after menu item activation</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="PopoverMenuOpenChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for popover menu open state changes</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
@@ -669,17 +697,32 @@
       </xs:attribute>
       <xs:attribute name="HotKey" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Hot key for activation</xs:documentation>
+          <xs:documentation>Hot key for activation (e.g., "Key.F1", "Key.Q.WithCtrl")</xs:documentation>
         </xs:annotation>
       </xs:attribute>
       <xs:attribute name="Help" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Help text</xs:documentation>
+          <xs:documentation>Help text displayed for the menu item</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Command" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>ICommand binding (e.g., "{Bind SaveCommand}")</xs:documentation>
         </xs:annotation>
       </xs:attribute>
       <xs:attribute name="Action" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Action to execute</xs:documentation>
+          <xs:documentation>Action to execute (legacy, prefer Command binding)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Accepting" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for menu item activation</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Accepted" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler after menu item activation</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
@@ -817,24 +860,83 @@
     </xs:annotation>
     <xs:complexType>
       <xs:attributeGroup ref="CommonAttributes"/>
-      <xs:attribute name="Text" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Shortcut text</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
-      <xs:attribute name="Help" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Help text</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
+
+      <!-- Properties -->
       <xs:attribute name="Key" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Key binding</xs:documentation>
+          <xs:documentation>Key binding that will invoke the Accept command (e.g., "Key.F1", "Key.Q.WithCtrl")</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Command" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>ICommand binding (e.g., "{Bind IncrementCommand}")</xs:documentation>
         </xs:annotation>
       </xs:attribute>
       <xs:attribute name="Action" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Action to execute</xs:documentation>
+          <xs:documentation>Action to execute when the shortcut is invoked (method name or lambda)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="HelpText" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Help text displayed in the middle of the Shortcut</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Help text displayed in the middle of the Shortcut (alias for HelpText)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Help" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Help text (legacy, use HelpText or Text instead)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="BindKeyToApplication" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Whether Key is bound to Command via HotKeyBindings (application-wide) or KeyBindings (view-specific) (true/false, default: false)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="AlignmentModes" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Alignment mode for the Shortcut content (StartToEnd or EndToStart)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="MinimumKeyTextSize" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Minimum size of the key text for alignment purposes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ForceFocusColors" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Force focus colors (true/false)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Orientation" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Orientation of the Shortcut (Horizontal or Vertical, default: Horizontal)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+
+      <!-- Events -->
+      <xs:attribute name="Accepting" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler invoked when the shortcut is about to be executed</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Accepted" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler invoked when the shortcut has been executed</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="OrientationChanging" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler raised when Orientation is changing (can be cancelled)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="OrientationChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler raised when Orientation has changed</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
@@ -863,11 +965,11 @@
   <!-- StatusBar element -->
   <xs:element name="StatusBar">
     <xs:annotation>
-      <xs:documentation>Status bar at bottom of screen. See Terminal.Gui.Views.StatusBar</xs:documentation>
+      <xs:documentation>Status bar at bottom of screen. Can contain any view (Shortcut, Label, Button, etc.). See Terminal.Gui.Views.StatusBar</xs:documentation>
     </xs:annotation>
     <xs:complexType mixed="true">
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="Shortcut"/>
+        <xs:group ref="ContainerViews"/>
       </xs:sequence>
       <xs:attributeGroup ref="CommonAttributes"/>
     </xs:complexType>

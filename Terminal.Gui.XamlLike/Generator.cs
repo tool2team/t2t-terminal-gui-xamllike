@@ -791,26 +791,64 @@ namespace Terminal.Gui.XamlLike
 
         private static string GetPropertyValue(string propName, string value)
         {
-            if (Mappings.IsExpressionProperty(propName))
+            // Check if property is a Terminal.Gui type (includes Pos, Dim, Key, Enum, etc.)
+            if (Mappings.IsTerminalGuiType(propName))
             {
-                // If value contains parentheses, it's already an expression like Dim.Fill()
-                if (value.Contains("("))
+                var fullType = Mappings.GetFullyQualifiedType(propName);
+
+                // Special handling for Pos and Dim types
+                if (fullType == "Terminal.Gui.Views.Pos" || fullType == "Terminal.Gui.Views.Dim")
                 {
+                    // If value contains parentheses, it's already an expression like Dim.Fill()
+                    if (value.Contains("("))
+                    {
+                        return value;
+                    }
+
+                    // For numeric values, convert to appropriate Terminal.Gui v2 types  
+                    if (int.TryParse(value, out _))
+                    {
+                        return value; // Terminal.Gui v2 accepts int directly for Pos/Dim
+                    }
+
+                    // If not numeric, treat as expression
                     return value;
                 }
 
-                // For numeric values, convert to appropriate Terminal.Gui v2 types  
-                if (int.TryParse(value, out _))
+                // For other Terminal.Gui types (Key, Enum, etc.), add full namespace
+                if (fullType != null)
                 {
-                    return propName switch
-                    {
-                        "X" or "Y" => value, // Terminal.Gui v2 accepts int directly for Pos
-                        "Width" or "Height" => value, // Terminal.Gui v2 accepts int directly for Dim 
-                        _ => $"\"{value.Replace("\"", "\\\"")}\"" // fallback
-                    };
-                }
+                    // Handle values like "Key.F1" or "Key.Q.WithCtrl" or just "F1"
+                    // Split by dots to analyze the structure
+                    var parts = value.Split('.');
 
-                // If not numeric, treat as expression
+                    if (parts.Length == 1)
+                    {
+                        // Just the value: "F1" → "Terminal.Gui.Input.Key.F1"
+                        return $"{fullType}.{value}";
+                    }
+                    else if (parts.Length >= 2)
+                    {
+                        // Has dots: "Key.F1" or "Key.Q.WithCtrl"
+                        // Check if first part matches the type name
+                        var typeShortName = fullType.Substring(fullType.LastIndexOf('.') + 1);
+
+                        if (parts[0] == typeShortName)
+                        {
+                            // Remove the type prefix and add the full namespace
+                            // "Key.F1" → "Terminal.Gui.Input.Key.F1"
+                            // "Key.Q.WithCtrl" → "Terminal.Gui.Input.Key.Q.WithCtrl"
+                            var valuePart = string.Join(".", parts.Skip(1));
+                            return $"{fullType}.{valuePart}";
+                        }
+                        else
+                        {
+                            // Doesn't start with type name, prefix the whole thing
+                            return $"{fullType}.{value}";
+                        }
+                    }
+                }
+                // Fallback: return as-is if we can't get the full type
                 return value;
             }
 
