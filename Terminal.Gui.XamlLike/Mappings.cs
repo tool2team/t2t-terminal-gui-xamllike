@@ -55,7 +55,11 @@ namespace Terminal.Gui.XamlLike
             },
             ["ListView"] = new Dictionary<string, EventMapping>
             {
-                ["ValueChanged"] = new EventMapping("ValueChanged", "System.EventHandler", "Selection change event"),
+                ["ValueChanged"] = new EventMapping("ValueChanged", "System.EventHandler<Terminal.Gui.App.ValueChangedEventArgs<int?>>", "Selection change event"),
+                ["ValueChanging"] = new EventMapping("ValueChanging", "System.EventHandler<Terminal.Gui.App.ValueChangingEventArgs<int?>>", "Selection changing event"),
+                ["SourceChanged"] = new EventMapping("SourceChanged", "System.EventHandler", "Source data changed event"),
+                ["CollectionChanged"] = new EventMapping("CollectionChanged", "System.Collections.Specialized.NotifyCollectionChangedEventHandler", "Collection changed event"),
+                ["RowRender"] = new EventMapping("RowRender", "System.EventHandler<Terminal.Gui.Views.ListViewRowEventArgs>", "Row render event"),
                 ["SelectedItemChanged"] = new EventMapping("SelectedItemChanged", "System.EventHandler", "Selection change event (legacy)", isObsolete: true, replacementEvent: "ValueChanged"),
                 ["OpenSelectedItem"] = new EventMapping("OpenSelectedItem", "System.EventHandler", "Item activation event")
             },

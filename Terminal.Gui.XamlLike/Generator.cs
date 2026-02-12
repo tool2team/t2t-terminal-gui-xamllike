@@ -159,6 +159,33 @@ namespace Terminal.Gui.XamlLike
         private Dictionary<XamlElement, string> _elementToFieldName = new();
         private int _anonymousControlCounter = 0;
         private List<Diagnostic>? _diagnostics;
+        private string? _sourceFilePath;
+
+        /// <summary>
+        /// Creates a diagnostic with location information from the XAML file
+        /// </summary>
+        private void ReportDiagnostic(DiagnosticDescriptor descriptor, XamlElement element, params object[] messageArgs)
+        {
+            if (_diagnostics == null || _sourceFilePath == null)
+                return;
+
+            Location location;
+            if (element.LineNumber > 0)
+            {
+                // Create location with line/column info
+                var linePosition = new Microsoft.CodeAnalysis.Text.LinePosition(
+                    element.LineNumber - 1,  // LinePosition is 0-based
+                    element.LinePosition - 1);
+                var span = new Microsoft.CodeAnalysis.Text.LinePositionSpan(linePosition, linePosition);
+                location = Location.Create(_sourceFilePath, default, span);
+            }
+            else
+            {
+                location = Location.None;
+            }
+
+            _diagnostics.Add(Diagnostic.Create(descriptor, location, messageArgs));
+        }
 
         public string GenerateClass(XamlDocument document, string? resolvedDataTypePropertyName, List<Diagnostic> diagnostics)
         {
@@ -167,6 +194,7 @@ namespace Terminal.Gui.XamlLike
             _elementToFieldName.Clear(); // Reset for each document
             _anonymousControlCounter = 0; // Reset counter
             _diagnostics = diagnostics; // Store diagnostic list
+            _sourceFilePath = document.SourceFilePath; // Store source file path for diagnostics
 
             var className = document.ClassName;
             var namespaceName = GetNamespace(className!);
@@ -448,15 +476,15 @@ namespace Terminal.Gui.XamlLike
                 var eventMapping = Mappings.GetEventMapping(element.Name, xamlEventName);
                 if (eventMapping?.IsObsolete == true)
                 {
-                    // Emit diagnostic and skip code generation
+                    // Emit diagnostic with file location and skip code generation
                     var obsoleteMessage = eventMapping.GetObsoleteMessage() ?? "";
-                    _diagnostics?.Add(Diagnostic.Create(
+                    ReportDiagnostic(
                         TuiDiagnostics.ObsoleteEvent,
-                        Location.None,
+                        element,
                         xamlEventName,
                         element.Name,
                         obsoleteMessage
-                    ));
+                    );
                     continue; // Skip generating code for obsolete event
                 }
 

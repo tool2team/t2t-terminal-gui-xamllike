@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using Microsoft.CodeAnalysis;
 
@@ -24,10 +25,20 @@ namespace Terminal.Gui.XamlLike
 
             try
             {
-                var doc = new XmlDocument();
-                doc.LoadXml(content);
+                // Use XmlReader to preserve line information
+                var settings = new XmlReaderSettings
+                {
+                    IgnoreWhitespace = false,
+                    IgnoreComments = true
+                };
 
-                if (doc.DocumentElement == null)
+                using var stringReader = new StringReader(content);
+                using var xmlReader = XmlReader.Create(stringReader, settings);
+
+                // Move to the root element
+                xmlReader.MoveToContent();
+
+                if (xmlReader.NodeType != XmlNodeType.Element)
                 {
                     return ParseResult<XamlDocument>.CreateError(
                         TuiDiagnostics.InvalidXml,
@@ -35,7 +46,7 @@ namespace Terminal.Gui.XamlLike
                         "No root element found");
                 }
 
-                var rootElement = ParseElement(doc.DocumentElement);
+                var rootElement = ParseElementWithReader(xmlReader);
                 var xamlDoc = new XamlDocument(rootElement, filePath);
 
                 // Validate required x:Class attribute
@@ -65,29 +76,51 @@ namespace Terminal.Gui.XamlLike
         }
 
         /// <summary>
-        /// Parses an XML element into a XamlElement
+        /// Parses an XML element using XmlReader (preserves line info)
         /// </summary>
-        private static XamlElement ParseElement(XmlElement xmlElement)
+        private static XamlElement ParseElementWithReader(XmlReader reader)
         {
+            var lineInfo = reader as IXmlLineInfo;
+            int lineNumber = lineInfo?.HasLineInfo() == true ? lineInfo.LineNumber : 0;
+            int linePosition = lineInfo?.HasLineInfo() == true ? lineInfo.LinePosition : 0;
+
+            var elementName = reader.LocalName;
             var attributes = new Dictionary<string, string>();
             var children = new List<XamlElement>();
 
-            // Parse attributes
-            foreach (XmlAttribute attr in xmlElement.Attributes)
+            // Read attributes
+            if (reader.HasAttributes)
             {
-                attributes[attr.Name] = attr.Value;
-            }
-
-            // Parse child elements
-            foreach (XmlNode child in xmlElement.ChildNodes)
-            {
-                if (child is XmlElement childElement)
+                while (reader.MoveToNextAttribute())
                 {
-                    children.Add(ParseElement(childElement));
+                    attributes[reader.Name] = reader.Value;
                 }
+                reader.MoveToElement();
             }
 
-            return new XamlElement(xmlElement.Name, attributes, children);
+            // Read child elements
+            if (!reader.IsEmptyElement)
+            {
+                reader.Read();
+                while (reader.NodeType != XmlNodeType.EndElement)
+                {
+                    if (reader.NodeType == XmlNodeType.Element)
+                    {
+                        children.Add(ParseElementWithReader(reader));
+                    }
+                    else
+                    {
+                        reader.Read();
+                    }
+                }
+                reader.Read(); // Read the end element
+            }
+            else
+            {
+                reader.Read(); // Move past the empty element
+            }
+
+            return new XamlElement(elementName, attributes, children, lineNumber, linePosition);
         }
 
         /// <summary>

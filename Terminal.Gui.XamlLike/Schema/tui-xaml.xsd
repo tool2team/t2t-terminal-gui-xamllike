@@ -168,12 +168,12 @@
       </xs:attribute>
       <xs:attribute name="Accepting" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Event handler for button click (Terminal.Gui v2)</xs:documentation>
+          <xs:documentation>Event handler for button click (recommended)</xs:documentation>
         </xs:annotation>
       </xs:attribute>
       <xs:attribute name="Clicked" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Event handler for button click (legacy)</xs:documentation>
+          <xs:documentation>⚠️ OBSOLETE: Use 'Accepting' instead. Event handler for button click (legacy)</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
@@ -241,9 +241,14 @@
           <xs:documentation>Checked state or binding (e.g., "{Bind IsEnabled, Mode=TwoWay}")</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="ValueChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for state changes (recommended)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="Toggled" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Event handler for state changes</xs:documentation>
+          <xs:documentation>⚠️ OBSOLETE: Use 'ValueChanged' instead. Event handler for state changes (legacy)</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
@@ -276,14 +281,68 @@
     </xs:annotation>
     <xs:complexType>
       <xs:attributeGroup ref="CommonAttributes"/>
-      <xs:attribute name="Value" type="xs:string">
+
+      <!-- Properties -->
+      <xs:attribute name="Source" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Selected item index or binding</xs:documentation>
+          <xs:documentation>Gets or sets the IListDataSource backing this ListView, enabling custom rendering</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="Value" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Gets or sets the index of the currently selected item or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SelectedItem" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Convenience property that is an alias for Value. Get or set the index of the currently selected item</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TopItem" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Gets or sets the index of the item that will appear at the top of the Viewport</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ShowMarks" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Gets or sets whether mark glyphs (checkboxes/radio buttons) are visually displayed (true/false)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="MarkMultiple" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Gets or sets whether multiple items can be marked simultaneously (true/false)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+
+      <!-- Events -->
       <xs:attribute name="ValueChanged" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Event handler for selection changes</xs:documentation>
+          <xs:documentation>Event handler for selection changes (recommended)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ValueChanging" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler raised when the ListView Value/SelectedItem is changing</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SourceChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler raised when the Source data is changed</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="CollectionChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler raised when an item is added, removed, or moved, or the entire list is refreshed</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="RowRender" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler invoked when this ListView is being drawn before rendering</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SelectedItemChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>⚠️ OBSOLETE: Use 'ValueChanged' instead. Event handler for selection changes (legacy)</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>

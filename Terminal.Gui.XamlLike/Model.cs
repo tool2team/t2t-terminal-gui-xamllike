@@ -36,11 +36,23 @@ namespace Terminal.Gui.XamlLike
         public Dictionary<string, string> Attributes { get; }
         public List<XamlElement> Children { get; }
 
-        public XamlElement(string name, Dictionary<string, string> attributes, List<XamlElement> children)
+        /// <summary>
+        /// Line number in the source XAML file (1-based, 0 if not available)
+        /// </summary>
+        public int LineNumber { get; }
+
+        /// <summary>
+        /// Column number in the source XAML file (1-based, 0 if not available)
+        /// </summary>
+        public int LinePosition { get; }
+
+        public XamlElement(string name, Dictionary<string, string> attributes, List<XamlElement> children, int lineNumber = 0, int linePosition = 0)
         {
             Name = name;
             Attributes = attributes;
             Children = children;
+            LineNumber = lineNumber;
+            LinePosition = linePosition;
         }
     /// <summary>
     /// Gets the x:Name value for this element
