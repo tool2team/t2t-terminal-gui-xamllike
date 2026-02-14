@@ -1,12 +1,11 @@
 using MvvmApp.ViewModels;
-using Terminal.Gui.Views;
 
 namespace MvvmApp.Views;
 
 /// <summary>
 /// Main view with MVVM pattern using custom ViewModels
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     internal MainViewModel ViewModel { get; }
 

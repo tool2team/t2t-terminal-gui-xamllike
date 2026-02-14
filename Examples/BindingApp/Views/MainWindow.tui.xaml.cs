@@ -1,12 +1,11 @@
 using System.ComponentModel;
-using Terminal.Gui.Views;
 
 namespace BindingApp.Views;
 
 /// <summary>
 /// Main view demonstrating self-binding (binding to view properties without ViewModel)
 /// </summary>
-public partial class MainWindow : Window, INotifyPropertyChanged
+public partial class MainWindow : INotifyPropertyChanged
 {
     private int _counter = 0;
     private string _userName = string.Empty;

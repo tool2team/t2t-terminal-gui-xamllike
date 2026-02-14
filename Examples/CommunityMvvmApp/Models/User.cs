@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CommunityMvvmApp.Models
+﻿namespace CommunityMvvmApp.Models
 {
     public enum UserRole
     {

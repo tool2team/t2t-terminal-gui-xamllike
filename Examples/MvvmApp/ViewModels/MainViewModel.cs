@@ -16,7 +16,7 @@ public class MainViewModel : BaseViewModel
 
     public MainViewModel(IApplication application)
     {
-        _application = application ?? throw new ArgumentNullException(nameof(application));
+        _application = application;
 
         // Initialize commands
         IncrementCommand = new RelayCommand(ExecuteIncrement, CanExecuteIncrement);
@@ -137,7 +137,7 @@ public class MainViewModel : BaseViewModel
     private void ExecuteExit()
     {
         Status = "Exiting application...";
-        _application.RequestStop();
+        _application?.RequestStop();
     }
 
     #endregion

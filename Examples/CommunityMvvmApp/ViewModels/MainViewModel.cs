@@ -15,7 +15,7 @@ public partial class MainViewModel : ObservableObject
 
     public MainViewModel(IApplication application)
     {
-        _application = application ?? throw new ArgumentNullException(nameof(application));
+        _application = application;
     }
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsSaveEnabled))]
@@ -125,6 +125,6 @@ public partial class MainViewModel : ObservableObject
     private void Exit()
     {
         StatusMessage = "Exiting application...";
-        _application.RequestStop();
+        _application?.RequestStop();
     }
 }

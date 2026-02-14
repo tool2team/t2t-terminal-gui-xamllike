@@ -5,7 +5,7 @@ namespace SimpleApp.Views;
 /// <summary>
 /// Simple main view with logic directly in the view (no ViewModel)
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     private int _counter = 0;
     private string _userName = string.Empty;

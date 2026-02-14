@@ -1,13 +1,11 @@
 using CommunityMvvmApp.ViewModels;
-using Terminal.Gui.Input;
-using Terminal.Gui.Views;
 
 namespace CommunityMvvmApp.Views;
 
 /// <summary>
 /// Main view using CommunityToolkit.Mvvm ViewModels
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     internal MainViewModel ViewModel { get; }
 
