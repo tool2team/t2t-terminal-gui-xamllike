@@ -157,7 +157,7 @@ namespace Terminal.Gui.XamlLike
         private int _indentLevel = 0;
         private string? _dataTypePropertyName;
         private Dictionary<XamlElement, string> _elementToFieldName = new();
-        private int _anonymousControlCounter = 0;
+        private Dictionary<string, int> _anonymousControlCounter = new();
         private List<Diagnostic>? _diagnostics;
         private string? _sourceFilePath;
 
@@ -192,7 +192,7 @@ namespace Terminal.Gui.XamlLike
             _code.Clear();
             _indentLevel = 0;
             _elementToFieldName.Clear(); // Reset for each document
-            _anonymousControlCounter = 0; // Reset counter
+            _anonymousControlCounter = new(); // Reset counter
             _diagnostics = diagnostics; // Store diagnostic list
             _sourceFilePath = document.SourceFilePath; // Store source file path for diagnostics
 
@@ -520,8 +520,17 @@ namespace Terminal.Gui.XamlLike
 
         private string GenerateAnonymousFieldName(string elementName)
         {
+            if(_anonymousControlCounter.TryGetValue(elementName, out var count))
+            {
+                _anonymousControlCounter[elementName] = count + 1;
+            }
+            else
+            {
+                _anonymousControlCounter[elementName] = 1;
+            }
+            ;
             // Use a counter from BoundControl to keep names consistent
-            return $"__{elementName}_{++_anonymousControlCounter}";
+            return $"__{elementName}_{_anonymousControlCounter[elementName]}";
         }
 
         private void GenerateBindingMethods(List<BoundControl> bindings, string? dataType)
