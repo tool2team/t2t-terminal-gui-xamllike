@@ -107,6 +107,11 @@ namespace Terminal.Gui.XamlLike
             ["CheckBox"] = new Dictionary<string, TwoWayBinding>
             {
                 ["Checked"] = new TwoWayBinding("Checked", "ValueChanged", "bool", "Checked state with value change notification")
+            },
+            ["ListView"] = new Dictionary<string, TwoWayBinding>
+            {
+                ["Value"] = new TwoWayBinding("Value", "ValueChanged", "int?", "Selected item index with change notification"),
+                ["Source"] = new TwoWayBinding("Source", "SourceChanged", "IListDataSource", "Data source with change notification")
             }
         };
 

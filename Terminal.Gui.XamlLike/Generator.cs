@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 
@@ -700,13 +701,37 @@ namespace Terminal.Gui.XamlLike
             {
                 foreach (var property in control.BoundProperties.Where(p => p.Binding.Mode == BindingMode.TwoWay))
                 {
+                    var fieldName = control.GetFieldName();
+                    var eventName = property.GetChangeEventName();
+
+                    // Get the correct event argument type from EventMappings
+                    string eventArgType = "System.EventArgs";
+                    if (eventName != null)
+                    {
+                        var eventMapping = Mappings.GetEventMapping(control.ElementName, eventName);
+                        if (eventMapping != null)
+                        {
+                            // Extract TEventArgs from EventHandler<TEventArgs> using regex
+                            var delegateType = eventMapping.DelegateType;
+                            var match = Regex.Match(delegateType, @"System\.EventHandler<(.+)>$");
+                            if (match.Success)
+                            {
+                                eventArgType = match.Groups[1].Value;
+                            }
+                            else if (delegateType == "System.EventHandler")
+                            {
+                                eventArgType = "System.EventArgs";
+                            }
+                        }
+                    }
+
                     AppendLine();
-                    AppendLine($"private void On{control.GetFieldName()}{property.PropertyName}Changed(object? sender, EventArgs e)");
+                    AppendLine($"private void On{fieldName}{property.PropertyName}Changed(object? sender, {eventArgType} e)");
                     AppendLine("{");
                     _indentLevel++;
-                    AppendLine($"if ({property.Binding.SourceExpression} != {control.GetFieldName()}.{property.PropertyName})");
+                    AppendLine($"if ({property.Binding.SourceExpression} != {fieldName}.{property.PropertyName})");
                     _indentLevel++;
-                    AppendLine($"{property.Binding.SourceExpression} = {control.GetFieldName()}.{property.PropertyName};");
+                    AppendLine($"{property.Binding.SourceExpression} = {fieldName}.{property.PropertyName};");
                     _indentLevel--;
                     _indentLevel--;
                     AppendLine("}");
@@ -735,7 +760,8 @@ namespace Terminal.Gui.XamlLike
                     var binding = BindingExpression.Parse(value, dataType);
                     if (binding != null)
                     {
-                        boundProperties.Add(new BoundProperty(propName, binding));
+                        // Pass the control type to BoundProperty so it can look up the change event name
+                        boundProperties.Add(new BoundProperty(propName, binding, element.Name));
                     }
                 }
             }

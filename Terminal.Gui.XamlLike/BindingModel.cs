@@ -156,23 +156,28 @@ public enum BindingMode
     {
         public string PropertyName { get; }
         public BindingExpression Binding { get; }
+        private readonly string? _controlType;
 
-        public BoundProperty(string propertyName, BindingExpression binding)
+        public BoundProperty(string propertyName, BindingExpression binding, string? controlType = null)
         {
             PropertyName = propertyName;
             Binding = binding;
+            _controlType = controlType;
         }
 
         /// <summary>
-        /// Gets the event name for TwoWay binding (if applicable)
+        /// Gets the event name for TwoWay binding by consulting Mappings.TwoWayBindings
         /// </summary>
-        public string? GetChangeEventName() => PropertyName switch
+        public string? GetChangeEventName()
         {
-            "Text" => "TextChanged",
-            "Checked" => "Toggled", 
-            "SelectedIndex" => "SelectedIndexChanged",
-            _ => null
-        };
+            if (string.IsNullOrEmpty(_controlType))
+            {
+                return null;
+            }
+
+            var twoWayBinding = Mappings.GetTwoWayBinding(_controlType!, PropertyName);
+            return twoWayBinding?.ChangeEventName;
+        }
 
         /// <summary>
         /// Checks if this property supports TwoWay binding
