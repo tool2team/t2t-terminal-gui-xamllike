@@ -77,8 +77,8 @@ The binding system now supports **three scenarios** with the **same `{Bind ...}`
 
 ## Current Limitations
 
-⚠️ **RadioGroup**: Conversion errors `string` → `string[]` and `string` → `int`  
-   → Requires special mapping for `RadioLabels` and `SelectedItem` properties
+⚠️ Nested property paths require proper null-checking  
+⚠️ Collection bindings need `INotifyCollectionChanged` support
 
 ## Generated Code Examples
 

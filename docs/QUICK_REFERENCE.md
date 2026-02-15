@@ -56,7 +56,6 @@ Guide de référence rapide pour la syntaxe XAML-like.
 ### Listes
 
 ```xml
-<RadioGroup RadioLabels="Item1,Item2,Item3" SelectedItem="0" />
 <ListView />
 ```
 

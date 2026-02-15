@@ -18,11 +18,10 @@ All notable changes to this project will be documented in this file.
   - Computed properties support
 
 - **Array properties support**
-  - `RadioGroup.RadioLabels` can be bound to `string[]`
   - Automatic detection of array type properties
 
 - **Numeric properties**
-  - `RadioGroup.SelectedItem` supports `int` values
+  - Support for `int` values in selectors
   - No quotes around numeric values
 
 - **Complete documentation**
@@ -44,10 +43,6 @@ All notable changes to this project will be documented in this file.
 
 - **Duplicate binding errors**: Binding `switch case` statements no longer generate duplicates
   - Smart grouping by property name
-
-- **Type conversion for RadioGroup**
-  - `RadioLabels` now accepts `string[]` via binding
-  - `SelectedItem` accepts `int` values without conversion
 
 ### 🎨 Improved
 
