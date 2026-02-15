@@ -110,7 +110,7 @@
     <xs:annotation>
       <xs:documentation>Main window container. See Terminal.Gui.Views.Window</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
       <xs:attributeGroup ref="RootElementAttributes"/>
@@ -127,7 +127,7 @@
     <xs:annotation>
       <xs:documentation>Base view container. Can contain any Terminal.Gui controls. See Terminal.Gui.ViewBase.View</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
       <xs:attributeGroup ref="RootElementAttributes"/>
@@ -353,7 +353,7 @@
     <xs:annotation>
       <xs:documentation>Container with border. See Terminal.Gui.Views.FrameView</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
       <xs:attribute name="Title" type="xs:string">
@@ -369,7 +369,7 @@
     <xs:annotation>
       <xs:documentation>Horizontally or vertically oriented container for Shortcuts. See Terminal.Gui.Views.Bar</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="Shortcut"/>
       </xs:sequence>
@@ -487,7 +487,7 @@
     <xs:annotation>
       <xs:documentation>Modal dialog window with buttons. See Terminal.Gui.Views.Dialog</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
       <xs:attributeGroup ref="RootElementAttributes"/>
@@ -614,7 +614,7 @@
     <xs:annotation>
       <xs:documentation>Vertical menu container. See Terminal.Gui.Views.Menu</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="MenuItem"/>
       </xs:sequence>
@@ -627,7 +627,7 @@
     <xs:annotation>
       <xs:documentation>Horizontal menu bar. See Terminal.Gui.Views.MenuBar</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="MenuBarItem"/>
       </xs:sequence>
@@ -640,7 +640,7 @@
     <xs:annotation>
       <xs:documentation>Menu bar item with popover menu. See Terminal.Gui.Views.MenuBarItem</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="MenuItem"/>
       </xs:sequence>
@@ -967,7 +967,7 @@
     <xs:annotation>
       <xs:documentation>Status bar at bottom of screen. Can contain any view (Shortcut, Label, Button, etc.). See Terminal.Gui.Views.StatusBar</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:group ref="ContainerViews"/>
       </xs:sequence>
@@ -980,7 +980,7 @@
     <xs:annotation>
       <xs:documentation>Single tab in a TabView. See Terminal.Gui.Views.Tab</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
       <xs:attribute name="Text" type="xs:string">
@@ -1016,7 +1016,7 @@
     <xs:annotation>
       <xs:documentation>Tab container control. See Terminal.Gui.Views.TabView</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="Tab"/>
       </xs:sequence>
@@ -1109,7 +1109,7 @@
     <xs:annotation>
       <xs:documentation>Multi-step wizard dialog. See Terminal.Gui.Views.Wizard</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="WizardStep"/>
       </xs:sequence>
@@ -1127,7 +1127,7 @@
     <xs:annotation>
       <xs:documentation>Single step in a wizard. See Terminal.Gui.Views.WizardStep</xs:documentation>
     </xs:annotation>
-    <xs:complexType mixed="true">
+    <xs:complexType>
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
       <xs:attribute name="Title" type="xs:string">
