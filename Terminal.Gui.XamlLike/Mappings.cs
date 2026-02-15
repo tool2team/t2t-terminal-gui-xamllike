@@ -29,7 +29,38 @@ namespace Terminal.Gui.XamlLike
             ["MenuBarItem"] = new ControlMapping("Terminal.Gui.Views.MenuBarItem", "Terminal.Gui.Views", isContainer: true),
             ["MenuItem"] = new ControlMapping("Terminal.Gui.Views.MenuItem", "Terminal.Gui.Views"),
             ["StatusBar"] = new ControlMapping("Terminal.Gui.Views.StatusBar", "Terminal.Gui.Views", isContainer: true),
-            ["Shortcut"] = new ControlMapping("Terminal.Gui.Views.Shortcut", "Terminal.Gui.Views")
+            ["Shortcut"] = new ControlMapping("Terminal.Gui.Views.Shortcut", "Terminal.Gui.Views"),
+            ["Slider"] = new ControlMapping("Terminal.Gui.Views.Slider", "Terminal.Gui.Views"),
+            ["TileView"] = new ControlMapping("Terminal.Gui.Views.TileView", "Terminal.Gui.Views", isContainer: true),
+            ["AttributePicker"] = new ControlMapping("Terminal.Gui.Views.AttributePicker", "Terminal.Gui.Views"),
+            ["AutocompleteTextField"] = new ControlMapping("Terminal.Gui.Views.AutocompleteTextField", "Terminal.Gui.Views"),
+            ["MessageBox"] = new ControlMapping("Terminal.Gui.Views.MessageBox", "Terminal.Gui.Views"),
+            ["DateField"] = new ControlMapping("Terminal.Gui.Views.DateField", "Terminal.Gui.Views"),
+            ["TimeField"] = new ControlMapping("Terminal.Gui.Views.TimeField", "Terminal.Gui.Views"),
+            ["DatePicker"] = new ControlMapping("Terminal.Gui.Views.DatePicker", "Terminal.Gui.Views"),
+            ["TextValidateField"] = new ControlMapping("Terminal.Gui.Views.TextValidateField", "Terminal.Gui.Views"),
+            ["NumericUpDown"] = new ControlMapping("Terminal.Gui.Views.NumericUpDown", "Terminal.Gui.Views"),
+            ["SpinnerView"] = new ControlMapping("Terminal.Gui.Views.SpinnerView", "Terminal.Gui.Views"),
+            ["ColorPicker"] = new ControlMapping("Terminal.Gui.Views.ColorPicker", "Terminal.Gui.Views"),
+            ["ColorPicker16"] = new ControlMapping("Terminal.Gui.Views.ColorPicker16", "Terminal.Gui.Views"),
+            ["TableView"] = new ControlMapping("Terminal.Gui.Views.TableView", "Terminal.Gui.Views"),
+            ["TreeView"] = new ControlMapping("Terminal.Gui.Views.TreeView", "Terminal.Gui.Views"),
+            ["GraphView"] = new ControlMapping("Terminal.Gui.Views.GraphView", "Terminal.Gui.Views"),
+            ["CharMap"] = new ControlMapping("Terminal.Gui.Views.CharMap", "Terminal.Gui.Views"),
+            ["HexView"] = new ControlMapping("Terminal.Gui.Views.HexView", "Terminal.Gui.Views"),
+            ["Line"] = new ControlMapping("Terminal.Gui.Views.Line", "Terminal.Gui.Views"),
+            ["LinearRange"] = new ControlMapping("Terminal.Gui.Views.LinearRange", "Terminal.Gui.Views"),
+            ["Menu"] = new ControlMapping("Terminal.Gui.Views.Menu", "Terminal.Gui.Views", isContainer: true),
+            ["Bar"] = new ControlMapping("Terminal.Gui.Views.Bar", "Terminal.Gui.Views", isContainer: true),
+            ["OpenDialog"] = new ControlMapping("Terminal.Gui.Views.OpenDialog", "Terminal.Gui.Views", isContainer: true),
+            ["SaveDialog"] = new ControlMapping("Terminal.Gui.Views.SaveDialog", "Terminal.Gui.Views", isContainer: true),
+            ["FileDialog"] = new ControlMapping("Terminal.Gui.Views.FileDialog", "Terminal.Gui.Views", isContainer: true),
+            ["Dialog"] = new ControlMapping("Terminal.Gui.Views.Dialog", "Terminal.Gui.Views", isContainer: true),
+            ["Wizard"] = new ControlMapping("Terminal.Gui.Views.Wizard", "Terminal.Gui.Views", isContainer: true),
+            ["WizardStep"] = new ControlMapping("Terminal.Gui.Views.WizardStep", "Terminal.Gui.Views", isContainer: true),
+            ["ScrollBar"] = new ControlMapping("Terminal.Gui.Views.ScrollBar", "Terminal.Gui.Views"),
+            ["Tab"] = new ControlMapping("Terminal.Gui.Views.Tab", "Terminal.Gui.Views", isContainer: true),
+            ["FlagSelector"] = new ControlMapping("Terminal.Gui.Views.FlagSelector", "Terminal.Gui.Views")
         };
 
         /// <summary>
@@ -89,6 +120,52 @@ namespace Terminal.Gui.XamlLike
                 ["Accepting"] = new EventMapping("Accepting", "System.EventHandler<Terminal.Gui.Input.CommandEventArgs>", "MenuBarItem accepting event"),
                 ["Accepted"] = new EventMapping("Accepted", "System.EventHandler<Terminal.Gui.Input.CommandEventArgs>", "MenuBarItem accepted event"),
                 ["PopoverMenuOpenChanged"] = new EventMapping("PopoverMenuOpenChanged", "System.EventHandler", "Popover menu open state changed event")
+            },
+            ["DateField"] = new Dictionary<string, EventMapping>
+            {
+                ["ValueChanged"] = new EventMapping("ValueChanged", "System.EventHandler", "Date change event")
+            },
+            ["TimeField"] = new Dictionary<string, EventMapping>
+            {
+                ["ValueChanged"] = new EventMapping("ValueChanged", "System.EventHandler", "Time change event")
+            },
+            ["DatePicker"] = new Dictionary<string, EventMapping>
+            {
+                ["ValueChanged"] = new EventMapping("ValueChanged", "System.EventHandler", "Date change event")
+            },
+            ["ColorPicker"] = new Dictionary<string, EventMapping>
+            {
+                ["ValueChanged"] = new EventMapping("ValueChanged", "System.EventHandler", "Color change event")
+            },
+            ["ColorPicker16"] = new Dictionary<string, EventMapping>
+            {
+                ["ValueChanged"] = new EventMapping("ValueChanged", "System.EventHandler", "Color change event")
+            },
+            ["AttributePicker"] = new Dictionary<string, EventMapping>
+            {
+                ["AttributeChanged"] = new EventMapping("AttributeChanged", "System.EventHandler", "Attribute change event")
+            },
+            ["AutocompleteTextField"] = new Dictionary<string, EventMapping>
+            {
+                ["TextChanged"] = new EventMapping("TextChanged", "System.EventHandler", "Text change event")
+            },
+            ["NumericUpDown"] = new Dictionary<string, EventMapping>
+            {
+                ["ValueChanged"] = new EventMapping("ValueChanged", "System.EventHandler", "Value change event")
+            },
+            ["TableView"] = new Dictionary<string, EventMapping>
+            {
+                ["SelectedCellChanged"] = new EventMapping("SelectedCellChanged", "System.EventHandler<Terminal.Gui.Views.SelectedCellChangedEventArgs>", "Selected cell change event"),
+                ["CellActivated"] = new EventMapping("CellActivated", "System.EventHandler<Terminal.Gui.Views.CellActivatedEventArgs>", "Cell activated event")
+            },
+            ["TreeView"] = new Dictionary<string, EventMapping>
+            {
+                ["SelectionChanged"] = new EventMapping("SelectionChanged", "System.EventHandler", "Selection change event"),
+                ["ObjectActivated"] = new EventMapping("ObjectActivated", "System.EventHandler", "Object activation event")
+            },
+            ["TextValidateField"] = new Dictionary<string, EventMapping>
+            {
+                ["TextChanged"] = new EventMapping("TextChanged", "System.EventHandler", "Text change event")
             }
         };
 
@@ -107,7 +184,7 @@ namespace Terminal.Gui.XamlLike
             },
             ["CheckBox"] = new Dictionary<string, TwoWayBinding>
             {
-                ["Checked"] = new TwoWayBinding("Checked", "ValueChanged", "Checked state with value change notification")
+                ["Value"] = new TwoWayBinding("Value", "ValueChanged", "Checked state with value change notification")
             },
             ["ListView"] = new Dictionary<string, TwoWayBinding>
             {
@@ -143,7 +220,16 @@ namespace Terminal.Gui.XamlLike
             },
             ["CheckBox"] = new Dictionary<string, PropertyMapping>
             {
-                ["Checked"] = new PropertyMapping("Checked", "bool", "Checked state")
+                ["Value"] = new PropertyMapping("Value", "Terminal.Gui.Views.CheckState", "Checked state")
+            },
+            ["Button"] = new Dictionary<string, PropertyMapping>
+            {
+                ["IsDefault"] = new PropertyMapping("IsDefault", "bool", "Whether this button is the default button in a dialog")
+            },
+            ["Dialog"] = new Dictionary<string, PropertyMapping>
+            {
+                ["ButtonAlignment"] = new PropertyMapping("ButtonAlignment", "Terminal.Gui.ViewBase.Alignment", "Button alignment (Start, Center, End, Fill, Justified)"),
+                ["ButtonAlignmentModes"] = new PropertyMapping("ButtonAlignmentModes", "Terminal.Gui.ViewBase.AlignmentModes", "Button alignment modes (StartToEnd or EndToStart)")
             },
             ["OptionSelector"] = new Dictionary<string, PropertyMapping>
             {
@@ -156,7 +242,7 @@ namespace Terminal.Gui.XamlLike
             },
             ["SpinnerView"] = new Dictionary<string, PropertyMapping>
             {
-                ["IsSpinning"] = new PropertyMapping("IsSpinning", "bool", "Spinner active state")
+                ["AutoSpin"] = new PropertyMapping("AutoSpin", "bool", "Spinner active state")
             },
             ["ProgressBar"] = new Dictionary<string, PropertyMapping>
             {
@@ -185,6 +271,98 @@ namespace Terminal.Gui.XamlLike
             {
                 ["HotKey"] = new PropertyMapping("HotKey", "Terminal.Gui.Input.Key", "Hot key for activation"),
                 ["PopoverMenuOpen"] = new PropertyMapping("PopoverMenuOpen", "bool", "Whether the popover menu is open")
+            },
+            ["DateField"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Value"] = new PropertyMapping("Value", "System.DateTime", "Date value"),
+                ["Format"] = new PropertyMapping("Format", "string", "Date format string")
+            },
+            ["TimeField"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Value"] = new PropertyMapping("Value", "System.TimeSpan", "Time value"),
+                ["Format"] = new PropertyMapping("Format", "string", "Time format string")
+            },
+            ["DatePicker"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Value"] = new PropertyMapping("Value", "System.DateTime", "Selected date")
+            },
+            ["ColorPicker"] = new Dictionary<string, PropertyMapping>
+            {
+                ["SelectedColor"] = new PropertyMapping("SelectedColor", "Terminal.Gui.Drawing.Color", "Selected color")
+            },
+            ["ColorPicker16"] = new Dictionary<string, PropertyMapping>
+            {
+                ["SelectedColor"] = new PropertyMapping("SelectedColor", "Terminal.Gui.Drawing.Color", "Selected color")
+            },
+            ["AttributePicker"] = new Dictionary<string, PropertyMapping>
+            {
+                ["SelectedAttribute"] = new PropertyMapping("SelectedAttribute", "Terminal.Gui.Drawing.Attribute", "Selected attribute")
+            },
+            ["AutocompleteTextField"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Text"] = new PropertyMapping("Text", "ustring", "Text content"),
+                ["AutocompleteSource"] = new PropertyMapping("AutocompleteSource", "Terminal.Gui.Views.IAutocomplete", "Autocomplete source")
+            },
+            ["NumericUpDown"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Value"] = new PropertyMapping("Value", "int", "Numeric value"),
+                ["Minimum"] = new PropertyMapping("Minimum", "int", "Minimum value"),
+                ["Maximum"] = new PropertyMapping("Maximum", "int", "Maximum value"),
+                ["Increment"] = new PropertyMapping("Increment", "int", "Increment amount")
+            },
+            ["TableView"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Table"] = new PropertyMapping("Table", "Terminal.Gui.Views.ITableSource", "Data table source"),
+                ["SelectedRow"] = new PropertyMapping("SelectedRow", "int", "Selected row index"),
+                ["SelectedColumn"] = new PropertyMapping("SelectedColumn", "int", "Selected column index")
+            },
+            ["TreeView"] = new Dictionary<string, PropertyMapping>
+            {
+                ["TreeSource"] = new PropertyMapping("TreeSource", "object", "Tree data source"),
+                ["SelectedObject"] = new PropertyMapping("SelectedObject", "object", "Selected item")
+            },
+            ["TextValidateField"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Text"] = new PropertyMapping("Text", "ustring", "Text content"),
+                ["ValidationPattern"] = new PropertyMapping("ValidationPattern", "string", "Validation regex pattern")
+            },
+            ["CharMap"] = new Dictionary<string, PropertyMapping>
+            {
+                ["StartCodePoint"] = new PropertyMapping("StartCodePoint", "int", "Starting Unicode code point")
+            },
+            ["HexView"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Source"] = new PropertyMapping("Source", "System.IO.Stream", "Data source stream")
+            },
+            ["Line"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Orientation"] = new PropertyMapping("Orientation", "Terminal.Gui.ViewBase.Orientation", "Orientation (Horizontal or Vertical)"),
+                ["LineStyle"] = new PropertyMapping("LineStyle", "Terminal.Gui.Drawing.LineStyle", "Line drawing style")
+            },
+            ["LinearRange"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Value"] = new PropertyMapping("Value", "object", "Current value")
+            },
+            ["MessageBox"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Message"] = new PropertyMapping("Message", "ustring", "Message content"),
+                ["Buttons"] = new PropertyMapping("Buttons", "string[]", "Button labels")
+            },
+            ["TileView"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Orientation"] = new PropertyMapping("Orientation", "Terminal.Gui.ViewBase.Orientation", "Orientation (Horizontal or Vertical)")
+            },
+            ["SpinnerView"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Style"] = new PropertyMapping("Style", "Terminal.Gui.Views.SpinnerStyle", "Spinner style")
+            },
+            ["ScrollBar"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Value"] = new PropertyMapping("Value", "int", "Scroll position")
+            },
+            ["FlagSelector"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Value"] = new PropertyMapping("Value", "object", "Selected flags value")
             }
         };
 

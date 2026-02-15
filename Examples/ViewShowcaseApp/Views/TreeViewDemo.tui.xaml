@@ -1,0 +1,24 @@
+<View x:Class="ViewShowcaseApp.Views.TreeViewDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="60"
+      Height="20">
+
+  <Label Text="File System Browser"
+         X="2"
+         Y="1" />
+
+  <TreeView x:Name="FileTree"
+            X="2"
+            Y="3"
+            Width="Dim.Fill(2)"
+            Height="Dim.Fill(2)"
+            SelectionChanged="OnSelectionChanged"
+            ObjectActivated="OnObjectActivated" />
+
+  <Label x:Name="StatusLabel"
+         Text="Select a file or folder"
+         X="2"
+         Y="Pos.Bottom(FileTree) + 1" />
+
+</View>

@@ -1,0 +1,39 @@
+<View x:Class="ViewShowcaseApp.Views.NumericUpDownDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="50"
+      Height="15">
+
+  <Label Text="Quantity Selector:"
+         X="2"
+         Y="2" />
+
+  <NumericUpDown x:Name="QuantitySelector"
+                 X="2"
+                 Y="4"
+                 Width="20"
+                 Height="1"
+                 ValueChanged="OnQuantityChanged" />
+
+  <Label x:Name="TotalLabel"
+         Text="Total: $0.00"
+         X="2"
+         Y="6" />
+
+  <Label Text="Temperature (°C):"
+         X="2"
+         Y="8" />
+
+  <NumericUpDown x:Name="TemperatureSelector"
+                 X="2"
+                 Y="10"
+                 Width="20"
+                 Height="1"
+                 ValueChanged="OnTemperatureChanged" />
+
+  <Label x:Name="TemperatureLabel"
+         Text="Temperature: 20°C"
+         X="2"
+         Y="12" />
+
+</View>

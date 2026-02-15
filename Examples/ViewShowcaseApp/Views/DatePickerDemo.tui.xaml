@@ -1,0 +1,23 @@
+<View x:Class="ViewShowcaseApp.Views.DatePickerDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="50"
+      Height="20">
+
+  <Label Text="Select a Date:"
+         X="2"
+         Y="2" />
+
+  <DatePicker x:Name="DemoDatePicker"
+              X="2"
+              Y="4"
+              Width="30"
+              Height="12"
+              ValueChanged="OnValueChanged" />
+
+  <Label x:Name="SelectedDateLabel"
+         Text="No date selected"
+         X="2"
+         Y="17" />
+
+</View>

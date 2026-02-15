@@ -1,0 +1,15 @@
+<View x:Class="ViewShowcaseApp.Views.DialogDemo"
+        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="50"
+        Height="20">
+	
+	<Button Text="Show dialog"
+			X="2"
+			Y="2"
+			Accepting="OnShow" />
+
+	<Label x:Name="ResultsLabel"
+         X="2"
+         Y="4" />
+</View>

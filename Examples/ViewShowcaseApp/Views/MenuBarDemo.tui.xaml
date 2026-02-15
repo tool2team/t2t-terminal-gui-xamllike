@@ -1,0 +1,74 @@
+<View x:Class="ViewShowcaseApp.Views.MenuBarDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="80"
+      Height="25">
+
+  <MenuBar x:Name="DemoMenuBar"
+           X="0"
+           Y="0"
+           Width="Dim.Fill()"
+           Height="1">
+
+    <MenuBarItem Text="File"
+                 HotKey="Key.F.WithAlt">
+      <MenuItem Text="New"
+                HotKey="Key.N.WithCtrl"
+                Accepting="OnNew" />
+      <MenuItem Text="Open"
+                HotKey="Key.O.WithCtrl"
+                Accepting="OnOpen" />
+      <MenuItem Text="Save"
+                HotKey="Key.S.WithCtrl"
+                Accepting="OnSave" />
+      <MenuItem Text="Save As..."
+                HotKey="Key.S.WithCtrl.WithShift"
+                Accepting="OnSaveAs" />
+      <MenuItem Text="Exit"
+                HotKey="Key.Q.WithCtrl"
+                Accepting="OnExit" />
+    </MenuBarItem>
+
+    <MenuBarItem Text="Edit"
+                 HotKey="Key.E.WithAlt">
+      <MenuItem Text="Undo"
+                HotKey="Key.Z.WithCtrl"
+                Accepting="OnUndo" />
+      <MenuItem Text="Redo"
+                HotKey="Key.Y.WithCtrl"
+                Accepting="OnRedo" />
+      <MenuItem Text="Cut"
+                HotKey="Key.X.WithCtrl"
+                Accepting="OnCut" />
+      <MenuItem Text="Copy"
+                HotKey="Key.C.WithCtrl"
+                Accepting="OnCopy" />
+      <MenuItem Text="Paste"
+                HotKey="Key.V.WithCtrl"
+                Accepting="OnPaste" />
+    </MenuBarItem>
+
+    <MenuBarItem Text="Help"
+                 HotKey="Key.H.WithAlt">
+      <MenuItem Text="Documentation"
+                HotKey="Key.F1"
+                Accepting="OnDocumentation" />
+      <MenuItem Text="About"
+                Accepting="OnAbout" />
+    </MenuBarItem>
+
+  </MenuBar>
+
+  <Label x:Name="StatusLabel"
+         Text="Ready"
+         X="2"
+         Y="3" />
+
+  <TextView x:Name="ContentArea"
+            X="2"
+            Y="5"
+            Width="Dim.Fill(2)"
+            Height="Dim.Fill(2)"
+            Text="Use the menu bar above to perform actions..." />
+
+</View>

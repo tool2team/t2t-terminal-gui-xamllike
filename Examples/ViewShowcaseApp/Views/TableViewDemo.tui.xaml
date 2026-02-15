@@ -1,0 +1,23 @@
+<View x:Class="ViewShowcaseApp.Views.TableViewDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="60"
+      Height="20">
+
+  <Label Text="Employee Table"
+         X="2"
+         Y="1" />
+
+  <TableView x:Name="EmployeeTable"
+             X="2"
+             Y="3"
+             Width="Dim.Fill(2)"
+             Height="Dim.Fill(2)"
+             CellActivated="OnCellActivated" />
+
+  <Label x:Name="StatusLabel"
+         Text="Click on a cell to view details"
+         X="2"
+         Y="Pos.Bottom(EmployeeTable) + 1" />
+
+</View>

@@ -102,11 +102,15 @@
       <xs:element ref="OpenDialog"/>
       <xs:element ref="SaveDialog"/>
       <xs:element ref="FileDialog"/>
+      <xs:element ref="MessageBox"/>
       <!-- Advanced -->
       <xs:element ref="Wizard"/>
       <xs:element ref="WizardStep"/>
       <xs:element ref="ScrollBar"/>
       <xs:element ref="LinearRange"/>
+      <xs:element ref="TileView"/>
+      <xs:element ref="AttributePicker"/>
+      <xs:element ref="AutocompleteTextField"/>
     </xs:choice>
   </xs:group>
 
@@ -164,6 +168,11 @@
       <xs:attribute name="Text" type="xs:string">
         <xs:annotation>
           <xs:documentation>Button text</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="IsDefault" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Whether this button is the default button in a dialog (true/false or binding)</xs:documentation>
         </xs:annotation>
       </xs:attribute>
       <xs:attribute name="Command" type="xs:string">
@@ -246,9 +255,9 @@
           <xs:documentation>Checkbox label</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="Checked" type="xs:string">
+      <xs:attribute name="Value" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Checked state or binding (e.g., "{Bind IsEnabled, Mode=TwoWay}")</xs:documentation>
+          <xs:documentation>Checked state or binding (e.g., "{Bind CheckedState, Mode=TwoWay}")</xs:documentation>
         </xs:annotation>
       </xs:attribute>
       <xs:attribute name="ValueChanged" type="xs:string">
@@ -419,7 +428,7 @@
           <xs:documentation>Selected color or binding</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="ColorChanged" type="xs:string">
+      <xs:attribute name="ValueChanged" type="xs:string">
         <xs:annotation>
           <xs:documentation>Event handler for color changes</xs:documentation>
         </xs:annotation>
@@ -439,7 +448,7 @@
           <xs:documentation>Selected color or binding</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="ColorChanged" type="xs:string">
+      <xs:attribute name="ValueChanged" type="xs:string">
         <xs:annotation>
           <xs:documentation>Event handler for color changes</xs:documentation>
         </xs:annotation>
@@ -464,7 +473,7 @@
           <xs:documentation>Date format string</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="DateChanged" type="xs:string">
+      <xs:attribute name="ValueChanged" type="xs:string">
         <xs:annotation>
           <xs:documentation>Event handler for date changes</xs:documentation>
         </xs:annotation>
@@ -484,7 +493,7 @@
           <xs:documentation>Selected date or binding</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="DateChanged" type="xs:string">
+      <xs:attribute name="ValueChanged" type="xs:string">
         <xs:annotation>
           <xs:documentation>Event handler for date changes</xs:documentation>
         </xs:annotation>
@@ -504,6 +513,16 @@
       <xs:attribute name="Title" type="xs:string">
         <xs:annotation>
           <xs:documentation>Dialog title</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ButtonAlignment" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Button alignment (Start, Center, End, Fill, Justified)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ButtonAlignmentModes" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Button alignment modes (StartToEnd or EndToStart)</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
@@ -981,9 +1000,9 @@
           <xs:documentation>Spinner style</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="IsSpinning" type="xs:string">
+      <xs:attribute name="AutoSpin" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Whether the spinner is active</xs:documentation>
+          <xs:documentation>Whether spinning should occur automatically or be manually triggered</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
@@ -1010,7 +1029,7 @@
     <xs:complexType>
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
       <xs:attributeGroup ref="CommonAttributes"/>
-      <xs:attribute name="Text" type="xs:string">
+      <xs:attribute name="DisplayText" type="xs:string">
         <xs:annotation>
           <xs:documentation>Tab title</xs:documentation>
         </xs:annotation>
@@ -1165,6 +1184,134 @@
       <xs:attribute name="HelpText" type="xs:string">
         <xs:annotation>
           <xs:documentation>Help text for the step</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- RadioGroup element - REMOVED (no longer exists in Terminal.Gui v2) -->
+
+  <!-- Slider element -->
+  <xs:element name="Slider">
+    <xs:annotation>
+      <xs:documentation>Slider control for numeric input. See Terminal.Gui.Views.Slider</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Value" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Current value or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Minimum" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Minimum value</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Maximum" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Maximum value</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Increment" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Increment amount</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Orientation" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Horizontal or Vertical orientation</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ValueChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for value changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- TileView element -->
+  <xs:element name="TileView">
+    <xs:annotation>
+      <xs:documentation>Container that arranges views in a tiled layout. See Terminal.Gui.Views.TileView</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ContainerViews"/>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Orientation" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Horizontal or Vertical orientation</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- AttributePicker element -->
+  <xs:element name="AttributePicker">
+    <xs:annotation>
+      <xs:documentation>Allows user to pick an Attribute by selecting foreground/background colors and text styles. See Terminal.Gui.Views.AttributePicker</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="SelectedAttribute" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Selected attribute or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="AttributeChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for attribute changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- AutocompleteTextField element -->
+  <xs:element name="AutocompleteTextField">
+    <xs:annotation>
+      <xs:documentation>Text field with autocomplete functionality. See Terminal.Gui.Views.AutocompleteTextField</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Text" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Text content or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="AutocompleteSource" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Source for autocomplete suggestions or binding</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TextChanged" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Event handler for text changes</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- MessageBox element -->
+  <xs:element name="MessageBox">
+    <xs:annotation>
+      <xs:documentation>Modal message box dialog. See Terminal.Gui.Views.MessageBox</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attributeGroup ref="CommonAttributes"/>
+      <xs:attribute name="Title" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Message box title</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Message" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Message box content</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Buttons" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Button labels array</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>

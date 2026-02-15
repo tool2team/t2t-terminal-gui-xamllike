@@ -51,6 +51,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void ShowAbout()
     {
+        if(_application is not null)
         _ = MessageBox.Query(_application, "About View Showcase", 
             "Terminal.Gui View Showcase\n\nThis application demonstrates all available Terminal.Gui views.\n\nUse the left panel to browse and select views to test.", 
             "OK");
@@ -68,7 +69,7 @@ public partial class MainViewModel : ObservableObject
     private void ShowViewDetails()
     {
         var details = $"View: {SelectedViewInfo.Name}\nCategory: {SelectedViewInfo.Category}\n\nDescription:\n{SelectedViewInfo.Description}";
-        MessageBox.Query(_application, $"Details: {SelectedViewInfo.Name}", details, "OK");
+        if (_application is not null) _ = MessageBox.Query(_application, $"Details: {SelectedViewInfo.Name}", details, "OK");
     }
 
     [RelayCommand]

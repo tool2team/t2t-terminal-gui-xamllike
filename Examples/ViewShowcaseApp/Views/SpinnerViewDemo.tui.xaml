@@ -1,0 +1,32 @@
+<View x:Class="ViewShowcaseApp.Views.SpinnerViewDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="50"
+      Height="20">
+
+  <Label Text="Loading Spinner Demo"
+         X="Pos.Center()"
+         Y="2" />
+
+  <Label Text="Spinner Style: Dots"
+         X="2"
+         Y="5" />
+
+  <SpinnerView x:Name="DotsSpinner"
+               X="Pos.Center()"
+               Y="7"
+               Width="5"
+               Height="1" />
+
+  <Button x:Name="ToggleButton"
+          Text="Start Spinner"
+          X="Pos.Center()"
+          Y="10"
+          Accepting="OnToggleSpinner" />
+
+  <Label x:Name="StatusLabel"
+         Text="Spinner is stopped"
+         X="Pos.Center()"
+         Y="13" />
+
+</View>

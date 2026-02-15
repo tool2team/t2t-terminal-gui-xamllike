@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -22,6 +22,15 @@
 
 	<ItemGroup>
 		<AdditionalFiles Include="**/*.tui.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Update="Views\DialogDemo.tui.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </AdditionalFiles>
+	  <AdditionalFiles Update="Views\WindowDemo.tui.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </AdditionalFiles>
 	</ItemGroup>
 
 </Project>
