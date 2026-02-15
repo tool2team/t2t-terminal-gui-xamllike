@@ -1,0 +1,78 @@
+<View x:Class="ViewShowcaseApp.Views.ProgressBarDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="50"
+      Height="20"
+      CanFocus="False">
+
+  <Label Text="Progress Bar Demonstrations"
+         X="2"
+         Y="1" />
+
+  <!-- Simple Progress Bar -->
+  <Label Text="Simple (50%):"
+         X="2"
+         Y="3" />
+  <ProgressBar x:Name="SimpleProgress"
+               X="2"
+               Y="4"
+               Width="40"
+               Height="1"
+               Fraction="0.5"
+               ProgressBarFormat="Simple"
+               ProgressBarStyle="Continuous" />
+
+  <!-- Progress Bar with Percentage -->
+  <Label Text="With Percentage:"
+         X="2"
+         Y="6" />
+  <ProgressBar x:Name="PercentageProgress"
+               X="2"
+               Y="7"
+               Width="40"
+               Height="1"
+               Fraction="0.75"
+               ProgressBarFormat="SimplePlusPercentage"
+               ProgressBarStyle="Continuous" />
+
+  <!-- Framed Progress Bar -->
+  <Label Text="Blocks Style (30%):"
+         X="2"
+         Y="9" />
+  <ProgressBar x:Name="FramedProgress"
+               X="2"
+               Y="10"
+               Width="40"
+               Height="1"
+               Fraction="0.3"
+               ProgressBarFormat="Simple"
+               ProgressBarStyle="Blocks" />
+
+  <!-- Progress Bar with Custom Text -->
+  <Label Text="With Custom Text:"
+         X="2"
+         Y="12" />
+  <ProgressBar x:Name="CustomTextProgress"
+               X="2"
+               Y="13"
+               Width="40"
+               Height="1"
+               Fraction="0.9"
+               Text="Processing..."
+               ProgressBarFormat="SimplePlusPercentage"
+               ProgressBarStyle="Continuous" />
+
+  <!-- Marquee Style -->
+  <Label Text="Marquee (Activity Mode):"
+         X="2"
+         Y="15" />
+  <ProgressBar x:Name="MarqueeProgress"
+               X="2"
+               Y="16"
+               Width="40"
+               Height="1"
+               Text="Loading..."
+               ProgressBarStyle="MarqueeContinuous"
+               BidirectionalMarquee="True" />
+
+</View>

@@ -899,8 +899,21 @@ namespace Terminal.Gui.XamlLike
                 return value;
             }
 
-            // Check if property is numeric (like SelectedItem)
-            if (Mappings.IsNumericProperty(propName) && int.TryParse(value, out _))
+            // Check if property is float (like Fraction in ProgressBar)
+            if (Mappings.IsFloatProperty(propName))
+            {
+                // Parse float values using invariant culture (decimal point)
+                if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
+                {
+                    // Ensure float literal has 'f' suffix
+                    return value.Contains('.') ? $"{value}f" : $"{value}.0f";
+                }
+                // If not a valid float, treat as expression
+                return value;
+            }
+
+            // Check if property is numeric int (like SelectedItem)
+            if (Mappings.IsIntProperty(propName) && int.TryParse(value, out _))
             {
                 return value; // Return numeric value without quotes
             }

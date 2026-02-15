@@ -821,23 +821,40 @@
   <!-- ProgressBar element -->
   <xs:element name="ProgressBar">
     <xs:annotation>
-      <xs:documentation>Progress indicator. See Terminal.Gui.Views.ProgressBar</xs:documentation>
+      <xs:documentation>Progress indicator. Can operate in percentage mode (using Fraction) or activity mode (using Pulse()). See Terminal.Gui.Views.ProgressBar</xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:attributeGroup ref="CommonAttributes"/>
-      <xs:attribute name="Value" type="xs:string">
+
+      <!-- Properties -->
+      <xs:attribute name="Fraction" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Current progress value or binding</xs:documentation>
+          <xs:documentation>Gets or sets the progress fraction to display (value between 0 and 1)</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="Minimum" type="xs:string">
+      <xs:attribute name="Text" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Minimum value</xs:documentation>
+          <xs:documentation>Gets or sets the text displayed on the progress bar. If empty and ProgressBarFormat is SimplePlusPercentage, the percentage will be displayed. For marquee styles, the text will be displayed.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="Maximum" type="xs:string">
+      <xs:attribute name="ProgressBarFormat" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Maximum value</xs:documentation>
+          <xs:documentation>Specifies the format (Simple, SimplePlusPercentage, Framed, FramedProgressPadded). Default is SimplePlusPercentage.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="ProgressBarStyle" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Gets/Sets the progress bar style (Blocks, Continuous, MarqueeBlocks, MarqueeContinuous). Default is Continuous.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="BidirectionalMarquee" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Specifies if the MarqueeBlocks or MarqueeContinuous styles are unidirectional or bidirectional (true/false)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SegmentCharacter" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Segment indicator character for meter views (single character or Rune)</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>

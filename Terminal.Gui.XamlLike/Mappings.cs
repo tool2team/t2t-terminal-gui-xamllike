@@ -24,6 +24,7 @@ namespace Terminal.Gui.XamlLike
             ["FrameView"] = new ControlMapping("Terminal.Gui.Views.FrameView", "Terminal.Gui.Views", isContainer: true),
             ["ScrollView"] = new ControlMapping("Terminal.Gui.Views.ScrollView", "Terminal.Gui.Views", isContainer: true),
             ["TabView"] = new ControlMapping("Terminal.Gui.Views.TabView", "Terminal.Gui.Views", isContainer: true),
+            ["ProgressBar"] = new ControlMapping("Terminal.Gui.Views.ProgressBar", "Terminal.Gui.Views"),
             ["MenuBar"] = new ControlMapping("Terminal.Gui.Views.MenuBar", "Terminal.Gui.Views"),
             ["MenuBarItem"] = new ControlMapping("Terminal.Gui.Views.MenuBarItem", "Terminal.Gui.Views", isContainer: true),
             ["MenuItem"] = new ControlMapping("Terminal.Gui.Views.MenuItem", "Terminal.Gui.Views"),
@@ -98,20 +99,20 @@ namespace Terminal.Gui.XamlLike
         {
             ["TextField"] = new Dictionary<string, TwoWayBinding>
             {
-                ["Text"] = new TwoWayBinding("Text", "TextChanged", "ustring", "Text property with change notification")
+                ["Text"] = new TwoWayBinding("Text", "TextChanged", "Text property with change notification")
             },
             ["TextView"] = new Dictionary<string, TwoWayBinding>
             {
-                ["Text"] = new TwoWayBinding("Text", "TextChanged", "ustring", "Text property with change notification")
+                ["Text"] = new TwoWayBinding("Text", "TextChanged", "Text property with change notification")
             },
             ["CheckBox"] = new Dictionary<string, TwoWayBinding>
             {
-                ["Checked"] = new TwoWayBinding("Checked", "ValueChanged", "bool", "Checked state with value change notification")
+                ["Checked"] = new TwoWayBinding("Checked", "ValueChanged", "Checked state with value change notification")
             },
             ["ListView"] = new Dictionary<string, TwoWayBinding>
             {
-                ["Value"] = new TwoWayBinding("Value", "ValueChanged", "int?", "Selected item index with change notification"),
-                ["Source"] = new TwoWayBinding("Source", "SourceChanged", "IListDataSource", "Data source with change notification")
+                ["Value"] = new TwoWayBinding("Value", "ValueChanged", "Selected item index with change notification"),
+                ["Source"] = new TwoWayBinding("Source", "SourceChanged", "Data source with change notification")
             }
         };
 
@@ -156,6 +157,14 @@ namespace Terminal.Gui.XamlLike
             ["SpinnerView"] = new Dictionary<string, PropertyMapping>
             {
                 ["IsSpinning"] = new PropertyMapping("IsSpinning", "bool", "Spinner active state")
+            },
+            ["ProgressBar"] = new Dictionary<string, PropertyMapping>
+            {
+                ["Fraction"] = new PropertyMapping("Fraction", "float", "Progress fraction between 0 and 1"),
+                ["ProgressBarFormat"] = new PropertyMapping("ProgressBarFormat", "Terminal.Gui.Views.ProgressBarFormat", "Format of the progress bar (Simple, SimplePlusPercentage, Framed, FramedProgressPadded)"),
+                ["ProgressBarStyle"] = new PropertyMapping("ProgressBarStyle", "Terminal.Gui.Views.ProgressBarStyle", "Style of the progress bar (Blocks, Continuous, MarqueeBlocks, MarqueeContinuous)"),
+                ["BidirectionalMarquee"] = new PropertyMapping("BidirectionalMarquee", "bool", "Whether marquee styles are bidirectional"),
+                ["SegmentCharacter"] = new PropertyMapping("SegmentCharacter", "System.Text.Rune", "Character used for segments in meter views")
             },
             ["Shortcut"] = new Dictionary<string, PropertyMapping>
             {
@@ -277,12 +286,21 @@ namespace Terminal.Gui.XamlLike
         }
 
         /// <summary>
-        /// Determines if a property should be treated as a numeric value (not quoted)
+        /// Determines if a property should be treated as an integer value
         /// </summary>
-        public static bool IsNumericProperty(string propertyName)
+        public static bool IsIntProperty(string propertyName)
         {
             var mapping = GetPropertyMapping(propertyName);
             return mapping?.TargetType == "int";
+        }
+
+        /// <summary>
+        /// Determines if a property should be treated as a float value
+        /// </summary>
+        public static bool IsFloatProperty(string propertyName)
+        {
+            var mapping = GetPropertyMapping(propertyName);
+            return mapping?.TargetType == "float";
         }
 
         /// <summary>
@@ -369,14 +387,12 @@ namespace Terminal.Gui.XamlLike
     {
         public string PropertyName { get; }
         public string ChangeEventName { get; }
-        public string PropertyType { get; }
         public string Description { get; }
 
-        public TwoWayBinding(string propertyName, string changeEventName, string propertyType, string description)
+        public TwoWayBinding(string propertyName, string changeEventName, string description)
         {
             PropertyName = propertyName;
             ChangeEventName = changeEventName;
-            PropertyType = propertyType;
             Description = description;
         }
     }
