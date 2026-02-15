@@ -1,0 +1,23 @@
+<View x:Class="ViewShowcaseApp.Views.TextFieldDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="50"
+      Height="10">
+
+  <Label Text="Enter text:"
+         X="2"
+         Y="2" />
+
+  <TextField x:Name="DemoTextField"
+             Text="Sample text"
+             X="2"
+             Y="3"
+             Width="Dim.Fill(2)"
+             TextChanged="OnTextChanged" />
+
+  <Label x:Name="CharCountLabel"
+         Text="Characters: 11"
+         X="2"
+         Y="5" />
+
+</View>

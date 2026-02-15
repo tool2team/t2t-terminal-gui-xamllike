@@ -1,6 +1,6 @@
 # Terminal.Gui XamlLike - Sample Projects
 
-This folder contains three sample projects demonstrating different architectural approaches with Terminal.Gui XamlLike framework.
+This folder contains four sample projects demonstrating different architectural approaches with Terminal.Gui XamlLike framework.
 
 ## 📁 Project Structure
 
@@ -55,6 +55,24 @@ This folder contains three sample projects demonstrating different architectural
 - `ViewModels/MainViewModel.cs` - ViewModel using CommunityToolkit attributes
 - `Views/MainView.cs` - Advanced view with comprehensive UI updates
 
+### 4. ViewShowcaseApp - Complete View Gallery
+**Path**: `src/samples/ViewShowcaseApp/`
+
+- **Architecture**: CommunityToolkit.Mvvm with comprehensive UI showcase
+- **Best for**: Learning all Terminal.Gui controls, testing views, reference
+- **Features**:
+  - Interactive browser for all Terminal.Gui views
+  - Category-organized view selection
+  - Menu bar with File and View menus
+  - Status bar with real-time feedback
+  - Dynamic view loading and testing
+  - Comprehensive view coverage (25+ controls)
+
+**Key Files**:
+- `Models/ViewInfo.cs` - View metadata and factory methods
+- `ViewModels/MainViewModel.cs` - Main application logic
+- `Views/MainWindow.tui.xaml` - Complex layout with menu, panels, and status bar
+
 ## 🚀 How to Run
 
 ### Prerequisites
@@ -75,26 +93,33 @@ dotnet run
 # CommunityMvvm App (CommunityToolkit.Mvvm)
 cd src/samples/CommunityMvvmApp
 dotnet run
+
+# View Showcase App (Complete View Gallery)
+cd src/samples/ViewShowcaseApp
+dotnet run
 ```
 
 ## 🎯 Feature Comparison
 
-| Feature | SimpleApp | MvvmApp | CommunityMvvmApp |
-|---------|-----------|---------|------------------|
-| **Complexity** | Low | Medium | High |
-| **Data Binding** | Manual | INotifyPropertyChanged | Full MVVM with source generators |
-| **Commands** | Event handlers | Custom RelayCommand | Auto-generated commands |
-| **Async Support** | Basic | Manual implementation | Built-in async commands |
-| **Boilerplate Code** | High | Medium | Low (source generators) |
-| **Learning Curve** | Easy | Moderate | Steeper initially, easier long-term |
-| **Testability** | Low | Good | Excellent |
-| **Maintainability** | Limited | Good | Excellent |
+| Feature | SimpleApp | MvvmApp | CommunityMvvmApp | ViewShowcaseApp |
+|---------|-----------|---------|------------------|------------------|
+| **Complexity** | Low | Medium | High | High |
+| **Data Binding** | Manual | INotifyPropertyChanged | Full MVVM with source generators | Full MVVM with source generators |
+| **Commands** | Event handlers | Custom RelayCommand | Auto-generated commands | Auto-generated commands |
+| **Async Support** | Basic | Manual implementation | Built-in async commands | Built-in async commands |
+| **Boilerplate Code** | High | Medium | Low (source generators) | Low (source generators) |
+| **Learning Curve** | Easy | Moderate | Steeper initially, easier long-term | Moderate (comprehensive reference) |
+| **Testability** | Low | Good | Excellent | Excellent |
+| **Maintainability** | Limited | Good | Excellent | Excellent |
+| **UI Layout** | Simple | Simple | Medium | Complex (menu, panels, status) |
+| **View Coverage** | 1 basic | 1 basic | 1 intermediate | 25+ comprehensive |
 
 ## 📚 Learning Path
 
 1. **Start with SimpleApp** - Understand basic Terminal.Gui XamlLike concepts
 2. **Move to MvvmApp** - Learn MVVM principles and data binding
 3. **Explore CommunityMvvmApp** - See modern MVVM with advanced features
+4. **Use ViewShowcaseApp** - Comprehensive reference for all available controls and layouts
 
 ## 🔧 Key Concepts Demonstrated
 

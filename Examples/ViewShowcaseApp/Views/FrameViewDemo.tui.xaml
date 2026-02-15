@@ -1,0 +1,29 @@
+<View x:Class="ViewShowcaseApp.Views.FrameViewDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="50"
+      Height="15">
+	
+  <FrameView Title="Sample Frame"
+             X="2"
+             Y="2"
+             Width="Dim.Fill(2)"
+             Height="Dim.Fill(2)">
+	  
+    <Label Text="Content inside frame"
+           X="2"
+           Y="1" />
+
+	  <Button Text="Frame Button"
+            X="2"
+            Y="3" />
+
+	  <TextField x:Name="frameTextField"
+		Text="Text in frame"
+               X="2"
+               Y="5"
+               Width="30" />
+
+  </FrameView>
+
+</View>

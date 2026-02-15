@@ -1,0 +1,12 @@
+<View x:Class="ViewShowcaseApp.Views.LabelDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="40"
+      Height="10">
+
+  <Label x:Name="DemoLabel"
+         Text="Sample Label"
+         X="Pos.Center()"
+         Y="Pos.Center()" />
+
+</View>

@@ -1,0 +1,23 @@
+<View x:Class="ViewShowcaseApp.Views.ListViewDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="50"
+      Height="15">
+
+  <Label Text="Select an item:"
+         X="2"
+         Y="1" />
+
+  <ListView x:Name="DemoList"
+            X="2"
+            Y="2"
+            Width="Dim.Fill(2)"
+            Height="Dim.Fill(4)"
+            ValueChanged="OnValueChanged" />
+
+  <Label x:Name="SelectionLabel"
+         Text="No selection"
+         X="2"
+         Y="Pos.Bottom(DemoList) + 1" />
+
+</View>

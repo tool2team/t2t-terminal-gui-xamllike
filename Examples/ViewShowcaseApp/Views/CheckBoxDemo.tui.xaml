@@ -1,0 +1,34 @@
+<View x:Class="ViewShowcaseApp.Views.CheckBoxDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="40"
+      Height="12">
+
+  <Label Text="Select options:"
+         X="2"
+         Y="1" />
+
+  <CheckBox x:Name="Option1"
+            Text="Option 1"
+            X="2"
+            Y="3"
+            ValueChanged="OnCheckBoxToggled" />
+
+  <CheckBox x:Name="Option2"
+            Text="Option 2"
+            X="2"
+            Y="4"
+            ValueChanged="OnCheckBoxToggled" />
+
+  <CheckBox x:Name="Option3"
+            Text="Option 3"
+            X="2"
+            Y="5"
+            ValueChanged="OnCheckBoxToggled" />
+
+  <Label x:Name="StatusLabel"
+         Text="None selected"
+         X="2"
+         Y="7" />
+
+</View>

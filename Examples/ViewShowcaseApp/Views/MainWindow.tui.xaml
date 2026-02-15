@@ -1,0 +1,84 @@
+<Window x:Class="ViewShowcaseApp.Views.MainWindow"
+		xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="Root"
+        x:DataType="ViewShowcaseApp.ViewModels.MainViewModel"
+        Title="Terminal.Gui View Showcase"
+        Width="Dim.Fill()"
+        Height="Dim.Fill()">
+
+  <!-- Menu Bar -->
+  <MenuBar Y="0" X="0" Width="Dim.Fill()" Height="1">
+    <MenuBarItem Text="_File">
+      <MenuItem Text="_About" Command="{Bind ShowAboutCommand}" />
+      <MenuItem Text="_Quit" Command="{Bind QuitCommand}" />
+    </MenuBarItem>
+    <MenuBarItem Text="_View">
+      <MenuItem Text="_Refresh" Command="{Bind RefreshViewCommand}" />
+      <MenuItem Text="_Details" Command="{Bind ShowViewDetailsCommand}" />
+    </MenuBarItem>
+  </MenuBar>
+
+  <!-- Left Panel Frame for View Selection -->
+  <FrameView x:Name="LeftPanel" 
+             Title="View Browser"
+             X="0"
+             Y="1"
+             Width="35"
+             Height="Dim.Fill(1)">
+
+    <!-- Views List -->
+    <ListView x:Name="ViewsList"
+              X="1"
+              Y="0"
+              Width="Dim.Fill(1)"
+              Height="Dim.Fill(3)"
+			  Value="{Bind SelectedViewIndex, Mode=TwoWay}"
+			  Source="{Bind ViewInfosWrapper} "/>
+
+    <!-- View Info -->
+    <Label Text="{Bind ViewName}" X="1" Y="Pos.Bottom(ViewsList)" />
+    <Label Text="{Bind ViewDescription}" X="1" Y="Pos.Bottom(ViewsList) + 1" />
+
+  </FrameView>
+
+  <!-- Main Display Frame -->
+  <FrameView x:Name="MainFrame"
+             Title="View Test Area"
+             X="35"
+             Y="1"
+             Width="Dim.Fill()"
+             Height="Dim.Fill(1)">
+
+    <!-- Content will be dynamically added here -->
+    <Label x:Name="PlaceholderLabel"
+           Text="Select a view from the left panel to display it here"
+           X="Pos.Center()"
+           Y="Pos.Center()"
+           Visible="True" />
+
+  </FrameView>
+
+  <!-- Status Bar -->
+  <StatusBar>
+	<Shortcut Key="Key.F1" 
+			  HelpText="Help" 
+			  Command="{Bind ShowAboutCommand}"
+			  BindKeyToApplication="true" />
+	<Shortcut Key="Key.F5" 
+			  HelpText="Refresh" 
+			  Command="{Bind RefreshViewCommand}"
+			  BindKeyToApplication="true" />
+	<Shortcut Key="Key.Q.WithCtrl" 
+			  HelpText="Quit" 
+			  Command="{Bind QuitCommand}"
+			  BindKeyToApplication="true" />
+
+	<Label Text="{Bind StatusText}" 
+		   X="50" 
+		   Y="0" 
+		   Width="Dim.Fill()" 
+		   Height="1" />
+  </StatusBar>
+
+</Window>
