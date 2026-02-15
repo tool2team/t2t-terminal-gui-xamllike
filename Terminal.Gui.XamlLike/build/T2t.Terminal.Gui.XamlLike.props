@@ -9,10 +9,13 @@
     <None Include="$(MSBuildThisFileDirectory)..\schemas\tui-xaml.xsd">
       <Link>Schemas\tui-xaml.xsd</Link>
       <Visible>false</Visible>
+      <CopyToOutputDirectory>IfDifferent</CopyToOutputDirectory>
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\schemas\xaml-2006.xsd">
       <Link>Schemas\xaml-2006.xsd</Link>
       <Visible>false</Visible>
+		<CopyToOutputDirectory>IfDifferent</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  
 </Project>

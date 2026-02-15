@@ -32,8 +32,8 @@
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers\dotnet\cs\$(AssemblyName).dll" Visible="false" />
 
     <!-- XSD Schemas for IntelliSense -->
-    <None Include="Schema\tui-xaml.xsd" Pack="true" PackagePath="schemas\" />
-    <None Include="Schema\xaml-2006.xsd" Pack="true" PackagePath="schemas\" />
+    <None Include="schemas\tui-xaml.xsd" Pack="true" PackagePath="schemas\" />
+    <None Include="schemas\xaml-2006.xsd" Pack="true" PackagePath="schemas\" />
 
     <!-- MSBuild props file for automatic schema integration -->
     <None Include="build\T2t.Terminal.Gui.XamlLike.props" Pack="true" PackagePath="build\" />
