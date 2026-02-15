@@ -11,7 +11,7 @@ namespace CommunityMvvmApp.ViewModels;
 /// </summary>
 public partial class MainViewModel : ObservableObject
 {
-    private readonly IApplication _application;
+    readonly IApplication? _application;
 
     public MainViewModel(IApplication application)
     {
@@ -21,15 +21,15 @@ public partial class MainViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(IsSaveEnabled))]
     [NotifyPropertyChangedFor(nameof(WelcomeMessage))]
     [NotifyCanExecuteChangedFor(nameof(SaveProfileCommand))]
-    private string _userName = string.Empty;
+    string _userName = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CounterMessage))]
     [NotifyCanExecuteChangedFor(nameof(IncrementCommand))]
-    private int _counter = 0;
+    int _counter = 0;
 
     [ObservableProperty]
-    private string _statusMessage = "Ready";
+    string _statusMessage = "Ready";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsSaveEnabled))]
@@ -37,7 +37,7 @@ public partial class MainViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(IsReadOnly))]
     [NotifyCanExecuteChangedFor(nameof(IncrementCommand))]
     [NotifyCanExecuteChangedFor(nameof(SaveProfileCommand))]
-    private bool _isEnabled = true;
+    bool _isEnabled = true;
 
     public bool IsSaveEnabled => IsEnabled && !string.IsNullOrWhiteSpace(UserName);
 

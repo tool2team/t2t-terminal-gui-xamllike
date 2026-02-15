@@ -8,11 +8,11 @@ namespace MvvmApp.ViewModels;
 /// </summary>
 public class MainViewModel : BaseViewModel
 {
-    private readonly IApplication _application;
-    private string _userName = string.Empty;
-    private int _counter = 0;
-    private string _status = "Ready";
-    private bool _isEnabled = true;
+    readonly IApplication? _application;
+    string _userName = string.Empty;
+    int _counter = 0;
+    string _status = "Ready";
+    bool _isEnabled = true;
 
     public MainViewModel(IApplication application)
     {

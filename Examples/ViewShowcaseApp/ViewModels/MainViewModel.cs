@@ -10,7 +10,7 @@ namespace ViewShowcaseApp.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    readonly IApplication _application;
+    readonly IApplication? _application;
 
     public MainViewModel(IApplication application)
     {
@@ -74,6 +74,6 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void Quit()
     {
-        _application.RequestStop();
+        _application?.RequestStop();
     }
 }
