@@ -41,6 +41,11 @@
         <xs:documentation>Visibility state (true/false or binding)</xs:documentation>
       </xs:annotation>
     </xs:attribute>
+    <xs:attribute name="CanFocus" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Whether the view can receive keyboard focus (true/false or binding). Set to false for container views to allow child controls to receive focus.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
     <xs:attribute ref="x:Name"/>
     <xs:attribute ref="x:Type"/>
   </xs:attributeGroup>

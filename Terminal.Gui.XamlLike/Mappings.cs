@@ -129,7 +129,8 @@ namespace Terminal.Gui.XamlLike
                 ["Text"] = new PropertyMapping("Text", "ustring", "Text content"),
                 ["Title"] = new PropertyMapping("Title", "ustring", "Title text"),
                 ["Enabled"] = new PropertyMapping("Enabled", "bool", "Enabled state"),
-                ["Visible"] = new PropertyMapping("Visible", "bool", "Visibility state")
+                ["Visible"] = new PropertyMapping("Visible", "bool", "Visibility state"),
+                ["CanFocus"] = new PropertyMapping("CanFocus", "bool", "Whether the view can receive focus")
             },
             ["TextField"] = new Dictionary<string, PropertyMapping>
             {
