@@ -135,6 +135,10 @@ namespace Terminal.Gui.XamlLike
             {
                 ["ReadOnly"] = new PropertyMapping("ReadOnly", "bool", "Read-only state")
             },
+            ["TextView"] = new Dictionary<string, PropertyMapping>
+            {
+                ["ReadOnly"] = new PropertyMapping("ReadOnly", "bool", "Read-only state")
+            },
             ["CheckBox"] = new Dictionary<string, PropertyMapping>
             {
                 ["Checked"] = new PropertyMapping("Checked", "bool", "Checked state")
