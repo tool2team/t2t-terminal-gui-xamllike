@@ -13,45 +13,45 @@
     <MenuBarItem Text="File"
                  HotKey="Key.F.WithAlt">
       <MenuItem Text="New"
-                HotKey="Key.N.WithCtrl"
+                Key="Key.N.WithCtrl"
                 Accepting="OnNew" />
       <MenuItem Text="Open"
-                HotKey="Key.O.WithCtrl"
+                Key="Key.O.WithCtrl"
                 Accepting="OnOpen" />
       <MenuItem Text="Save"
-                HotKey="Key.S.WithCtrl"
+                Key="Key.S.WithCtrl"
                 Accepting="OnSave" />
       <MenuItem Text="Save As..."
-                HotKey="Key.S.WithCtrl.WithShift"
+                Key="Key.S.WithCtrl.WithShift"
                 Accepting="OnSaveAs" />
       <MenuItem Text="Exit"
-                HotKey="Key.Q.WithCtrl"
+                Key="Key.Q.WithCtrl"
                 Accepting="OnExit" />
     </MenuBarItem>
 
     <MenuBarItem Text="Edit"
                  HotKey="Key.E.WithAlt">
       <MenuItem Text="Undo"
-                HotKey="Key.Z.WithCtrl"
+                Key="Key.Z.WithCtrl"
                 Accepting="OnUndo" />
       <MenuItem Text="Redo"
-                HotKey="Key.Y.WithCtrl"
+                Key="Key.Y.WithCtrl"
                 Accepting="OnRedo" />
       <MenuItem Text="Cut"
-                HotKey="Key.X.WithCtrl"
+                Key="Key.X.WithCtrl"
                 Accepting="OnCut" />
       <MenuItem Text="Copy"
-                HotKey="Key.C.WithCtrl"
+                Key="Key.C.WithCtrl"
                 Accepting="OnCopy" />
       <MenuItem Text="Paste"
-                HotKey="Key.V.WithCtrl"
+                Key="Key.V.WithCtrl"
                 Accepting="OnPaste" />
     </MenuBarItem>
 
     <MenuBarItem Text="Help"
                  HotKey="Key.H.WithAlt">
       <MenuItem Text="Documentation"
-                HotKey="Key.F1"
+                Key="Key.F1"
                 Accepting="OnDocumentation" />
       <MenuItem Text="About"
                 Accepting="OnAbout" />

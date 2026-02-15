@@ -515,7 +515,15 @@ namespace Terminal.Gui.XamlLike
                     _elementToFieldName[child] = childName;
                 }
 
-                AppendLine($"{variableName}.Add({childName});");
+                // Special handling: Buttons in Dialog should be added to Buttons collection
+                if (element.Name == "Dialog" && child.Name == "Button")
+                {
+                    AppendLine($"{variableName}.AddButton({childName});");
+                }
+                else
+                {
+                    AppendLine($"{variableName}.Add({childName});");
+                }
             }
         }
 

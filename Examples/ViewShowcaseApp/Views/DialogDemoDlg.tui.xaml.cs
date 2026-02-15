@@ -1,3 +1,4 @@
+using Terminal.Gui.Input;
 using Terminal.Gui.Views;
 
 namespace ViewShowcaseApp.Views;
@@ -12,7 +13,7 @@ public partial class DialogDemoDlg
         InitializeComponent();
     }
 
-    private void OnOk(object? sender, EventArgs e)
+    private void OnOk(object? sender, CommandEventArgs e)
     {
         EnteredName = NameTextField.Text?.ToString();
         EnteredEmail = EmailTextField.Text?.ToString();
@@ -20,19 +21,21 @@ public partial class DialogDemoDlg
         if (string.IsNullOrWhiteSpace(EnteredName))
         {
             if (App is not null) MessageBox.ErrorQuery(App, "Validation Error", "Please enter your name.", "OK");
+            e.Handled = false; // Keep the dialog open
             return;
         }
         
         if (string.IsNullOrWhiteSpace(EnteredEmail))
         {
             if (App is not null) MessageBox.ErrorQuery(App, "Validation Error", "Please enter your email.", "OK");
+            e.Handled = false; // Keep the dialog open
             return;
         }
         
         Result = 0; // OK button index
     }
 
-    private void OnCancel(object? sender, EventArgs e)
+    private void OnCancel(object? sender, CommandEventArgs e)
     {
         Result = 1; // Cancel button index
     }
