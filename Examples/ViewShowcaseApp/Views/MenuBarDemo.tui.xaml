@@ -10,50 +10,50 @@
            Width="Dim.Fill()"
            Height="1">
 
-    <MenuBarItem Text="File"
+    <MenuBarItem Title="_File"
                  HotKey="Key.F.WithAlt">
-      <MenuItem Text="New"
+      <MenuItem Title="New"
                 Key="Key.N.WithCtrl"
                 Accepting="OnNew" />
-      <MenuItem Text="Open"
+      <MenuItem Title="Open"
                 Key="Key.O.WithCtrl"
                 Accepting="OnOpen" />
-      <MenuItem Text="Save"
+      <MenuItem Title="Save"
                 Key="Key.S.WithCtrl"
                 Accepting="OnSave" />
-      <MenuItem Text="Save As..."
+      <MenuItem Title="Save As..."
                 Key="Key.S.WithCtrl.WithShift"
                 Accepting="OnSaveAs" />
-      <MenuItem Text="Exit"
+      <MenuItem Title="Exit"
                 Key="Key.Q.WithCtrl"
                 Accepting="OnExit" />
     </MenuBarItem>
 
-    <MenuBarItem Text="Edit"
+    <MenuBarItem Title="_Edit"
                  HotKey="Key.E.WithAlt">
-      <MenuItem Text="Undo"
+      <MenuItem Title="Undo"
                 Key="Key.Z.WithCtrl"
                 Accepting="OnUndo" />
-      <MenuItem Text="Redo"
+      <MenuItem Title="Redo"
                 Key="Key.Y.WithCtrl"
                 Accepting="OnRedo" />
-      <MenuItem Text="Cut"
+      <MenuItem Title="Cut"
                 Key="Key.X.WithCtrl"
                 Accepting="OnCut" />
-      <MenuItem Text="Copy"
+      <MenuItem Title="Copy"
                 Key="Key.C.WithCtrl"
                 Accepting="OnCopy" />
-      <MenuItem Text="Paste"
+      <MenuItem Title="Paste"
                 Key="Key.V.WithCtrl"
                 Accepting="OnPaste" />
     </MenuBarItem>
 
-    <MenuBarItem Text="Help"
+    <MenuBarItem Title="_Help"
                  HotKey="Key.H.WithAlt">
-      <MenuItem Text="Documentation"
+      <MenuItem Title="Documentation"
                 Key="Key.F1"
                 Accepting="OnDocumentation" />
-      <MenuItem Text="About"
+      <MenuItem Title="About"
                 Accepting="OnAbout" />
     </MenuBarItem>
 
