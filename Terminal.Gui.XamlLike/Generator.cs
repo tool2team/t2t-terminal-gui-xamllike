@@ -457,6 +457,12 @@ namespace Terminal.Gui.XamlLike
                 var propName = kvp.Key;
                 var value = kvp.Value;
 
+                // Skip IsDialogButton - it's a meta-property for generation only
+                if (propName == "IsDialogButton")
+                {
+                    continue;
+                }
+
                 if (IsBindingExpression(value))
                 {
                     // Skip bindings - they're handled separately
@@ -493,37 +499,74 @@ namespace Terminal.Gui.XamlLike
                 AppendLine($"{variableName}.{xamlEventName} += {handlerName};");
             }
 
-            // Add children
-            foreach (var child in element.Children)
+            // Special handling for container types with specific child management
+            if (element.Name == "Dialog" && element.Children.Any())
             {
-                GenerateElementCode(child);
+                // Dialog: Generate children recursively first, then add via AddButton() or Add() based on IsDialogButton
+                foreach (var child in element.Children)
+                {
+                    GenerateElementCode(child);
 
-                // Determine child's variable name
-                string childName;
-                if (!string.IsNullOrEmpty(child.XName))
-                {
-                    childName = child.XName!;
+                    string childName = GetChildVariableName(child);
+
+                    if (child.IsDialogButton(element))
+                    {
+                        AppendLine($"{variableName}.AddButton({childName});");
+                    }
+                    else
+                    {
+                        AppendLine($"{variableName}.Add({childName});");
+                    }
                 }
-                else if (_elementToFieldName.TryGetValue(child, out var childFieldName))
+            }
+            else if (element.Name == "MenuBarItem" && element.Children.Any())
+            {
+                // MenuBarItem: Create a Menu, add all children to it recursively, then create PopoverMenu
+                string menuName = GenerateAnonymousFieldName("Menu");
+                AppendLine($"var {menuName} = new Terminal.Gui.Views.Menu();");
+
+                foreach (var child in element.Children)
                 {
-                    childName = childFieldName;
-                }
-                else
-                {
-                    // This shouldn't happen anymore, but fallback
-                    childName = GenerateAnonymousFieldName(child.Name);
-                    _elementToFieldName[child] = childName;
+                    GenerateElementCode(child);
+
+                    string childName = GetChildVariableName(child);
+                    AppendLine($"{menuName}.Add({childName});");
                 }
 
-                // Special handling: Buttons in Dialog should be added to Buttons collection
-                if (element.Name == "Dialog" && child.Name == "Button")
+                AppendLine($"{variableName}.PopoverMenu = new Terminal.Gui.Views.PopoverMenu({menuName});");
+            }
+            else
+            {
+                // Standard container: Generate children recursively and add them normally
+                foreach (var child in element.Children)
                 {
-                    AppendLine($"{variableName}.AddButton({childName});");
-                }
-                else
-                {
+                    GenerateElementCode(child);
+
+                    string childName = GetChildVariableName(child);
                     AppendLine($"{variableName}.Add({childName});");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the variable name for a child element (handles both named and anonymous elements)
+        /// </summary>
+        private string GetChildVariableName(XamlElement child)
+        {
+            if (!string.IsNullOrEmpty(child.XName))
+            {
+                return child.XName!;
+            }
+            else if (_elementToFieldName.TryGetValue(child, out var childFieldName))
+            {
+                return childFieldName;
+            }
+            else
+            {
+                // This shouldn't happen anymore, but fallback
+                var childName = GenerateAnonymousFieldName(child.Name);
+                _elementToFieldName[child] = childName;
+                return childName;
             }
         }
 

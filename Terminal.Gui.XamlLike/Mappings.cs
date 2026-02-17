@@ -224,7 +224,8 @@ namespace Terminal.Gui.XamlLike
             },
             ["Button"] = new Dictionary<string, PropertyMapping>
             {
-                ["IsDefault"] = new PropertyMapping("IsDefault", "bool", "Whether this button is the default button in a dialog")
+                ["IsDefault"] = new PropertyMapping("IsDefault", "bool", "Whether this button is the default button in a dialog"),
+                ["IsDialogButton"] = new PropertyMapping("IsDialogButton", "bool", "Set to true to add this button to Dialog.Buttons collection (AddButton) instead of regular child (Add). Default is false.")
             },
             ["Dialog"] = new Dictionary<string, PropertyMapping>
             {

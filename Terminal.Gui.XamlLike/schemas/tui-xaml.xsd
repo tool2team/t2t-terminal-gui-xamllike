@@ -175,6 +175,11 @@
           <xs:documentation>Whether this button is the default button in a dialog (true/false or binding)</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="IsDialogButton" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Set to true to add this button to Dialog.Buttons collection (AddButton) instead of regular child (Add). Default is false. (true/false)</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute name="Command" type="xs:string">
         <xs:annotation>
           <xs:documentation>ICommand binding (e.g., "{Bind SaveCommand}")</xs:documentation>

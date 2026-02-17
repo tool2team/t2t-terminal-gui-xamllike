@@ -133,6 +133,30 @@ namespace Terminal.Gui.XamlLike
     /// Checks if an attribute name represents an event (uses Mappings.EventMappings)
     /// </summary>
     private static bool IsEventAttribute(string attributeName) => Mappings.IsKnownEvent(attributeName);
+
+    /// <summary>
+    /// Determines if this Button should be added as a dialog button (via AddButton) or regular child (via Add)
+    /// </summary>
+    /// <param name="parentElement">The parent element (should be Dialog)</param>
+    public bool IsDialogButton(XamlElement? parentElement)
+    {
+        // Only applicable to Button elements
+        if (Name != "Button")
+            return false;
+
+        // Check if explicit IsDialogButton attribute is set
+        if (HasAttribute("IsDialogButton"))
+        {
+            var value = GetAttributeValue("IsDialogButton");
+            if (bool.TryParse(value, out var isDialogButton))
+            {
+                return isDialogButton;
+            }
+        }
+
+        // Default: Button uses regular Add() unless explicitly marked as IsDialogButton="true"
+        return false;
+    }
 }
 
     /// <summary>
