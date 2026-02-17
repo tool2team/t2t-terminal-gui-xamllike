@@ -1,9 +1,8 @@
-using Terminal.Gui.ViewBase;
 using Terminal.Gui.Views;
 
 namespace ViewShowcaseApp.Views;
 
-public partial class MenuBarDemo : View
+public partial class MenuBarDemo
 {
     public MenuBarDemo()
     {
