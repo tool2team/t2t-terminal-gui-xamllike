@@ -1,31 +1,31 @@
 # Quick Reference - Terminal.Gui.XamlLike
 
-Guide de référence rapide pour la syntaxe XAML-like.
+Quick reference guide for XAML-like syntax.
 
-## 🎯 Structure de base
+## 🎯 Basic Structure
 
 ```xml
 <Window x:Class="Namespace.ClassName"
         x:Name="Root"
         x:DataType="ViewModel"
-        Title="Titre"
+        Title="Title"
         Width="Dim.Fill()"
         Height="Dim.Fill()">
-  <!-- Contrôles -->
+  <!-- Controls -->
 </Window>
 ```
 
-## 📋 Attributs essentiels
+## 📋 Essential Attributes
 
-| Attribut | Obligatoire | Description | Exemple |
+| Attribute | Required | Description | Example |
 |----------|-------------|-------------|---------|
-| `x:Class` | ✅ | Nom complet de la classe C# | `"MonApp.Views.MainView"` |
-| `x:Name` | ❌ | Nom du champ généré | `"Root"`, `"BtnSave"` |
-| `x:DataType` | ❌ | Contexte de binding par défaut | `"ViewModel"` |
+| `x:Class` | ✅ | Full C# class name | `"MyApp.Views.MainView"` |
+| `x:Name` | ❌ | Generated field name | `"Root"`, `"BtnSave"` |
+| `x:DataType` | ❌ | Default binding context | `"ViewModel"` |
 
-## 🎨 Contrôles
+## 🎨 Controls
 
-### Conteneurs
+### Containers
 
 ```xml
 <Window Title="..." />
@@ -33,13 +33,13 @@ Guide de référence rapide pour la syntaxe XAML-like.
 <ScrollView />
 ```
 
-### Affichage
+### Display
 
 ```xml
 <Label Text="..." />
 ```
 
-### Saisie
+### Input
 
 ```xml
 <TextField Text="..." Width="20" />
@@ -50,33 +50,33 @@ Guide de référence rapide pour la syntaxe XAML-like.
 ### Actions
 
 ```xml
-<Button Text="..." Clicked="OnClick" />
+<Button Text="..." Accepting="OnClick" />
 ```
 
-### Listes
+### Lists
 
 ```xml
 <ListView />
 ```
 
-## 📐 Positionnement
+## 📐 Positioning
 
 ```xml
-<!-- Valeurs fixes -->
+<!-- Fixed values -->
 <Label X="10" Y="5" Width="20" Height="1" />
 
-<!-- Expressions Terminal.Gui -->
+<!-- Terminal.Gui expressions -->
 <Label X="Pos.Center()" Y="Pos.Bottom(otherView) + 1" />
 <TextField Width="Dim.Fill(2)" Height="Dim.Percent(50)" />
 ```
 
-## 🔗 Binding de données
+## 🔗 Data Binding
 
-### Syntaxe avec x:DataType (Recommandé)
+### Syntax with x:DataType (Recommended)
 
 ```xml
 <Window x:DataType="ViewModel">
-  <!-- OneWay (défaut) -->
+  <!-- OneWay (default) -->
   <Label Text="{Bind Status}" />
   <Button Enabled="{Bind CanSave}" />
   
@@ -86,36 +86,36 @@ Guide de référence rapide pour la syntaxe XAML-like.
 </Window>
 ```
 
-### Syntaxe explicite (Sans x:DataType)
+### Explicit Syntax (Without x:DataType)
 
 ```xml
 <Label Text="{Bind ViewModel.Status}" />
 <TextField Text="{Bind ViewModel.UserName, Mode=TwoWay}" />
 ```
 
-### Propriétés imbriquées
+### Nested Properties
 
 ```xml
 <Label Text="{Bind User.Name}" />
 <Label Text="{Bind Config.Display.Title}" />
 ```
 
-### Binding vers collections
+### Binding to Collections
 
 ```xml
-<RadioGroup RadioLabels="{Bind AvailableItems}" />
+<ListView Source="{Bind AvailableItems}" />
 ```
 
-## ⚡ Événements
+## ⚡ Events
 
 ```xml
-<Button Clicked="OnSaveClicked" />
+<Button Accepting="OnSaveClicked" />
 <TextField TextChanged="OnTextChanged" Accept="OnAccept" />
-<CheckBox Toggled="OnToggled" />
+<CheckBox ValueChanged="OnValueChanged" />
 <Window Loaded="OnLoaded" Closing="OnClosing" />
 ```
 
-## 🏗️ Template de ViewModel
+## 🏗️ ViewModel Template
 
 ```csharp
 using System.ComponentModel;
@@ -137,7 +137,7 @@ public class MainViewModel : INotifyPropertyChanged
         }
     }
     
-    // Propriété calculée
+    // Computed property
     public string ComputedProperty => $"Computed: {MyProperty}";
     
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -149,55 +149,55 @@ public class MainViewModel : INotifyPropertyChanged
 }
 ```
 
-## 🏗️ Template de Vue
+## 🏗️ View Template
 
 ```csharp
 using Terminal.Gui;
 
-namespace MonApp.Views
+namespace MyApp.Views
 {
     public partial class MainView : Window
     {
         public MainViewModel ViewModel { get; }
-        
+
         public MainView()
         {
             ViewModel = new MainViewModel();
-            InitializeComponent(); // Généré automatiquement
+            InitializeComponent(); // Auto-generated
         }
-        
+
         // Event handlers
         private void OnSaveClicked(object? sender, EventArgs e)
         {
-            // Logique
+            // Logic here
         }
     }
 }
 ```
 
-## 🎯 Modes de Binding
+## 🎯 Binding Modes
 
-| Mode | Symbole | Description | Usage |
+| Mode | Symbol | Description | Usage |
 |------|---------|-------------|-------|
-| `OneWay` | → | ViewModel → UI | Affichage (défaut) |
-| `TwoWay` | ↔️ | ViewModel ↔️ UI | Saisie utilisateur |
+| `OneWay` | → | ViewModel → UI | Display (default) |
+| `TwoWay` | ↔️ | ViewModel ↔️ UI | User input |
 
-## 📦 Propriétés supportant TwoWay
+## 📦 Properties Supporting TwoWay
 
-| Contrôle | Propriété | Événement |
+| Control | Property | Event |
 |----------|-----------|-----------|
 | `TextField` | `Text` | `TextChanged` |
 | `TextView` | `Text` | `TextChanged` |
-| `CheckBox` | `Checked` | `Toggled` |
+| `CheckBox` | `Checked` | `ValueChanged` |
 
-## 💡 Exemples complets
+## 💡 Complete Examples
 
-### Simple (Sans ViewModel)
+### Simple (Without ViewModel)
 
 ```xml
 <Window x:Class="SimpleView" Title="Simple">
   <Label Text="Hello World" />
-  <Button Text="Click" Clicked="OnClick" />
+  <Button Text="Click" Accepting="OnClick" />
 </Window>
 ```
 
@@ -205,21 +205,21 @@ namespace MonApp.Views
 public partial class SimpleView : Window
 {
     public SimpleView() => InitializeComponent();
-    
+
     private void OnClick(object? sender, EventArgs e)
     {
-        // Logique
+        // Logic here
     }
 }
 ```
 
-### MVVM (Avec ViewModel)
+### MVVM (With ViewModel)
 
 ```xml
 <Window x:Class="MvvmView" x:DataType="ViewModel">
   <Label Text="{Bind Message}" />
   <TextField Text="{Bind Input, Mode=TwoWay}" />
-  <Button Text="Save" Clicked="OnSave" Enabled="{Bind CanSave}" />
+  <Button Text="Save" Accepting="OnSave" Enabled="{Bind CanSave}" />
 </Window>
 ```
 
@@ -241,15 +241,15 @@ public partial class MvvmView : Window
 }
 ```
 
-## 🚫 Pièges courants
+## 🚫 Common Pitfalls
 
-### ❌ Oublier INotifyPropertyChanged
+### ❌ Forgetting INotifyPropertyChanged
 
 ```csharp
-// ❌ MAUVAIS - Pas de mise à jour UI
+// ❌ BAD - No UI update
 public string Status { get; set; }
 
-// ✅ BON
+// ✅ GOOD
 public string Status
 {
     get => _status;
@@ -261,17 +261,17 @@ public string Status
 }
 ```
 
-### ❌ Initialiser ViewModel après InitializeComponent
+### ❌ Initializing ViewModel After InitializeComponent
 
 ```csharp
-// ❌ MAUVAIS - Exception
+// ❌ BAD - Exception thrown
 public MainView()
 {
     InitializeComponent();
     ViewModel = new MainViewModel();
 }
 
-// ✅ BON
+// ✅ GOOD
 public MainView()
 {
     ViewModel = new MainViewModel();
@@ -279,7 +279,7 @@ public MainView()
 }
 ```
 
-### ❌ Ne pas notifier les propriétés calculées
+### ❌ Not Notifying Computed Properties
 
 ```csharp
 public string FirstName
@@ -288,36 +288,36 @@ public string FirstName
     {
         _firstName = value;
         OnPropertyChanged(nameof(FirstName));
-        // ❌ OUBLIÉ : OnPropertyChanged(nameof(FullName));
+        // ❌ FORGOT: OnPropertyChanged(nameof(FullName));
     }
 }
 
 public string FullName => $"{FirstName} {LastName}";
 ```
 
-## 📚 Documentation complète
+## 📚 Complete Documentation
 
-- [Format XAML](docs/format.md)
-- [Guide MVVM](docs/mvvm-guide.md)
-- [Implémentation Binding](BINDING_IMPLEMENTATION.md)
+- [XAML Format](docs/format.md)
+- [MVVM Guide](docs/mvvm-guide.md)
+- [Binding Implementation](BINDING_IMPLEMENTATION.md)
 
-## 🆘 Aide rapide
+## 🆘 Quick Help
 
 ```bash
-# Compiler
+# Build
 dotnet build
 
-# Exécuter les exemples
+# Run examples
 dotnet run --project samples/SimpleApp
 dotnet run --project samples/MvvmApp
 dotnet run --project samples/CommunityMvvmApp
 
-# Voir les fichiers générés
-# Chercher dans obj/Debug/net8.0/Terminal.Gui.XamlLike/
+# View generated files
+# Look in obj/Debug/net8.0/Terminal.Gui.XamlLike/
 ```
 
-## 🔗 Liens utiles
+## 🔗 Useful Links
 
 - [Terminal.Gui Documentation](https://gui-cs.github.io/Terminal.Gui/)
 - [INotifyPropertyChanged (Microsoft)](https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged)
-- [Pattern MVVM (Microsoft)](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm)
+- [MVVM Pattern (Microsoft)](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm)

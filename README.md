@@ -1,14 +1,24 @@
 # Terminal.Gui.XamlLike
 
-A source generator to create Terminal.Gui interfaces with XAML-like syntax.
+A C# source generator that brings **XAML-like syntax** to [Terminal.Gui v2](https://github.com/gui-cs/Terminal.Gui), enabling rapid development of terminal-based applications with familiar markup and full MVVM support.
+
+```xml
+<Dialog Title="Hello Terminal!" Width="40" Height="10">
+  <Label Text="{Bind WelcomeMessage}" X="Pos.Center()" Y="2" />
+  <Button Text="OK" IsDialogButton="true" IsDefault="true" />
+</Dialog>
+```
+
+**Write declarative UI, get type-safe code at compile time.** 🚀
 
 ## 🚀 Features
 
 - ✅ **Familiar XAML-like syntax** for .NET developers
-- ✅ **Full MVVM support** with data binding
-- ✅ **Two-way binding** (TwoWay) for user input
+- ✅ **Full MVVM support** with data binding (OneWay, TwoWay)
+- ✅ **Dialog management** with IsDialogButton property
 - ✅ **Computed properties** with automatic updates
-- ✅ **`x:DataType` attribute** for simplified syntax
+- ✅ **`x:DataType` attribute** for simplified syntax (like MAUI)
+- ✅ **50+ Terminal.Gui controls** supported
 - ✅ **Code generation** at compile time via Source Generators
 - ✅ **IntelliSense support** for `.tui.xaml` files via XSD schema
 - ✅ **Compatible with Terminal.Gui v2**
@@ -45,7 +55,7 @@ For now, clone the repository and add a project reference:
              TextChanged="OnUserNameChanged" />
 
   <Button Text="Save" 
-          Clicked="OnSaveClicked" />
+          Accepting="OnSaveClicked" />
 
 </Window>
 ```
@@ -119,37 +129,23 @@ The code is automatically generated at compile time. The generated file (`MainVi
 
 ## 📚 Documentation
 
-- [📖 Quick Reference](docs/QUICK_REFERENCE.md) - Quick syntax guide and cheat sheet
-- [🔧 Binding Implementation](docs/BINDING_IMPLEMENTATION.md) - Technical details
-- [📝 Changelog](docs/CHANGELOG.md) - Version history and changes
+### Quick Start
+- **[Quick Reference](docs/QUICK_REFERENCE.md)** - Fast reference for XAML syntax, controls, and patterns
+- **[Documentation Index](docs/README.md)** - Complete documentation overview
 
-## 🎨 Examples
+### Features
+- **[Dialog Buttons](docs/DIALOG_BUTTONS.md)** - Complete guide for Dialog management
+  - IsDialogButton property and design rationale
+  - Auto-positioned vs manually positioned buttons
+  - Migration guide for upgrading
+- **[Binding Implementation](docs/BINDING_IMPLEMENTATION.md)** - Technical details of binding system
+- **[Changelog](docs/CHANGELOG.md)** - Version history and changes
 
-The repository contains three examples:
-
-### SimpleApp - No ViewModel
-Simple application without binding, manual UI management.
-
-```bash
-cd samples/SimpleApp
-dotnet run
-```
-
-### MvvmApp - Custom MVVM
-MVVM application with custom ViewModels.
-
-```bash
-cd samples/MvvmApp
-dotnet run
-```
-
-### CommunityMvvmApp - CommunityToolkit.Mvvm
-Application using CommunityToolkit.Mvvm with source generators.
-
-```bash
-cd samples/CommunityMvvmApp
-dotnet run
-```
+### Examples
+Check the `Examples/` folder for working demos:
+- **SimpleApp** - Basic usage without ViewModel
+- **MvvmApp** - Full MVVM pattern
+- **ViewShowcaseApp** - All controls and features showcase
 
 ## 🔑 Key Concepts
 
@@ -190,14 +186,37 @@ The generator automatically finds the property with the specified type in your v
 ### Supported Controls
 
 - `Window` - Main window
+- `Dialog` - Modal dialog window with button management
 - `Label` - Text label
-- `Button` - Button
+- `Button` - Button (with IsDialogButton support for dialogs)
 - `TextField` - Text input field
 - `TextView` - Multiline text area
 - `CheckBox` - Checkbox
+- `RadioGroup` - Radio button group
 - `OptionSelector` - Option selector
+- `ListView` - List view
 - `FrameView` - Container with border
-- And more...
+- `MenuBar` - Menu bar with items
+- `TabView` - Tab container
+- And 50+ more Terminal.Gui controls...
+
+See [Quick Reference](docs/QUICK_REFERENCE.md) for complete list.
+
+### Dialog Management
+
+Create dialogs with auto-positioned or manually positioned buttons:
+
+```xml
+<Dialog Title="Confirm Action" Width="40" Height="10">
+  <Label Text="Are you sure?" X="Pos.Center()" Y="2" />
+
+  <!-- Auto-positioned dialog buttons -->
+  <Button Text="Yes" IsDialogButton="true" IsDefault="true" Accepting="OnYes" />
+  <Button Text="No" IsDialogButton="true" Accepting="OnNo" />
+</Dialog>
+```
+
+See [Dialog Buttons Guide](docs/DIALOG_BUTTONS.md) for complete documentation.
 
 
 ## 🛠️ Development
