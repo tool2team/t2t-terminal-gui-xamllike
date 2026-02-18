@@ -554,6 +554,25 @@ namespace Terminal.Gui.XamlLike
                     }
                 }
             }
+            else if (element.Name == "Tab" && element.Children.Any())
+            {
+                string viewName = GenerateAnonymousFieldName("View");
+                AppendLine($"var {viewName} = new Terminal.Gui.ViewBase.View {{ Width = Dim.Fill (), Height = Dim.Fill (), CanFocus = true }};");
+
+                // Tab: Generate children recursively first, then add to view 
+                foreach (var child in element.Children)
+                {
+                    GenerateElementCode(child);
+
+                    string childName = GetChildVariableName(child);
+
+                    {
+                        AppendLine($"{viewName}.Add({childName});");
+                    }
+                }
+
+                AppendLine($"{variableName}.View = {viewName};");
+            }
             else
             {
                 // Standard container: Generate children recursively and add them normally
