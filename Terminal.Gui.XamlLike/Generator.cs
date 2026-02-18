@@ -535,6 +535,25 @@ namespace Terminal.Gui.XamlLike
 
                 AppendLine($"{variableName}.PopoverMenu = new Terminal.Gui.Views.PopoverMenu({menuName});");
             }
+            else if (element.Name == "TabView" && element.Children.Any())
+            {
+                // Dialog: Generate children recursively first, then add via AddButton() or Add() based on IsDialogButton
+                foreach (var child in element.Children)
+                {
+                    GenerateElementCode(child);
+
+                    string childName = GetChildVariableName(child);
+
+                    if (child.IsTab(element))
+                    {
+                        AppendLine($"{variableName}.AddTab({childName}, false);");
+                    }
+                    else
+                    {
+                        AppendLine($"{variableName}.Add({childName});");
+                    }
+                }
+            }
             else
             {
                 // Standard container: Generate children recursively and add them normally

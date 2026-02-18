@@ -54,110 +54,125 @@ namespace Terminal.Gui.XamlLike
             LineNumber = lineNumber;
             LinePosition = linePosition;
         }
-    /// <summary>
-    /// Gets the x:Name value for this element
-    /// </summary>
-    public string? XName => GetAttributeValue("x:Name");
+        /// <summary>
+        /// Gets the x:Name value for this element
+        /// </summary>
+        public string? XName => GetAttributeValue("x:Name");
 
-    /// <summary>
-    /// Gets the x:Type value for this element (used for generic types)
-    /// </summary>
-    public string? XType => GetAttributeValue("x:Type");
+        /// <summary>
+        /// Gets the x:Type value for this element (used for generic types)
+        /// </summary>
+        public string? XType => GetAttributeValue("x:Type");
 
-    /// <summary>
-    /// Gets an attribute value by name
-    /// </summary>
-    public string? GetAttributeValue(string name) => 
-        Attributes.TryGetValue(name, out var value) ? value : null;
+        /// <summary>
+        /// Gets an attribute value by name
+        /// </summary>
+        public string? GetAttributeValue(string name) =>
+            Attributes.TryGetValue(name, out var value) ? value : null;
 
-    /// <summary>
-    /// Checks if this element has an attribute
-    /// </summary>
-    public bool HasAttribute(string name) => Attributes.ContainsKey(name);
+        /// <summary>
+        /// Checks if this element has an attribute
+        /// </summary>
+        public bool HasAttribute(string name) => Attributes.ContainsKey(name);
 
-    /// <summary>
-    /// Gets all non-xmlns and non-x: attributes (property attributes)
-    /// </summary>
-    public Dictionary<string, string> PropertyAttributes
-    {
-        get
+        /// <summary>
+        /// Gets all non-xmlns and non-x: attributes (property attributes)
+        /// </summary>
+        public Dictionary<string, string> PropertyAttributes
         {
-            var result = new Dictionary<string, string>();
-            foreach (var kvp in Attributes)
+            get
             {
-                var key = kvp.Key;
-                var value = kvp.Value;
-                if (!key.StartsWith("x:") && !key.StartsWith("xmlns") && !IsEventAttribute(key))
+                var result = new Dictionary<string, string>();
+                foreach (var kvp in Attributes)
                 {
-                    result[key] = value;
+                    var key = kvp.Key;
+                    var value = kvp.Value;
+                    if (!key.StartsWith("x:") && !key.StartsWith("xmlns") && !IsEventAttribute(key))
+                    {
+                        result[key] = value;
+                    }
+                }
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets all event attributes (those that don't contain bindings or expressions)
+        /// </summary>
+        public Dictionary<string, string> EventAttributes
+        {
+            get
+            {
+                var result = new Dictionary<string, string>();
+                foreach (var kvp in Attributes)
+                {
+                    var key = kvp.Key;
+                    var value = kvp.Value;
+                    if (!key.StartsWith("x:") && !key.StartsWith("xmlns") && IsEventAttribute(key) && !IsBinding(value) && !IsExpression(value))
+                    {
+                        result[key] = value;
+                    }
+                }
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Checks if a value is a binding expression {Bind ...}
+        /// </summary>
+        private static bool IsBinding(string value) =>
+            value.Trim().StartsWith("{Bind ") && value.Trim().EndsWith("}");
+
+        /// <summary>
+        /// Checks if a value is an expression like Dim.Fill()
+        /// </summary>
+        private static bool IsExpression(string value) =>
+            value.Contains("(") && value.Contains(")");
+
+        /// <summary>
+        /// Checks if an attribute name represents an event (uses Mappings.EventMappings)
+        /// </summary>
+        private static bool IsEventAttribute(string attributeName) => Mappings.IsKnownEvent(attributeName);
+
+        /// <summary>
+        /// Determines if this Button should be added as a dialog button (via AddButton) or regular child (via Add)
+        /// </summary>
+        /// <param name="parentElement">The parent element (should be Dialog)</param>
+        public bool IsDialogButton(XamlElement? parentElement)
+        {
+            // Only applicable to Button elements
+            if (Name != "Button")
+                return false;
+
+            if (parentElement?.Name != "Dialog")
+                return false;
+
+            // Check if explicit IsDialogButton attribute is set
+            if (HasAttribute("IsDialogButton"))
+            {
+                var value = GetAttributeValue("IsDialogButton");
+                if (bool.TryParse(value, out var isDialogButton))
+                {
+                    return isDialogButton;
                 }
             }
-            return result;
-        }
-    }
 
-    /// <summary>
-    /// Gets all event attributes (those that don't contain bindings or expressions)
-    /// </summary>
-    public Dictionary<string, string> EventAttributes
-    {
-        get
-        {
-            var result = new Dictionary<string, string>();
-            foreach (var kvp in Attributes)
-            {
-                var key = kvp.Key;
-                var value = kvp.Value;
-                if (!key.StartsWith("x:") && !key.StartsWith("xmlns") && IsEventAttribute(key) && !IsBinding(value) && !IsExpression(value))
-                {
-                    result[key] = value;
-                }
-            }
-            return result;
-        }
-    }
-
-    /// <summary>
-    /// Checks if a value is a binding expression {Bind ...}
-    /// </summary>
-    private static bool IsBinding(string value) => 
-        value.Trim().StartsWith("{Bind ") && value.Trim().EndsWith("}");
-
-    /// <summary>
-    /// Checks if a value is an expression like Dim.Fill()
-    /// </summary>
-    private static bool IsExpression(string value) => 
-        value.Contains("(") && value.Contains(")");
-
-    /// <summary>
-    /// Checks if an attribute name represents an event (uses Mappings.EventMappings)
-    /// </summary>
-    private static bool IsEventAttribute(string attributeName) => Mappings.IsKnownEvent(attributeName);
-
-    /// <summary>
-    /// Determines if this Button should be added as a dialog button (via AddButton) or regular child (via Add)
-    /// </summary>
-    /// <param name="parentElement">The parent element (should be Dialog)</param>
-    public bool IsDialogButton(XamlElement? parentElement)
-    {
-        // Only applicable to Button elements
-        if (Name != "Button")
+            // Default: Button uses regular Add() unless explicitly marked as IsDialogButton="true"
             return false;
-
-        // Check if explicit IsDialogButton attribute is set
-        if (HasAttribute("IsDialogButton"))
-        {
-            var value = GetAttributeValue("IsDialogButton");
-            if (bool.TryParse(value, out var isDialogButton))
-            {
-                return isDialogButton;
-            }
         }
 
-        // Default: Button uses regular Add() unless explicitly marked as IsDialogButton="true"
-        return false;
+        public bool IsTab(XamlElement? parentElement)
+        {
+            // Only applicable to Tab elements
+            if (Name != "Tab")
+                return false;
+
+            if (parentElement?.Name != "TabView")
+                return false;
+
+            return true;
+        }
     }
-}
 
     /// <summary>
     /// Represents property information for code generation
