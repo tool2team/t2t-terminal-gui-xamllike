@@ -9,7 +9,12 @@
 			Y="2"
 			Accepting="OnShow" />
 
+	<Button Text="Show advanced dialog"
+		X="2"
+		Y="4"
+		Accepting="OnAdvancedShow" />
+
 	<Label x:Name="ResultsLabel"
          X="2"
-         Y="4" />
+         Y="6" />
 </View>

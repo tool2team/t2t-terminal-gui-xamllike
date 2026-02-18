@@ -9,13 +9,13 @@
 
   <!-- Menu Bar -->
   <MenuBar Y="0" X="0" Width="Dim.Fill()" Height="1">
-    <MenuBarItem Text="_File">
-      <MenuItem Text="_About" Command="{Bind ShowAboutCommand}" />
-      <MenuItem Text="_Quit" Command="{Bind QuitCommand}" />
+    <MenuBarItem Title="_File">
+      <MenuItem Title="_About" Command="{Bind ShowAboutCommand}" />
+      <MenuItem Title="_Quit" Command="{Bind QuitCommand}" />
     </MenuBarItem>
-    <MenuBarItem Text="_View">
-      <MenuItem Text="_Refresh" Command="{Bind RefreshViewCommand}" />
-      <MenuItem Text="_Details" Command="{Bind ShowViewDetailsCommand}" />
+    <MenuBarItem Title="_View">
+      <MenuItem Title="_Refresh" Command="{Bind RefreshViewCommand}" />
+      <MenuItem Title="_Details" Command="{Bind ShowViewDetailsCommand}" />
     </MenuBarItem>
   </MenuBar>
 

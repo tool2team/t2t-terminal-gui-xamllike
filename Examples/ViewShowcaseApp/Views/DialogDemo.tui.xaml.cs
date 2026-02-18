@@ -16,4 +16,12 @@ public partial class DialogDemo
         
         ResultsLabel.Text = $"You selected: {res} with {dlg.EnteredName}<{dlg.EnteredEmail}>";
     }
+
+    private void OnAdvancedShow(object? sender, EventArgs e)
+    {
+        AdvancedDialogDemoDlg dlg = new AdvancedDialogDemoDlg();
+        var res = App?.Run(dlg);
+
+        ResultsLabel.Text = $"You selected: {res} with {dlg.Result}";
+    }
 }

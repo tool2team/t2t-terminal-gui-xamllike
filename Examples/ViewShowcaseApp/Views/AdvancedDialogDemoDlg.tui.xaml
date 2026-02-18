@@ -1,0 +1,45 @@
+<Dialog x:Class="ViewShowcaseApp.Views.AdvancedDialogDemoDlg"
+        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Advanced Dialog Example"
+        Width="60"
+        Height="20"
+        ButtonAlignment="End">
+
+  <!-- Content area with custom buttons -->
+  <FrameView Title="File Operations" 
+             X="2" 
+             Y="2" 
+             Width="Dim.Fill(2)" 
+             Height="8">
+    
+    <Label Text="Selected file:" 
+           X="2" 
+           Y="1" />
+    
+    <TextField x:Name="FilePathTextField"
+               X="2" 
+               Y="2"
+               Width="Dim.Fill(2)" 
+               Text="C:\example.txt" />
+    
+    <!-- Custom button in content (uses default Add behavior) -->
+    <Button Text="Browse..." 
+            X="2" 
+            Y="4"
+            Width="15"
+            Accepting="OnBrowse" />
+
+  </FrameView>
+
+  <!-- Standard dialog buttons at bottom (auto-positioned) -->
+  <Button Text="Apply" 
+          IsDefault="true"
+          IsDialogButton="true"
+          Accepting="OnApply" />
+
+  <Button Text="Cancel"
+          IsDialogButton="true"
+          Accepting="OnCancel" />
+
+</Dialog>
