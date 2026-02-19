@@ -1,9 +1,8 @@
-﻿namespace CommunityMvvmApp.Models
+﻿namespace CommunityMvvmApp.Models;
+
+public enum UserRole
 {
-    public enum UserRole
-    {
-        Admin,
-        User,
-        Guest
-    }
+    Admin,
+    User,
+    Guest
 }
