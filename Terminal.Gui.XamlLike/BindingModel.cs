@@ -18,6 +18,7 @@ public class BindingExpression
         Mode = mode;
         SourceExpression = sourceExpression;
     }
+
 /// <summary>
 /// Parses a binding expression from XAML syntax like "{Bind Status}" or "{Bind UserName, Mode=TwoWay}"
 /// </summary>
@@ -38,7 +39,7 @@ public static BindingExpression? Parse(string expression, string? dataType = nul
     // Split by comma to handle Mode parameter
     var parts = content.Split(',');
     var propertyPath = parts[0].Trim();
-    var mode = BindingMode.OneWay; // default
+        BindingMode mode = BindingMode.OneWay; // default
 
     // Check for Mode parameter
     for (int i = 1; i < parts.Length; i++)
@@ -47,7 +48,7 @@ public static BindingExpression? Parse(string expression, string? dataType = nul
         if (part.StartsWith("Mode=", System.StringComparison.OrdinalIgnoreCase))
         {
             var modeValue = part.Substring(5).Trim();
-            if (System.Enum.TryParse<BindingMode>(modeValue, true, out var parsedMode))
+            if (System.Enum.TryParse(modeValue, true, out BindingMode parsedMode))
             {
                 mode = parsedMode;
             }
@@ -175,7 +176,7 @@ public class BoundProperty
             return null;
         }
 
-        var twoWayBinding = Mappings.GetTwoWayBinding(_controlType!, PropertyName);
+        TwoWayBinding? twoWayBinding = Mappings.GetTwoWayBinding(_controlType!, PropertyName);
         return twoWayBinding?.ChangeEventName;
     }
 

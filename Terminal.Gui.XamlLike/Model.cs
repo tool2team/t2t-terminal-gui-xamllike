@@ -82,8 +82,8 @@ public class XamlElement
     {
         get
         {
-            var result = new Dictionary<string, string>();
-            foreach (var kvp in Attributes)
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, string> kvp in Attributes)
             {
                 var key = kvp.Key;
                 var value = kvp.Value;
@@ -103,8 +103,8 @@ public class XamlElement
     {
         get
         {
-            var result = new Dictionary<string, string>();
-            foreach (var kvp in Attributes)
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, string> kvp in Attributes)
             {
                 var key = kvp.Key;
                 var value = kvp.Value;

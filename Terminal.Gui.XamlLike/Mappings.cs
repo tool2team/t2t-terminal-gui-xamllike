@@ -372,7 +372,7 @@ public static class Mappings
     /// </summary>
     public static string? GetFullTypeName(string elementName, string? genericType = null)
     {
-        if (!ControlMappings.TryGetValue(elementName, out var mapping))
+        if (!ControlMappings.TryGetValue(elementName, out ControlMapping? mapping))
             return null; // Type not found - caller should generate diagnostic
 
         var typeName = mapping.FullTypeName;
@@ -390,14 +390,14 @@ public static class Mappings
     /// Checks if a control is a container (can have children)
     /// </summary>
     public static bool IsContainer(string elementName) =>
-        ControlMappings.TryGetValue(elementName, out var mapping) && mapping.IsContainer;
+        ControlMappings.TryGetValue(elementName, out ControlMapping? mapping) && mapping.IsContainer;
 
     /// <summary>
     /// Gets the event mapping for a control/event combination
     /// </summary>
     public static EventMapping? GetEventMapping(string controlName, string eventName) =>
-        EventMappings.TryGetValue(controlName, out var events) && 
-        events.TryGetValue(eventName, out var eventMapping) 
+        EventMappings.TryGetValue(controlName, out Dictionary<string, EventMapping>? events) && 
+        events.TryGetValue(eventName, out EventMapping? eventMapping) 
             ? eventMapping 
             : null;
 
@@ -405,8 +405,8 @@ public static class Mappings
     /// Gets TwoWay binding information for a control/property combination
     /// </summary>
     public static TwoWayBinding? GetTwoWayBinding(string controlName, string propertyName) =>
-        TwoWayBindings.TryGetValue(controlName, out var properties) && 
-        properties.TryGetValue(propertyName, out var binding) 
+        TwoWayBindings.TryGetValue(controlName, out Dictionary<string, TwoWayBinding>? properties) && 
+        properties.TryGetValue(propertyName, out TwoWayBinding? binding) 
             ? binding 
             : null;
 
@@ -422,16 +422,16 @@ public static class Mappings
     public static PropertyMapping? GetPropertyMapping(string propertyName)
     {
         // Check Common properties first
-        if (PropertyMappings.TryGetValue("Common", out var commonProperties) &&
-            commonProperties.TryGetValue(propertyName, out var commonMapping))
+        if (PropertyMappings.TryGetValue("Common", out Dictionary<string, PropertyMapping>? commonProperties) &&
+            commonProperties.TryGetValue(propertyName, out PropertyMapping? commonMapping))
         {
             return commonMapping;
         }
 
         // Search in all control-specific properties
-        foreach (var controlProperties in PropertyMappings.Values)
+        foreach (Dictionary<string, PropertyMapping> controlProperties in PropertyMappings.Values)
         {
-            if (controlProperties.TryGetValue(propertyName, out var mapping))
+            if (controlProperties.TryGetValue(propertyName, out PropertyMapping? mapping))
             {
                 return mapping;
             }
@@ -445,7 +445,7 @@ public static class Mappings
     /// </summary>
     public static bool IsKnownEvent(string eventName)
     {
-        foreach (var controlEvents in EventMappings.Values)
+        foreach (Dictionary<string, EventMapping> controlEvents in EventMappings.Values)
         {
             if (controlEvents.ContainsKey(eventName))
             {
@@ -460,7 +460,7 @@ public static class Mappings
     /// </summary>
     public static bool IsBooleanProperty(string propertyName)
     {
-        var mapping = GetPropertyMapping(propertyName);
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
         return mapping?.TargetType == "bool";
     }
 
@@ -469,7 +469,7 @@ public static class Mappings
     /// </summary>
     public static bool IsIntProperty(string propertyName)
     {
-        var mapping = GetPropertyMapping(propertyName);
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
         return mapping?.TargetType == "int";
     }
 
@@ -478,7 +478,7 @@ public static class Mappings
     /// </summary>
     public static bool IsFloatProperty(string propertyName)
     {
-        var mapping = GetPropertyMapping(propertyName);
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
         return mapping?.TargetType == "float";
     }
 
@@ -487,7 +487,7 @@ public static class Mappings
     /// </summary>
     public static bool IsArrayProperty(string propertyName)
     {
-        var mapping = GetPropertyMapping(propertyName);
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
         return mapping?.TargetType.EndsWith("[]") ?? false;
     }
 
@@ -496,7 +496,7 @@ public static class Mappings
     /// </summary>
     public static bool IsTerminalGuiType(string propertyName)
     {
-        var mapping = GetPropertyMapping(propertyName);
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
         if (mapping == null) return false;
 
         return mapping.TargetType.StartsWith("Terminal.Gui.");
@@ -507,7 +507,7 @@ public static class Mappings
     /// </summary>
     public static string? GetFullyQualifiedType(string propertyName)
     {
-        var mapping = GetPropertyMapping(propertyName);
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
         return mapping?.TargetType;
     }
 }

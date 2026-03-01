@@ -26,14 +26,14 @@ public static class XamlParser
         try
         {
             // Use XmlReader to preserve line information
-            var settings = new XmlReaderSettings
+            XmlReaderSettings settings = new XmlReaderSettings
             {
                 IgnoreWhitespace = false,
                 IgnoreComments = true
             };
 
-            using var stringReader = new StringReader(content);
-            using var xmlReader = XmlReader.Create(stringReader, settings);
+            using StringReader stringReader = new StringReader(content);
+            using XmlReader xmlReader = XmlReader.Create(stringReader, settings);
 
             // Move to the root element
             xmlReader.MoveToContent();
@@ -46,8 +46,8 @@ public static class XamlParser
                     "No root element found");
             }
 
-            var rootElement = ParseElementWithReader(xmlReader);
-            var xamlDoc = new XamlDocument(rootElement, filePath);
+            XamlElement rootElement = ParseElementWithReader(xmlReader);
+            XamlDocument xamlDoc = new XamlDocument(rootElement, filePath);
 
             // Validate required x:Class attribute
             if (string.IsNullOrWhiteSpace(xamlDoc.ClassName))
@@ -80,13 +80,13 @@ public static class XamlParser
     /// </summary>
     private static XamlElement ParseElementWithReader(XmlReader reader)
     {
-        var lineInfo = reader as IXmlLineInfo;
+        IXmlLineInfo? lineInfo = reader as IXmlLineInfo;
         int lineNumber = lineInfo?.HasLineInfo() == true ? lineInfo.LineNumber : 0;
         int linePosition = lineInfo?.HasLineInfo() == true ? lineInfo.LinePosition : 0;
 
         var elementName = reader.LocalName;
-        var attributes = new Dictionary<string, string>();
-        var children = new List<XamlElement>();
+        Dictionary<string, string> attributes = new Dictionary<string, string>();
+        List<XamlElement> children = new List<XamlElement>();
 
         // Read attributes
         if (reader.HasAttributes)
@@ -128,7 +128,7 @@ public static class XamlParser
     /// </summary>
     public static List<TuiDiagnostic> Validate(XamlDocument document)
     {
-        var diagnostics = new List<TuiDiagnostic>();
+        List<TuiDiagnostic> diagnostics = new List<TuiDiagnostic>();
 
         ValidateElement(document.RootElement, document.SourceFilePath, diagnostics, document.DataType);
 
@@ -148,14 +148,14 @@ public static class XamlParser
         }
 
         // Validate bindings
-        foreach (var kvp in element.PropertyAttributes)
+        foreach (KeyValuePair<string, string> kvp in element.PropertyAttributes)
         {
             var propName = kvp.Key;
             var value = kvp.Value;
 
             if (IsBindingExpression(value))
             {
-                var binding = BindingExpression.Parse(value, dataType);
+                BindingExpression? binding = BindingExpression.Parse(value, dataType);
                 if (binding == null)
                 {
                     diagnostics.Add(TuiDiagnostics.InvalidBinding.Create(filePath, value));
@@ -175,7 +175,7 @@ public static class XamlParser
         }
 
         // Validate event handlers
-        foreach (var kvp in element.EventAttributes)
+        foreach (KeyValuePair<string, string> kvp in element.EventAttributes)
         {
             var eventName = kvp.Key;
             var handlerName = kvp.Value;
@@ -193,7 +193,7 @@ public static class XamlParser
         }
 
         // Recursively validate children
-        foreach (var child in element.Children)
+        foreach (XamlElement child in element.Children)
         {
             ValidateElement(child, filePath, diagnostics, dataType);
         }
@@ -218,7 +218,7 @@ public static class XamlParser
     /// Checks if an event name is known for a control type
     /// </summary>
     private static bool IsKnownEventName(string controlName, string eventName) =>
-        Mappings.EventMappings.TryGetValue(controlName, out var events) && 
+        Mappings.EventMappings.TryGetValue(controlName, out Dictionary<string, EventMapping>? events) && 
         events.ContainsKey(eventName);
 }
 

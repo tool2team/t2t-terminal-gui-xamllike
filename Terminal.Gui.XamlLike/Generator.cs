@@ -30,7 +30,7 @@ public sealed class TuiXamlGenerator : IIncrementalGenerator
         // Generate source code for each XAML file
         context.RegisterSourceOutput(compilationAndFiles, (context, source) =>
         {
-            var compilation = source.Left;
+            Compilation compilation = source.Left;
             var files = source.Right;
             
             foreach (var file in files)
@@ -53,7 +53,7 @@ public sealed class TuiXamlGenerator : IIncrementalGenerator
             filePath));
 
         // Parse the XAML content
-        var parseResult = XamlParser.Parse(content, filePath);
+        ParseResult<XamlDocument> parseResult = XamlParser.Parse(content, filePath);
 
         if (!parseResult.IsSuccess)
         {
@@ -64,11 +64,11 @@ public sealed class TuiXamlGenerator : IIncrementalGenerator
             return;
         }
 
-        var document = parseResult.Value;
+        XamlDocument? document = parseResult.Value;
 
         // Validate the document
-        var validationErrors = XamlParser.Validate(document!);
-        foreach (var error in validationErrors)
+        List<TuiDiagnostic> validationErrors = XamlParser.Validate(document!);
+        foreach (TuiDiagnostic error in validationErrors)
         {
             context.ReportDiagnostic(error.ToDiagnostic());
         }
@@ -83,11 +83,11 @@ public sealed class TuiXamlGenerator : IIncrementalGenerator
         var dataTypePropertyName = ResolveDataTypeToPropertyName(compilation, document!);
 
         // Generate the C# code
-        var diagnostics = new List<Diagnostic>();
+        List<Diagnostic> diagnostics = new List<Diagnostic>();
         var generatedCode = GenerateCode(document!, dataTypePropertyName, diagnostics);
 
         // Report any diagnostics that occurred during code generation
-        foreach (var diagnostic in diagnostics)
+        foreach (Diagnostic diagnostic in diagnostics)
         {
             context.ReportDiagnostic(diagnostic);
         }
@@ -98,7 +98,7 @@ public sealed class TuiXamlGenerator : IIncrementalGenerator
             generatedCode.Length));
 
         // Add the generated source
-        var sourceText = SourceText.From(generatedCode, Encoding.UTF8);
+        SourceText sourceText = SourceText.From(generatedCode);
         var fileName = System.IO.Path.GetFileName(filePath) + ".g.cs";
 
         context.AddSource(fileName, sourceText);
@@ -123,13 +123,13 @@ public sealed class TuiXamlGenerator : IIncrementalGenerator
         if (string.IsNullOrEmpty(className))
             return null;
 
-        var classSymbol = compilation.GetTypeByMetadataName(className!);
+        INamedTypeSymbol? classSymbol = compilation.GetTypeByMetadataName(className!);
         if (classSymbol == null)
             return null;
 
         // Find a property of the specified type
-        var members = classSymbol.GetMembers().OfType<IPropertySymbol>();
-        foreach (var property in members)
+        IEnumerable<IPropertySymbol> members = classSymbol.GetMembers().OfType<IPropertySymbol>();
+        foreach (IPropertySymbol property in members)
         {
             var propertyTypeName = property.Type.ToDisplayString();
             if (propertyTypeName == dataType)
@@ -144,7 +144,7 @@ public sealed class TuiXamlGenerator : IIncrementalGenerator
 
     private static string GenerateCode(XamlDocument document, string? resolvedDataTypePropertyName, List<Diagnostic> diagnostics)
     {
-        var emitter = new CodeEmitter();
+        CodeEmitter emitter = new CodeEmitter();
         return emitter.GenerateClass(document, resolvedDataTypePropertyName, diagnostics);
     }
 }
@@ -174,10 +174,10 @@ public sealed class CodeEmitter
         if (element.LineNumber > 0)
         {
             // Create location with line/column info
-            var linePosition = new Microsoft.CodeAnalysis.Text.LinePosition(
+            LinePosition linePosition = new LinePosition(
                 element.LineNumber - 1,  // LinePosition is 0-based
                 element.LinePosition - 1);
-            var span = new Microsoft.CodeAnalysis.Text.LinePositionSpan(linePosition, linePosition);
+            LinePositionSpan span = new LinePositionSpan(linePosition, linePosition);
             location = Location.Create(_sourceFilePath, default, span);
         }
         else
@@ -237,15 +237,15 @@ public sealed class CodeEmitter
             ));
             rootElementType = "object"; // Fallback to allow compilation to continue
         }
-
-        if (!Mappings.IsContainer(document.RootElement.Name))
-        {
-            _diagnostics?.Add(Diagnostic.Create(
-                TuiDiagnostics.RootElementNotContainer,
-                Location.None,
-                document.RootElement.Name
-            ));
-        }
+        // TODO : Use to prevent adding child controls to non-container root elements, but need to verify this doesn't break anything in Terminal.Gui v2
+        //if (!Mappings.IsContainer(document.RootElement.Name))
+        //{
+        //    _diagnostics?.Add(Diagnostic.Create(
+        //        TuiDiagnostics.RootElementNotContainer,
+        //        Location.None,
+        //        document.RootElement.Name
+        //    ));
+        //}
         // Class declaration with base class
         AppendLine($"partial class {simpleClassName} : {rootElementType}");
         AppendLine("{");
@@ -253,7 +253,7 @@ public sealed class CodeEmitter
 
         // Collect bindings first to know which controls need fields
         // This also builds the element-to-field-name map for bound controls without x:Name
-        var bindings = CollectBindings(document.RootElement, _dataTypePropertyName);
+        List<BoundControl> bindings = CollectBindings(document.RootElement, _dataTypePropertyName);
 
         // Generate fields for named controls
         GenerateFields(document.RootElement, bindings, isRoot: false);
@@ -306,7 +306,7 @@ public sealed class CodeEmitter
             AppendLine($"private {typeName} {element.XName} = null!;");
         }
 
-        foreach (var child in element.Children)
+        foreach (XamlElement child in element.Children)
         {
             GenerateFields(child, bindings, isRoot: false);
         }
@@ -321,7 +321,7 @@ public sealed class CodeEmitter
 
     private void GenerateFieldsForBoundControls(List<BoundControl> bindings)
     {
-        foreach (var control in bindings)
+        foreach (BoundControl control in bindings)
         {
             if (!control.HasExplicitName)
             {
@@ -366,7 +366,7 @@ public sealed class CodeEmitter
             }
         }
 
-        foreach (var child in element.Children)
+        foreach (XamlElement child in element.Children)
         {
             GenerateFieldsForAnonymousControls(child, isRoot: false);
         }
@@ -389,7 +389,7 @@ public sealed class CodeEmitter
         GenerateElementCode(document.RootElement, isRoot: true);
 
         // Setup bindings if any exist
-        var bindings = CollectBindings(document.RootElement, _dataTypePropertyName);
+        List<BoundControl> bindings = CollectBindings(document.RootElement, _dataTypePropertyName);
         if (bindings.Count > 0)
         {
             AppendLine();
@@ -452,7 +452,7 @@ public sealed class CodeEmitter
         }
 
         // Set properties
-        foreach (var kvp in element.PropertyAttributes)
+        foreach (KeyValuePair<string, string> kvp in element.PropertyAttributes)
         {
             var propName = kvp.Key;
             var value = kvp.Value;
@@ -474,13 +474,13 @@ public sealed class CodeEmitter
         }
 
         // Wire up events
-        foreach (var kvp in element.EventAttributes)
+        foreach (KeyValuePair<string, string> kvp in element.EventAttributes)
         {
             var xamlEventName = kvp.Key;
             var handlerName = kvp.Value;
 
             // Check if event is obsolete
-            var eventMapping = Mappings.GetEventMapping(element.Name, xamlEventName);
+            EventMapping? eventMapping = Mappings.GetEventMapping(element.Name, xamlEventName);
             if (eventMapping?.IsObsolete == true)
             {
                 // Emit diagnostic with file location and skip code generation
@@ -503,7 +503,7 @@ public sealed class CodeEmitter
         if (element.Name == "Dialog" && element.Children.Any())
         {
             // Dialog: Generate children recursively first, then add via AddButton() or Add() based on IsDialogButton
-            foreach (var child in element.Children)
+            foreach (XamlElement child in element.Children)
             {
                 GenerateElementCode(child);
 
@@ -525,7 +525,7 @@ public sealed class CodeEmitter
             string menuName = GenerateAnonymousFieldName("Menu");
             AppendLine($"var {menuName} = new Terminal.Gui.Views.Menu();");
 
-            foreach (var child in element.Children)
+            foreach (XamlElement child in element.Children)
             {
                 GenerateElementCode(child);
 
@@ -538,7 +538,7 @@ public sealed class CodeEmitter
         else if (element.Name == "TabView" && element.Children.Any())
         {
             // Dialog: Generate children recursively first, then add via AddButton() or Add() based on IsDialogButton
-            foreach (var child in element.Children)
+            foreach (XamlElement child in element.Children)
             {
                 GenerateElementCode(child);
 
@@ -560,7 +560,7 @@ public sealed class CodeEmitter
             AppendLine($"var {viewName} = new Terminal.Gui.ViewBase.View {{ Width = Dim.Fill(), Height = Dim.Fill(), CanFocus = true }};");
 
             // Tab: Generate children recursively first, then add to view 
-            foreach (var child in element.Children)
+            foreach (XamlElement child in element.Children)
             {
                 GenerateElementCode(child);
 
@@ -574,7 +574,7 @@ public sealed class CodeEmitter
         else
         {
             // Standard container: Generate children recursively and add them normally
-            foreach (var child in element.Children)
+            foreach (XamlElement child in element.Children)
             {
                 GenerateElementCode(child);
 
@@ -639,12 +639,12 @@ public sealed class CodeEmitter
         }
 
         // Generate initial binding setup
-        foreach (var control in bindings)
+        foreach (BoundControl control in bindings)
         {
-            foreach (var property in control.BoundProperties)
+            foreach (BoundProperty property in control.BoundProperties)
             {
                 var fieldName = control.GetFieldName();
-                var binding = property.Binding;
+                BindingExpression binding = property.Binding;
 
                 if (property.IsCommand)
                 {
@@ -680,9 +680,9 @@ public sealed class CodeEmitter
         }
 
         // Generate TwoWay binding event handlers
-        foreach (var control in bindings)
+        foreach (BoundControl control in bindings)
         {
-            foreach (var property in control.BoundProperties.Where(p => p.Binding.Mode == BindingMode.TwoWay))
+            foreach (BoundProperty? property in control.BoundProperties.Where(p => p.Binding.Mode == BindingMode.TwoWay))
             {
                 var fieldName = control.GetFieldName();
                 var eventName = property.GetChangeEventName();
@@ -694,12 +694,12 @@ public sealed class CodeEmitter
         }
 
         // Generate Command.CanExecuteChanged handlers
-        foreach (var control in bindings)
+        foreach (BoundControl control in bindings)
         {
-            foreach (var property in control.BoundProperties.Where(p => p.IsCommand))
+            foreach (BoundProperty? property in control.BoundProperties.Where(p => p.IsCommand))
             {
                 var fieldName = control.GetFieldName();
-                var binding = property.Binding;
+                BindingExpression binding = property.Binding;
                 AppendLine($"// Subscribe to CanExecuteChanged for {fieldName}");
                 AppendLine($"if ({binding.SourceExpression} != null)");
                 AppendLine("{");
@@ -730,11 +730,11 @@ public sealed class CodeEmitter
         _indentLevel++;
 
         // Group bindings by the actual property name being watched
-        var processedCases = new System.Collections.Generic.HashSet<string>();
+        HashSet<string> processedCases = new HashSet<string>();
 
-        foreach (var control in bindings)
+        foreach (BoundControl control in bindings)
         {
-            foreach (var property in control.BoundProperties)
+            foreach (BoundProperty property in control.BoundProperties)
             {
                 // Skip Commands - they don't need PropertyChanged updates
                 if (property.IsCommand)
@@ -757,9 +757,9 @@ public sealed class CodeEmitter
                     _indentLevel++;
 
                     // Find all controls that bind to this property and update them
-                    foreach (var ctrl in bindings)
+                    foreach (BoundControl ctrl in bindings)
                     {
-                        foreach (var prop in ctrl.BoundProperties)
+                        foreach (BoundProperty prop in ctrl.BoundProperties)
                         {
                             var ctrlSourceExpr = prop.Binding.SourceExpression;
                             var ctrlLastDot = ctrlSourceExpr.LastIndexOf('.');
@@ -784,9 +784,9 @@ public sealed class CodeEmitter
         AppendLine("}");
 
         // Generate TwoWay event handlers
-        foreach (var control in bindings)
+        foreach (BoundControl control in bindings)
         {
-            foreach (var property in control.BoundProperties.Where(p => p.Binding.Mode == BindingMode.TwoWay))
+            foreach (BoundProperty? property in control.BoundProperties.Where(p => p.Binding.Mode == BindingMode.TwoWay))
             {
                 var fieldName = control.GetFieldName();
                 var eventName = property.GetChangeEventName();
@@ -795,12 +795,12 @@ public sealed class CodeEmitter
                 string eventArgType = "System.EventArgs";
                 if (eventName != null)
                 {
-                    var eventMapping = Mappings.GetEventMapping(control.ElementName, eventName);
+                    EventMapping? eventMapping = Mappings.GetEventMapping(control.ElementName, eventName);
                     if (eventMapping != null)
                     {
                         // Extract TEventArgs from EventHandler<TEventArgs> using regex
                         var delegateType = eventMapping.DelegateType;
-                        var match = Regex.Match(delegateType, @"System\.EventHandler<(.+)>$");
+                        Match match = Regex.Match(delegateType, @"System\.EventHandler<(.+)>$");
                         if (match.Success)
                         {
                             eventArgType = match.Groups[1].Value;
@@ -828,23 +828,23 @@ public sealed class CodeEmitter
 
     private List<BoundControl> CollectBindings(XamlElement element, string? dataType)
     {
-        var result = new List<BoundControl>();
+        List<BoundControl> result = new List<BoundControl>();
         CollectBindingsRecursive(element, result, dataType);
         return result;
     }
 
     private void CollectBindingsRecursive(XamlElement element, List<BoundControl> result, string? dataType)
     {
-        var boundProperties = new List<BoundProperty>();
+        List<BoundProperty> boundProperties = new List<BoundProperty>();
 
-        foreach (var kvp in element.PropertyAttributes)
+        foreach (KeyValuePair<string, string> kvp in element.PropertyAttributes)
         {
             var propName = kvp.Key;
             var value = kvp.Value;
 
             if (IsBindingExpression(value))
             {
-                var binding = BindingExpression.Parse(value, dataType);
+                BindingExpression? binding = BindingExpression.Parse(value, dataType);
                 if (binding != null)
                 {
                     // Pass the control type to BoundProperty so it can look up the change event name
@@ -855,7 +855,7 @@ public sealed class CodeEmitter
 
         if (boundProperties.Count > 0)
         {
-            var control = new BoundControl(element.Name, element.XName, boundProperties, element.XType);
+            BoundControl control = new BoundControl(element.Name, element.XName, boundProperties, element.XType);
             result.Add(control);
 
             // Store mapping for elements without explicit names
@@ -867,7 +867,7 @@ public sealed class CodeEmitter
             }
         }
 
-        foreach (var child in element.Children)
+        foreach (XamlElement child in element.Children)
         {
             CollectBindingsRecursive(child, result, dataType);
         }
@@ -890,9 +890,9 @@ public sealed class CodeEmitter
     /// </summary>
     private static string? DetectBindingSource(List<BoundControl> bindings)
     {
-        foreach (var control in bindings)
+        foreach (BoundControl control in bindings)
         {
-            foreach (var property in control.BoundProperties)
+            foreach (BoundProperty property in control.BoundProperties)
             {
                 var path = property.Binding.PropertyPath;
                 if (path.Contains("."))
