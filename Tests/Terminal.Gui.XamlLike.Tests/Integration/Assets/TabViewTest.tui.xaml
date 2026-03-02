@@ -1,0 +1,6 @@
+﻿<TabView x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.TabViewTest"
+    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TabView1"
+    X="Pos.Center()"
+    Y="Pos.Center()" />

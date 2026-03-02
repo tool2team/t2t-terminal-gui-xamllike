@@ -18,10 +18,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{24
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B465C348-7B36-4719-BE38-4C85D7D696D3}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D60756FB-78E4-44DE-9166-39ECAA6F25C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terminal.Gui.XamlLike.Tests", "Tests\Terminal.Gui.XamlLike.Tests\Terminal.Gui.XamlLike.Tests.csproj", "{D1A25E64-B987-4A04-807A-865D95CC07B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +58,10 @@ Global
 		{44444444-4444-4444-4444-444444444444}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44444444-4444-4444-4444-444444444444}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44444444-4444-4444-4444-444444444444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1A25E64-B987-4A04-807A-865D95CC07B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1A25E64-B987-4A04-807A-865D95CC07B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1A25E64-B987-4A04-807A-865D95CC07B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1A25E64-B987-4A04-807A-865D95CC07B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +72,7 @@ Global
 		{33333333-3333-3333-3333-333333333333} = {241F34FE-F77D-45BA-B70A-49B6623C47FF}
 		{3F0BA784-F029-CAA9-75D4-E74B4B8FF004} = {241F34FE-F77D-45BA-B70A-49B6623C47FF}
 		{44444444-4444-4444-4444-444444444444} = {241F34FE-F77D-45BA-B70A-49B6623C47FF}
+		{D1A25E64-B987-4A04-807A-865D95CC07B3} = {D60756FB-78E4-44DE-9166-39ECAA6F25C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1394E978-43A2-4152-BC6D-311CC0F3E867}

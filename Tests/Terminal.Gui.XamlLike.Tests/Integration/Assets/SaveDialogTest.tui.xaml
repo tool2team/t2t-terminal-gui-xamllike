@@ -1,0 +1,6 @@
+﻿<SaveDialog x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.SaveDialogTest"
+    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="SaveDialog1"
+    X="Pos.Center()"
+    Y="Pos.Center()" />

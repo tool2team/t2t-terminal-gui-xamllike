@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>net10.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+	<IsPackable>false</IsPackable>
+
+	<!-- Force disable generation of binding redirects to avoid Roslyn version conflicts -->
+	<AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+	<GenerateBindingRedirectsOutputType>false</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);BUILD_TESTS</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="coverlet.collector" Version="8.0.0">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+
+	  <!-- Microsoft Testing Framework for Source Generators -->
+	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0" />
+	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" Version="1.1.2" />
+
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+
+	<!-- XUnit -->
+  </ItemGroup>
+
+
+
+	<ItemGroup>
+		<PackageReference Include="Terminal.Gui" Version="2.0.0-develop.5093" />
+		<PackageReference Include="xunit.v3" Version="3.2.2" />
+	</ItemGroup>
+	
+	<ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+	<ItemGroup Condition="$(DefineConstants.Contains('BUILD_TESTS'))">
+		<ProjectReference Include="..\..\Terminal.Gui.XamlLike\Terminal.Gui.XamlLike.csproj" />
+		<None Include="**\Assets\*.tui.xaml" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="**\Snapshots\*.tui.xaml.g.cs" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
+	<PropertyGroup Condition="$(DefineConstants.Contains('BUILD_ASSETS'))">
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)Generated</CompilerGeneratedFilesOutputPath>
+	</PropertyGroup>
+
+	<ItemGroup Condition="$(DefineConstants.Contains('BUILD_ASSETS'))">
+		<ProjectReference Include="..\..\Terminal.Gui.XamlLike\Terminal.Gui.XamlLike.csproj" OutputItemType="Analyzer" />
+		<AdditionalFiles Include="**\Assets\*.tui.xaml" />
+		<None Include="**\Snapshots\*.tui.xaml.g.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Integration\Snapshots\" />
+	  <Folder Include="Unit\" />
+	</ItemGroup>
+
+</Project>
