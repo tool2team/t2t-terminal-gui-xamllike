@@ -13,6 +13,8 @@ namespace Terminal.Gui.XamlLike;
 [Generator]
 public sealed class TuiXamlGenerator : IIncrementalGenerator
 {
+    private static readonly Encoding Utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         // Register the generator for .tui.xaml files
@@ -98,7 +100,7 @@ public sealed class TuiXamlGenerator : IIncrementalGenerator
             generatedCode.Length));
 
         // Add the generated source
-        SourceText sourceText = SourceText.From(generatedCode);
+        SourceText sourceText = SourceText.From(generatedCode, Utf8NoBom);
         var fileName = System.IO.Path.GetFileName(filePath) + ".g.cs";
 
         context.AddSource(fileName, sourceText);
