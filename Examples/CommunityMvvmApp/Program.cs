@@ -18,10 +18,10 @@ class Program
             using IApplication app = Application.Create().Init();
 
             // Configure dependency injection with the application instance
-            using var serviceProvider = ServiceConfiguration.ConfigureServices(app);
+            using ServiceProvider serviceProvider = ServiceConfiguration.ConfigureServices(app);
 
             // Resolve MainWindow from DI container (ViewModel injected automatically)
-            var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
+            MainWindow mainWindow = serviceProvider.GetRequiredService<MainWindow>();
 
             app.Run(mainWindow);
         }

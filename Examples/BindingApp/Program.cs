@@ -15,7 +15,7 @@ class Program
         try
         {
             using IApplication app = Application.Create().Init();
-            var mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow();
             app.Run(mainWindow);
         }
         catch (Exception ex)

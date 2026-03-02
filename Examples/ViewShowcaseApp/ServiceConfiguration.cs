@@ -12,7 +12,7 @@ public static class ServiceConfiguration
     /// </summary>
     public static ServiceProvider ConfigureServices(IApplication application)
     {
-        var services = new ServiceCollection();
+        ServiceCollection services = new ServiceCollection();
 
         // Register Terminal.Gui Application as Singleton
         services.AddSingleton(application);

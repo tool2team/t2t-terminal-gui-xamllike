@@ -14,7 +14,7 @@ public partial class AdvancedDialogDemoDlg
     private void OnBrowse(object? sender, CommandEventArgs e)
     {
         // Open file dialog to select a file
-        var fileDialog = new OpenDialog
+        OpenDialog fileDialog = new OpenDialog
         {
             Title = "Select File"
         };

@@ -9,9 +9,9 @@ public partial class TableViewDemo : View
     public TableViewDemo()
     {
         InitializeComponent();
-        
+
         // Create a sample data table
-        var dataTable = new DataTable();
+        DataTable dataTable = new DataTable();
         dataTable.Columns.Add("ID", typeof(int));
         dataTable.Columns.Add("Name", typeof(string));
         dataTable.Columns.Add("Department", typeof(string));
@@ -33,7 +33,7 @@ public partial class TableViewDemo : View
 
     private void OnCellActivated(object? sender, CellActivatedEventArgs e)
     {
-        var table = (DataTableSource)EmployeeTable.Table;
+        DataTableSource table = (DataTableSource)EmployeeTable.Table;
         var row = e.Row;
         var col = e.Col;
         

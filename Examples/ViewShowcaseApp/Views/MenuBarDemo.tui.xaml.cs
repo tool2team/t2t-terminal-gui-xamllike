@@ -18,7 +18,7 @@ public partial class MenuBarDemo
     private void OnOpen(object? sender, EventArgs e)
     {
         StatusLabel.Text = "File -> Open selected";
-        var dialog = new OpenDialog();
+        OpenDialog dialog = new OpenDialog();
         App?.Run(dialog);
     }
 
@@ -30,7 +30,7 @@ public partial class MenuBarDemo
     private void OnSaveAs(object? sender, EventArgs e)
     {
         StatusLabel.Text = "File -> Save As selected";
-        var dialog = new SaveDialog();
+        SaveDialog dialog = new SaveDialog();
         App?.Run(dialog);
     }
 

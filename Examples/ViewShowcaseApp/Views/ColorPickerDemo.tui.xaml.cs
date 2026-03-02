@@ -13,7 +13,7 @@ public partial class ColorPickerDemo : View
 
     private void OnFullValueChanged(object? sender, ValueChangedEventArgs<Color?> e)
     {
-        var color = FullColorPicker.SelectedColor;
+        Color color = FullColorPicker.SelectedColor;
         FullColorLabel.Text = $"Selected Color: RGB({color.R}, {color.G}, {color.B})";
     }
 }
