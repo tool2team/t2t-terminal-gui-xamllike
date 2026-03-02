@@ -10,7 +10,7 @@ namespace Terminal.Gui.XamlLike;
 /// <summary>
 /// Incremental source generator for Terminal.Gui XAML-like files
 /// </summary>
-[Generator]
+[Generator(LanguageNames.CSharp)]
 public sealed class TuiXamlGenerator : IIncrementalGenerator
 {
     private static readonly Encoding Utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);

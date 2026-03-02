@@ -1,69 +1,73 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Testing;
-using Microsoft.CodeAnalysis.Testing;
-using Microsoft.CodeAnalysis.Text;
+﻿using Xunit;
 using System.Text;
 using Terminal.Gui.ViewBase;
 
-namespace Terminal.Gui.XamlLike.Tests.Integration.Views
+namespace Terminal.Gui.XamlLike.Tests.Integration.Views;
+
+public abstract class BaseViewTests<T> where T : View
 {
-    public class BaseViewTests<T> where T : View
+    private static readonly Encoding Utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+
+    public string XamlName => $"{typeof(T).Name}Test.tui.xaml";
+    public string XamlPath => Path.Combine(AppContext.BaseDirectory, "Integration", "Assets", XamlName);
+
+    public string SnapshotName => $"{XamlName}.g.cs";
+    public string SnapshotPath => Path.Combine(AppContext.BaseDirectory, "Integration", "Snapshots", SnapshotName);
+
+    public string GeneratedSourcePath => Path.Combine(typeof(TuiXamlGenerator).Namespace!, typeof(TuiXamlGenerator).FullName!, SnapshotName);
+
+    public BaseViewTests()
     {
-        // ✨ Même encodage que le generator
-        private static readonly Encoding Utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+    }
 
-        public string XamlName => $"{typeof(T).Name}Test.tui.xaml";
-        public string XamlPath => Path.Combine(AppContext.BaseDirectory, "Integration", "Assets", XamlName);
+    public string GetXamlContent()
+    {
+        Assert.True(File.Exists(XamlPath), $"Missing test asset: {XamlPath}");
+        return File.ReadAllText(XamlPath);
+    }
 
-        public string SnapshotName => $"{XamlName}.g.cs";
-        public string SnapshotPath => Path.Combine(AppContext.BaseDirectory, "Integration", "Snapshots", SnapshotName);
+    public string GetSnapshotContent()
+    {
+        Assert.True(File.Exists(SnapshotPath), $"Missing test snapshot: {SnapshotPath}");
+        return File.ReadAllText(SnapshotPath);
+    }
 
-        public string GeneratedSourcePath => Path.Combine(typeof(TuiXamlGenerator).Namespace!, typeof(TuiXamlGenerator).FullName!, SnapshotName);
+    [Fact]
+    public async Task Should_Generate_From_Xaml_And_Match_Snapshot()
+    {
+        var generator = new Terminal.Gui.XamlLike.TuiXamlGenerator();
 
-        public CSharpSourceGeneratorTest<TuiXamlGenerator, DefaultVerifier> SourceGeneratorTest { get; } = new();
+        // Source C# minimal pour que la compilation existe
+        var sources = new[]
+        {       
+            ("Dummy.cs", """
+            namespace TestNs;
+            public partial class Dummy { }
+            """)
+        };
 
-        public BaseViewTests()
-        {
-            var xamlText = SourceText.From(GetXamlContent(), Utf8NoBom);
-            SourceGeneratorTest.TestState.AdditionalFiles.Add((XamlName, xamlText));
+        var result = GeneratorTestHost.Run(
+            incrementalGenerator: generator,
+            sources: [],
+            additionalFiles: new[] { (XamlName, GetXamlContent()) });
 
-            var snapshotText = SourceText.From(GetSnapshotContent(), Utf8NoBom);
-            SourceGeneratorTest.TestState.GeneratedSources.Add((GeneratedSourcePath, snapshotText));
-        }
+        // 1) Vérifie qu'il y a au moins une source générée
+        Assert.True(result.Results.Length > 0);
 
-        public string GetXamlContent()
-        {
-            Assert.True(File.Exists(XamlPath), $"Missing test asset: {XamlPath}");
-            return File.ReadAllText(XamlPath);
-        }
+        var generated = result
+            .Results
+            .SelectMany(r => r.GeneratedSources)
+            .ToList();
 
-        public string GetSnapshotContent()
-        {
-            Assert.True(File.Exists(SnapshotPath), $"Missing test snapshot: {SnapshotPath}");
-            return File.ReadAllText(SnapshotPath);
-        }
+        Assert.NotEmpty(generated);
 
-        [Fact]
-        public async Task Should_Generate_From_Xaml_And_Match_Snapshot()
-        {
-            await SourceGeneratorTest.RunAsync(TestContext.Current.CancellationToken);
-        }
+        // 2) Vérifie que le bon fichier (hintName) existe
+        Assert.Contains(generated, g => g.HintName == SnapshotName);
 
-        [Fact]
-        public async Task Should_Generate_Valid_Structure()
-        {
-            await SourceGeneratorTest.RunAsync(TestContext.Current.CancellationToken);
+        var file = generated.First(g => g.HintName == SnapshotName);
+        var text = file!.SourceText.ToString();
 
-            var generated = SourceGeneratorTest.TestState.GeneratedSources
-                .FirstOrDefault(gs => gs.filename.EndsWith(SnapshotName));
-
-            Assert.NotNull(generated);
-
-            var content = generated.content.ToString();
-            var viewName = typeof(T).Name;
-
-            Assert.Contains($"namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml.{viewName}Test", content);
-            Assert.Contains($"partial class {viewName}Test", content);
-            Assert.Contains("private void InitializeComponent()", content);
-        }
+        // 3) Vérifie la correspondance avec le snapshot
+        Assert.Equal(GetSnapshotContent(), text);
     }
 }
