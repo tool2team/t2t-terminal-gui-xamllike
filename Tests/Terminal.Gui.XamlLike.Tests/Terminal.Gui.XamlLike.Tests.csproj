@@ -45,7 +45,9 @@
 	<ItemGroup Condition="$(DefineConstants.Contains('BUILD_SNAPSHOTS'))">
 		<ProjectReference Include="..\..\Terminal.Gui.XamlLike\Terminal.Gui.XamlLike.csproj" OutputItemType="Analyzer" />
 		<AdditionalFiles Include="Integration\Assets\*.tui.xaml" />
-		<None Include="Integration\Snapshots\*.tui.xaml.g.cs" />
+		<!-- Exclude snapshots from build -->
+		<Compile Remove="Integration\Snapshots\*.tui.xaml.g.cs" />
+		<None Remove="Integration\Snapshots\*.tui.xaml.g.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

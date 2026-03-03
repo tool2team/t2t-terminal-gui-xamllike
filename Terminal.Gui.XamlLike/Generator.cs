@@ -471,7 +471,7 @@ public sealed class CodeEmitter
                 continue;
             }
 
-            var csharpValue = GetPropertyValue(propName, value);
+            var csharpValue = GetPropertyValue(element.Name, propName, value);
             AppendLine($"{variableName}.{propName} = {csharpValue};");
         }
 
@@ -913,15 +913,17 @@ public sealed class CodeEmitter
     private static bool IsBindingExpression(string value) =>
         value.Trim().StartsWith("{Bind ") && value.Trim().EndsWith("}");
 
-    private static string GetPropertyValue(string propName, string value)
+    private static string GetPropertyValue(string controlName, string propName, string value)
     {
         // Check if property is a Terminal.Gui type (includes Pos, Dim, Key, Enum, etc.)
-        if (Mappings.IsTerminalGuiType(propName))
+        // Pass controlName to get control-specific property types
+        var propertyMapping = Mappings.GetPropertyMapping(propName, controlName);
+        if (propertyMapping != null && propertyMapping.TargetType.StartsWith("Terminal.Gui."))
         {
-            var fullType = Mappings.GetFullyQualifiedType(propName);
+            var fullType = propertyMapping.TargetType;
 
             // Special handling for Pos and Dim types
-            if (fullType == "Terminal.Gui.Views.Pos" || fullType == "Terminal.Gui.Views.Dim")
+            if (fullType == "Terminal.Gui.ViewBase.Pos" || fullType == "Terminal.Gui.ViewBase.Dim")
             {
                 // If value contains parentheses, it's already an expression like Dim.Fill()
                 if (value.Contains("("))
@@ -943,6 +945,7 @@ public sealed class CodeEmitter
             if (fullType != null)
             {
                 // Handle values like "Key.F1" or "Key.Q.WithCtrl" or just "F1"
+                // Or "CheckState.Checked" → "Terminal.Gui.Views.CheckState.Checked"
                 // Split by dots to analyze the structure
                 var parts = value.Split('.');
 
@@ -953,7 +956,7 @@ public sealed class CodeEmitter
                 }
                 else if (parts.Length >= 2)
                 {
-                    // Has dots: "Key.F1" or "Key.Q.WithCtrl"
+                    // Has dots: "Key.F1" or "Key.Q.WithCtrl" or "CheckState.Checked"
                     // Check if first part matches the type name
                     var typeShortName = fullType.Substring(fullType.LastIndexOf('.') + 1);
 
@@ -962,6 +965,7 @@ public sealed class CodeEmitter
                         // Remove the type prefix and add the full namespace
                         // "Key.F1" → "Terminal.Gui.Input.Key.F1"
                         // "Key.Q.WithCtrl" → "Terminal.Gui.Input.Key.Q.WithCtrl"
+                        // "CheckState.Checked" → "Terminal.Gui.Views.CheckState.Checked"
                         var valuePart = string.Join(".", parts.Skip(1));
                         return $"{fullType}.{valuePart}";
                     }
