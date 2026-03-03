@@ -11,13 +11,18 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class NumericUpDownTest : Terminal.Gui.Views.NumericUpDown
     {
-        private Terminal.Gui.Views.NumericUpDown NumericUpDown1 = null!;
+        private Terminal.Gui.Views.NumericUpDown TestNumericUpDown = null!;
 
         private void InitializeComponent()
         {
-            NumericUpDown1 = this;
-            NumericUpDown1.X = Pos.Center();
-            NumericUpDown1.Y = Pos.Center();
+            TestNumericUpDown = this;
+            TestNumericUpDown.X = 5;
+            TestNumericUpDown.Y = 2;
+            TestNumericUpDown.Width = 30;
+            TestNumericUpDown.Height = 5;
+            TestNumericUpDown.Format = "Sample";
+            TestNumericUpDown.Increment = "Sample";
+            TestNumericUpDown.Value = "0";
         }
     }
 }

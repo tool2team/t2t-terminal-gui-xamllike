@@ -1,9 +1,12 @@
 ﻿<LegendAnnotation x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.LegendAnnotationTestView"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-       Width="40"
-       Height="10">
-
-  <!-- Basic LegendAnnotation test -->
-
+    x:Name="TestControl"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5">
+  
+  <!-- Test properties for LegendAnnotation -->
+  
 </LegendAnnotation>

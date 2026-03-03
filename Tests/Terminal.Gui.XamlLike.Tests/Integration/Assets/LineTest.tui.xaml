@@ -1,6 +1,14 @@
 ﻿<Line x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.LineTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="Line1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestLine"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    Length="Sample"
+    Style="Sample">
+  
+  <!-- Line with properties: Length, Style -->
+  
+</Line>

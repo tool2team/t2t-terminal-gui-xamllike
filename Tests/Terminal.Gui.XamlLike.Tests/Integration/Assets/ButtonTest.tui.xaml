@@ -1,7 +1,15 @@
-<Button x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.ButtonTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="ButtonTest1"
-    Text="Click Me!"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+﻿<Button x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.ButtonTest"
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestButton"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    IsDefault="True"
+    NoDecorations="True"
+    NoPadding="True">
+  
+  <!-- Button with properties: IsDefault, NoDecorations, NoPadding -->
+  
+</Button>

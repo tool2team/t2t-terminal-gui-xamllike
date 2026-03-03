@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class LinearRangeTest : Terminal.Gui.Views.LinearRange
     {
-        private Terminal.Gui.Views.LinearRange LinearRange1 = null!;
+        private Terminal.Gui.Views.LinearRange TestLinearRange = null!;
 
         private void InitializeComponent()
         {
-            LinearRange1 = this;
-            LinearRange1.X = Pos.Center();
-            LinearRange1.Y = Pos.Center();
+            TestLinearRange = this;
+            TestLinearRange.X = 5;
+            TestLinearRange.Y = 2;
+            TestLinearRange.Width = 30;
+            TestLinearRange.Height = 5;
+            TestLinearRange.AllowEmpty = Sample;
+            TestLinearRange.FocusedOption = "Sample";
+            TestLinearRange.LegendsOrientation = Terminal.Gui.ViewBase.Orientation.Sample;
+            TestLinearRange.MinimumInnerSpacing = "Sample";
+            TestLinearRange.Options = "Sample";
         }
     }
 }

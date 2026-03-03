@@ -11,11 +11,15 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class LegendAnnotationTestView : Terminal.Gui.Views.LegendAnnotation
     {
+        private Terminal.Gui.Views.LegendAnnotation TestControl = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestControl = this;
+            TestControl.X = 5;
+            TestControl.Y = 2;
+            TestControl.Width = 30;
+            TestControl.Height = 5;
         }
     }
 }

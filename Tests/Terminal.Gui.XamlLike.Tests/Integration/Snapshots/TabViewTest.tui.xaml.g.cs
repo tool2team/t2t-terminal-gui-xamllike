@@ -11,13 +11,19 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class TabViewTest : Terminal.Gui.Views.TabView
     {
-        private Terminal.Gui.Views.TabView TabView1 = null!;
+        private Terminal.Gui.Views.TabView TestTabView = null!;
 
         private void InitializeComponent()
         {
-            TabView1 = this;
-            TabView1.X = Pos.Center();
-            TabView1.Y = Pos.Center();
+            TestTabView = this;
+            TestTabView.X = 5;
+            TestTabView.Y = 2;
+            TestTabView.Width = 30;
+            TestTabView.Height = 5;
+            TestTabView.MaxTabTextWidth = "Sample";
+            TestTabView.SelectedTab = Terminal.Gui.Views.Tab.0;
+            TestTabView.Style = Terminal.Gui.Views.TabStyle.Sample;
+            TestTabView.TabScrollOffset = "Sample";
         }
     }
 }

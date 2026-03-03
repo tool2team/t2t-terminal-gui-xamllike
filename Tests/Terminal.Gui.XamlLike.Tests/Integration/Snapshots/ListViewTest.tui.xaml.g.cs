@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class ListViewTest : Terminal.Gui.Views.ListView
     {
-        private Terminal.Gui.Views.ListView ListView1 = null!;
+        private Terminal.Gui.Views.ListView TestListView = null!;
 
         private void InitializeComponent()
         {
-            ListView1 = this;
-            ListView1.X = Pos.Center();
-            ListView1.Y = Pos.Center();
+            TestListView = this;
+            TestListView.X = 5;
+            TestListView.Y = 2;
+            TestListView.Width = 30;
+            TestListView.Height = 5;
+            TestListView.MarkMultiple = Sample;
+            TestListView.SelectedItem = 0;
+            TestListView.ShowMarks = Sample;
+            TestListView.Source = Terminal.Gui.Views.IListDataSource.;
+            TestListView.TopItem = "Sample";
         }
     }
 }

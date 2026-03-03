@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class TextViewTest : Terminal.Gui.Views.TextView
     {
-        private Terminal.Gui.Views.TextView TextView1 = null!;
+        private Terminal.Gui.Views.TextView TestTextView = null!;
 
         private void InitializeComponent()
         {
-            TextView1 = this;
-            TextView1.X = Pos.Center();
-            TextView1.Y = Pos.Center();
+            TestTextView = this;
+            TestTextView.X = 5;
+            TestTextView.Y = 2;
+            TestTextView.Width = 30;
+            TestTextView.Height = 5;
+            TestTextView.EnterKeyAddsLine = Sample;
+            TestTextView.InheritsPreviousAttribute = Sample;
+            TestTextView.InsertionPoint = "Sample";
+            TestTextView.IsSelecting = Sample;
+            TestTextView.Multiline = false;
         }
     }
 }

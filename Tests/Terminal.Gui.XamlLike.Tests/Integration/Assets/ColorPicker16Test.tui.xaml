@@ -1,6 +1,17 @@
 ﻿<ColorPicker16 x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.ColorPicker16Test"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="ColorPicker161"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestColorPicker16"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    BoxHeight="Sample"
+    BoxWidth="Sample"
+    Caret="Sample"
+    SelectedColor="0"
+    Value="0">
+  
+  <!-- ColorPicker16 with properties: BoxHeight, BoxWidth, Caret, SelectedColor, Value -->
+  
+</ColorPicker16>

@@ -11,13 +11,17 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class MenuTest : Terminal.Gui.Views.Menu
     {
-        private Terminal.Gui.Views.Menu Menu1 = null!;
+        private Terminal.Gui.Views.Menu TestMenu = null!;
 
         private void InitializeComponent()
         {
-            Menu1 = this;
-            Menu1.X = Pos.Center();
-            Menu1.Y = Pos.Center();
+            TestMenu = this;
+            TestMenu.X = 5;
+            TestMenu.Y = 2;
+            TestMenu.Width = 30;
+            TestMenu.Height = 5;
+            TestMenu.SuperMenuItem = Terminal.Gui.Views.MenuItem.Sample;
+            TestMenu.Value = Terminal.Gui.Views.MenuItem.0;
         }
     }
 }

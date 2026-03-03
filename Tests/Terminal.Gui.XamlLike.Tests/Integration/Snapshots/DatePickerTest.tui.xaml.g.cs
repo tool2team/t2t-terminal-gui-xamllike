@@ -11,11 +11,17 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class DatePickerTestView : Terminal.Gui.Views.DatePicker
     {
+        private Terminal.Gui.Views.DatePicker TestDatePicker = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestDatePicker = this;
+            TestDatePicker.X = 5;
+            TestDatePicker.Y = 2;
+            TestDatePicker.Width = 30;
+            TestDatePicker.Height = 5;
+            TestDatePicker.Culture = "Sample";
+            TestDatePicker.Value = "0";
         }
     }
 }

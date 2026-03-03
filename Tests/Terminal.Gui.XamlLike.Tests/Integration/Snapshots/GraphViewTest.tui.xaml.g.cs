@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class GraphViewTest : Terminal.Gui.Views.GraphView
     {
-        private Terminal.Gui.Views.GraphView GraphView1 = null!;
+        private Terminal.Gui.Views.GraphView TestGraphView = null!;
 
         private void InitializeComponent()
         {
-            GraphView1 = this;
-            GraphView1.X = Pos.Center();
-            GraphView1.Y = Pos.Center();
+            TestGraphView = this;
+            TestGraphView.X = 5;
+            TestGraphView.Y = 2;
+            TestGraphView.Width = 30;
+            TestGraphView.Height = 5;
+            TestGraphView.AxisX = Terminal.Gui.Views.HorizontalAxis.Sample;
+            TestGraphView.AxisY = Terminal.Gui.Views.VerticalAxis.Sample;
+            TestGraphView.CellSize = "Sample";
+            TestGraphView.GraphColor = "Sample";
+            TestGraphView.MarginBottom = "Sample";
         }
     }
 }

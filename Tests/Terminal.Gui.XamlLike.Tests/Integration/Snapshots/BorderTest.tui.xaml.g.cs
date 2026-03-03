@@ -11,11 +11,16 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class BorderTestView : Terminal.Gui.ViewBase.Border
     {
+        private Terminal.Gui.ViewBase.Border TestBorder = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestBorder = this;
+            TestBorder.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.Sample;
+            TestBorder.LineStyle = Terminal.Gui.Drawing.LineStyle.Sample;
+            TestBorder.Parent = Terminal.Gui.ViewBase.View.Sample;
+            TestBorder.Settings = Terminal.Gui.ViewBase.BorderSettings.Sample;
+            TestBorder.Thickness = Terminal.Gui.Drawing.Thickness.1;
         }
     }
 }

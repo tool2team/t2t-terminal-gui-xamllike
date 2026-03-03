@@ -11,13 +11,18 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class CheckBoxTest : Terminal.Gui.Views.CheckBox
     {
-        private Terminal.Gui.Views.CheckBox CheckBox1 = null!;
+        private Terminal.Gui.Views.CheckBox TestCheckBox = null!;
 
         private void InitializeComponent()
         {
-            CheckBox1 = this;
-            CheckBox1.X = Pos.Center();
-            CheckBox1.Y = Pos.Center();
+            TestCheckBox = this;
+            TestCheckBox.X = 5;
+            TestCheckBox.Y = 2;
+            TestCheckBox.Width = 30;
+            TestCheckBox.Height = 5;
+            TestCheckBox.Value = Terminal.Gui.Views.CheckState.Checked;
+            TestCheckBox.AllowCheckStateNone = true;
+            TestCheckBox.RadioStyle = false;
         }
     }
 }

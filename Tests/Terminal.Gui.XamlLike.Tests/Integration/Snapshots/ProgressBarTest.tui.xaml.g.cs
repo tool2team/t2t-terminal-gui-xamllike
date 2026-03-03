@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class ProgressBarTest : Terminal.Gui.Views.ProgressBar
     {
-        private Terminal.Gui.Views.ProgressBar ProgressBar1 = null!;
+        private Terminal.Gui.Views.ProgressBar TestProgressBar = null!;
 
         private void InitializeComponent()
         {
-            ProgressBar1 = this;
-            ProgressBar1.X = Pos.Center();
-            ProgressBar1.Y = Pos.Center();
+            TestProgressBar = this;
+            TestProgressBar.X = 5;
+            TestProgressBar.Y = 2;
+            TestProgressBar.Width = 30;
+            TestProgressBar.Height = 5;
+            TestProgressBar.BidirectionalMarquee = Sample;
+            TestProgressBar.Fraction = 0.5f;
+            TestProgressBar.ProgressBarFormat = Terminal.Gui.Views.ProgressBarFormat.Sample;
+            TestProgressBar.ProgressBarStyle = Terminal.Gui.Views.ProgressBarStyle.Sample;
+            TestProgressBar.SegmentCharacter = "Sample";
         }
     }
 }

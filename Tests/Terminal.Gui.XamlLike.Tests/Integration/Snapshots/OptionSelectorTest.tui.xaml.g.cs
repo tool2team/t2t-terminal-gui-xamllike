@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class OptionSelectorTest : Terminal.Gui.Views.OptionSelector
     {
-        private Terminal.Gui.Views.OptionSelector OptionSelector1 = null!;
+        private Terminal.Gui.Views.OptionSelector TestOptionSelector = null!;
 
         private void InitializeComponent()
         {
-            OptionSelector1 = this;
-            OptionSelector1.X = Pos.Center();
-            OptionSelector1.Y = Pos.Center();
+            TestOptionSelector = this;
+            TestOptionSelector.X = 5;
+            TestOptionSelector.Y = 2;
+            TestOptionSelector.Width = 30;
+            TestOptionSelector.Height = 5;
+            TestOptionSelector.DoubleClickAccepts = Sample;
+            TestOptionSelector.FocusedItem = "Sample";
+            TestOptionSelector.HorizontalSpace = "Sample";
+            TestOptionSelector.Labels = "Sample";
+            TestOptionSelector.Styles = Terminal.Gui.Views.SelectorStyles.Sample;
         }
     }
 }

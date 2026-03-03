@@ -1,6 +1,17 @@
 ﻿<CharMap x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.CharMapTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="CharMap1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestCharMap"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    SelectedCodePoint="0"
+    ShowGlyphWidths="Sample"
+    ShowUnicodeCategory="Sample"
+    StartCodePoint="Sample"
+    Value="0">
+  
+  <!-- CharMap with properties: SelectedCodePoint, ShowGlyphWidths, ShowUnicodeCategory, StartCodePoint, Value -->
+  
+</CharMap>

@@ -1,9 +1,14 @@
 ﻿<DatePicker x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.DatePickerTestView"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-       Width="40"
-       Height="10">
-
-  <!-- Basic DatePicker test -->
-
+    x:Name="TestDatePicker"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    Culture="Sample"
+    Value="0">
+  
+  <!-- DatePicker with properties: Culture, Value -->
+  
 </DatePicker>

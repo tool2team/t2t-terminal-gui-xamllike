@@ -11,11 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class MenuItemTestView : Terminal.Gui.Views.MenuItem
     {
+        private Terminal.Gui.Views.MenuItem TestMenuItem = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestMenuItem = this;
+            TestMenuItem.X = 5;
+            TestMenuItem.Y = 2;
+            TestMenuItem.Width = 30;
+            TestMenuItem.Height = 5;
+            TestMenuItem.Action = "Sample";
+            TestMenuItem.BindKeyToApplication = Sample;
+            TestMenuItem.Command = Terminal.Gui.Input.Command.Sample;
+            TestMenuItem.CommandView = Terminal.Gui.ViewBase.View.Sample;
+            TestMenuItem.HelpText = "Sample";
         }
     }
 }

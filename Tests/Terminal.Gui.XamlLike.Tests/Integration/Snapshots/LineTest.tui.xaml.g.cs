@@ -11,13 +11,17 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class LineTest : Terminal.Gui.Views.Line
     {
-        private Terminal.Gui.Views.Line Line1 = null!;
+        private Terminal.Gui.Views.Line TestLine = null!;
 
         private void InitializeComponent()
         {
-            Line1 = this;
-            Line1.X = Pos.Center();
-            Line1.Y = Pos.Center();
+            TestLine = this;
+            TestLine.X = 5;
+            TestLine.Y = 2;
+            TestLine.Width = 30;
+            TestLine.Height = 5;
+            TestLine.Length = Sample;
+            TestLine.Style = Terminal.Gui.Drawing.LineStyle.Sample;
         }
     }
 }

@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class SpinnerViewTest : Terminal.Gui.Views.SpinnerView
     {
-        private Terminal.Gui.Views.SpinnerView SpinnerView1 = null!;
+        private Terminal.Gui.Views.SpinnerView TestSpinnerView = null!;
 
         private void InitializeComponent()
         {
-            SpinnerView1 = this;
-            SpinnerView1.X = Pos.Center();
-            SpinnerView1.Y = Pos.Center();
+            TestSpinnerView = this;
+            TestSpinnerView.X = 5;
+            TestSpinnerView.Y = 2;
+            TestSpinnerView.Width = 30;
+            TestSpinnerView.Height = 5;
+            TestSpinnerView.AutoSpin = Sample;
+            TestSpinnerView.Sequence = "Sample";
+            TestSpinnerView.SpinBounce = Sample;
+            TestSpinnerView.SpinDelay = "Sample";
+            TestSpinnerView.SpinReverse = Sample;
         }
     }
 }

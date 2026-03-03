@@ -11,11 +11,14 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class AdornmentTestView : Terminal.Gui.ViewBase.Adornment
     {
+        private Terminal.Gui.ViewBase.Adornment TestAdornment = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestAdornment = this;
+            TestAdornment.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.Sample;
+            TestAdornment.Parent = Terminal.Gui.ViewBase.View.Sample;
+            TestAdornment.Thickness = Terminal.Gui.Drawing.Thickness.1;
         }
     }
 }

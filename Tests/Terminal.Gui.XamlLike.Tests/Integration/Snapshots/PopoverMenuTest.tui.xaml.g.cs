@@ -11,11 +11,19 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class PopoverMenuTestView : Terminal.Gui.Views.PopoverMenu
     {
+        private Terminal.Gui.Views.PopoverMenu TestPopoverMenu = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestPopoverMenu = this;
+            TestPopoverMenu.X = 5;
+            TestPopoverMenu.Y = 2;
+            TestPopoverMenu.Width = 30;
+            TestPopoverMenu.Height = 5;
+            TestPopoverMenu.MouseFlags = Terminal.Gui.Input.MouseFlags.Sample;
+            TestPopoverMenu.Owner = Terminal.Gui.App.IRunnable.Sample;
+            TestPopoverMenu.Root = Terminal.Gui.Views.Menu.Sample;
+            TestPopoverMenu.Target = "Sample";
         }
     }
 }

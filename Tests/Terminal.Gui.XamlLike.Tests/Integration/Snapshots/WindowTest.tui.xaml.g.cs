@@ -11,13 +11,12 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class WindowTest : Terminal.Gui.Views.Window
     {
-        private Terminal.Gui.Views.Window Window1 = null!;
+        private Terminal.Gui.Views.Window TestWindow = null!;
 
         private void InitializeComponent()
         {
-            Window1 = this;
-            Window1.X = Pos.Center();
-            Window1.Y = Pos.Center();
+            TestWindow = this;
+            TestWindow.Result = "Sample";
         }
     }
 }

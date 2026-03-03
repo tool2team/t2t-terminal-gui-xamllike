@@ -1,4 +1,14 @@
 ﻿<AttributePicker x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.AttributePickerTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="AttributePicker1" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestAttributePicker"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    SampleText="Sample"
+    Value="0">
+  
+  <!-- AttributePicker with properties: SampleText, Value -->
+  
+</AttributePicker>

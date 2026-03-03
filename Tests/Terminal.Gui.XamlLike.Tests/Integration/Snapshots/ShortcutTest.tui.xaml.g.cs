@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class ShortcutTest : Terminal.Gui.Views.Shortcut
     {
-        private Terminal.Gui.Views.Shortcut Shortcut1 = null!;
+        private Terminal.Gui.Views.Shortcut TestShortcut = null!;
 
         private void InitializeComponent()
         {
-            Shortcut1 = this;
-            Shortcut1.X = Pos.Center();
-            Shortcut1.Y = Pos.Center();
+            TestShortcut = this;
+            TestShortcut.X = 5;
+            TestShortcut.Y = 2;
+            TestShortcut.Width = 30;
+            TestShortcut.Height = 5;
+            TestShortcut.Action = "Sample";
+            TestShortcut.BindKeyToApplication = Sample;
+            TestShortcut.Command = Terminal.Gui.Input.Command.Sample;
+            TestShortcut.CommandView = Terminal.Gui.ViewBase.View.Sample;
+            TestShortcut.HelpText = "Sample";
         }
     }
 }

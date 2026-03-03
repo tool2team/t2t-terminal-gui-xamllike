@@ -1,9 +1,16 @@
 ﻿<PopoverMenu x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.PopoverMenuTestView"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-       Width="40"
-       Height="10">
-
-  <!-- Basic PopoverMenu test -->
-
+    x:Name="TestPopoverMenu"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    MouseFlags="Sample"
+    Owner="Sample"
+    Root="Sample"
+    Target="Sample">
+  
+  <!-- PopoverMenu with properties: MouseFlags, Owner, Root, Target -->
+  
 </PopoverMenu>

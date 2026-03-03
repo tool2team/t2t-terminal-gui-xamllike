@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class CharMapTest : Terminal.Gui.Views.CharMap
     {
-        private Terminal.Gui.Views.CharMap CharMap1 = null!;
+        private Terminal.Gui.Views.CharMap TestCharMap = null!;
 
         private void InitializeComponent()
         {
-            CharMap1 = this;
-            CharMap1.X = Pos.Center();
-            CharMap1.Y = Pos.Center();
+            TestCharMap = this;
+            TestCharMap.X = 5;
+            TestCharMap.Y = 2;
+            TestCharMap.Width = 30;
+            TestCharMap.Height = 5;
+            TestCharMap.SelectedCodePoint = 0;
+            TestCharMap.ShowGlyphWidths = Sample;
+            TestCharMap.ShowUnicodeCategory = "Sample";
+            TestCharMap.StartCodePoint = "Sample";
+            TestCharMap.Value = "0";
         }
     }
 }

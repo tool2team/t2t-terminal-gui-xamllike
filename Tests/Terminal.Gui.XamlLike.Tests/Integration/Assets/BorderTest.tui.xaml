@@ -1,9 +1,13 @@
 ﻿<Border x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.BorderTestView"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-       Width="40"
-       Height="10">
-
-  <!-- Basic Border test -->
-
+    x:Name="TestBorder"
+    Diagnostics="Sample"
+    LineStyle="Sample"
+    Parent="Sample"
+    Settings="Sample"
+    Thickness="1">
+  
+  <!-- Border with properties: Diagnostics, LineStyle, Parent, Settings, Thickness -->
+  
 </Border>

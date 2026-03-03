@@ -11,13 +11,18 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class ColorPickerTest : Terminal.Gui.Views.ColorPicker
     {
-        private Terminal.Gui.Views.ColorPicker ColorPicker1 = null!;
+        private Terminal.Gui.Views.ColorPicker TestColorPicker = null!;
 
         private void InitializeComponent()
         {
-            ColorPicker1 = this;
-            ColorPicker1.X = Pos.Center();
-            ColorPicker1.Y = Pos.Center();
+            TestColorPicker = this;
+            TestColorPicker.X = 5;
+            TestColorPicker.Y = 2;
+            TestColorPicker.Width = 30;
+            TestColorPicker.Height = 5;
+            TestColorPicker.SelectedColor = Terminal.Gui.Drawing.Color.0;
+            TestColorPicker.Style = Terminal.Gui.Views.ColorPickerStyle.Sample;
+            TestColorPicker.Value = "0";
         }
     }
 }

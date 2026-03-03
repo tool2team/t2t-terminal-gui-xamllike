@@ -1,6 +1,17 @@
 ﻿<ProgressBar x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.ProgressBarTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="ProgressBar1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestProgressBar"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    BidirectionalMarquee="Sample"
+    Fraction="0.5f"
+    ProgressBarFormat="Sample"
+    ProgressBarStyle="Sample"
+    SegmentCharacter="Sample">
+  
+  <!-- ProgressBar with properties: BidirectionalMarquee, Fraction, ProgressBarFormat, ProgressBarStyle, SegmentCharacter -->
+  
+</ProgressBar>

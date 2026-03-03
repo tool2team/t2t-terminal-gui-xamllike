@@ -1,6 +1,17 @@
 ﻿<OpenDialog x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.OpenDialogTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="OpenDialog1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestOpenDialog"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    AllowedTypes="Sample"
+    AllowsMultipleSelection="Sample"
+    FileOperationsHandler="Sample"
+    MustExist="Sample"
+    OpenMode="Sample">
+  
+  <!-- OpenDialog with properties: AllowedTypes, AllowsMultipleSelection, FileOperationsHandler, MustExist, OpenMode -->
+  
+</OpenDialog>

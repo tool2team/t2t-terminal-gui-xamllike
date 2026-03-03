@@ -1,6 +1,17 @@
 ﻿<GraphView x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.GraphViewTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="GraphView1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestGraphView"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    AxisX="Sample"
+    AxisY="Sample"
+    CellSize="Sample"
+    GraphColor="Sample"
+    MarginBottom="Sample">
+  
+  <!-- GraphView with properties: AxisX, AxisY, CellSize, GraphColor, MarginBottom -->
+  
+</GraphView>

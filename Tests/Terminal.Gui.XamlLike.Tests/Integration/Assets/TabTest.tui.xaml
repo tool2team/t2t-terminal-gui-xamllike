@@ -1,6 +1,14 @@
 ﻿<Tab x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.TabTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="Tab1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestTab"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    DisplayText="Display"
+    View="Sample">
+  
+  <!-- Tab with properties: DisplayText, View -->
+  
+</Tab>

@@ -11,11 +11,16 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class TextValidateFieldTestView : Terminal.Gui.Views.TextValidateField
     {
+        private Terminal.Gui.Views.TextValidateField TestTextValidateField = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestTextValidateField = this;
+            TestTextValidateField.X = 5;
+            TestTextValidateField.Y = 2;
+            TestTextValidateField.Width = 30;
+            TestTextValidateField.Height = 5;
+            TestTextValidateField.Provider = Terminal.Gui.Views.ITextValidateProvider.Sample;
         }
     }
 }

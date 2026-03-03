@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class FlagSelectorTest : Terminal.Gui.Views.FlagSelector
     {
-        private Terminal.Gui.Views.FlagSelector FlagSelector1 = null!;
+        private Terminal.Gui.Views.FlagSelector TestFlagSelector = null!;
 
         private void InitializeComponent()
         {
-            FlagSelector1 = this;
-            FlagSelector1.X = Pos.Center();
-            FlagSelector1.Y = Pos.Center();
+            TestFlagSelector = this;
+            TestFlagSelector.X = 5;
+            TestFlagSelector.Y = 2;
+            TestFlagSelector.Width = 30;
+            TestFlagSelector.Height = 5;
+            TestFlagSelector.DoubleClickAccepts = Sample;
+            TestFlagSelector.HorizontalSpace = "Sample";
+            TestFlagSelector.Labels = "Sample";
+            TestFlagSelector.Styles = Terminal.Gui.Views.SelectorStyles.Sample;
+            TestFlagSelector.TabBehavior = "Sample";
         }
     }
 }

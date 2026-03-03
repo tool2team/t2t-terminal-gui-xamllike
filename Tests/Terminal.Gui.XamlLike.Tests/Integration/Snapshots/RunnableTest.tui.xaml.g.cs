@@ -11,11 +11,16 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class RunnableTestView : Terminal.Gui.Views.Runnable
     {
+        private Terminal.Gui.Views.Runnable TestRunnable = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestRunnable = this;
+            TestRunnable.X = 5;
+            TestRunnable.Y = 2;
+            TestRunnable.Width = 30;
+            TestRunnable.Height = 5;
+            TestRunnable.Result = "Sample";
         }
     }
 }

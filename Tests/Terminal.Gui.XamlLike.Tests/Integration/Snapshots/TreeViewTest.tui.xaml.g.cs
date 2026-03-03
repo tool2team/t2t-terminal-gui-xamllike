@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class TreeViewTest : Terminal.Gui.Views.TreeView
     {
-        private Terminal.Gui.Views.TreeView TreeView1 = null!;
+        private Terminal.Gui.Views.TreeView TestTreeView = null!;
 
         private void InitializeComponent()
         {
-            TreeView1 = this;
-            TreeView1.X = Pos.Center();
-            TreeView1.Y = Pos.Center();
+            TestTreeView = this;
+            TestTreeView.X = 5;
+            TestTreeView.Y = 2;
+            TestTreeView.Width = 30;
+            TestTreeView.Height = 5;
+            TestTreeView.AllowLetterBasedNavigation = Sample;
+            TestTreeView.AspectGetter = Terminal.Gui.Views.AspectGetterDelegate<ITreeNode>.Sample;
+            TestTreeView.ColorGetter = "Color.Blue";
+            TestTreeView.MaxDepth = "Sample";
+            TestTreeView.MultiSelect = Sample;
         }
     }
 }

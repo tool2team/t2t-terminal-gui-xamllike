@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class TextFieldTest : Terminal.Gui.Views.TextField
     {
-        private Terminal.Gui.Views.TextField TextField1 = null!;
+        private Terminal.Gui.Views.TextField TestTextField = null!;
 
         private void InitializeComponent()
         {
-            TextField1 = this;
-            TextField1.X = Pos.Center();
-            TextField1.Y = Pos.Center();
+            TestTextField = this;
+            TestTextField.X = 5;
+            TestTextField.Y = 2;
+            TestTextField.Width = 30;
+            TestTextField.Height = 5;
+            TestTextField.Autocomplete = Terminal.Gui.Views.IAutocomplete.Sample;
+            TestTextField.InsertionPoint = "Sample";
+            TestTextField.Secret = Sample;
+            TestTextField.SelectedStart = 0;
+            TestTextField.SelectWordOnlyOnDoubleClick = Sample;
         }
     }
 }

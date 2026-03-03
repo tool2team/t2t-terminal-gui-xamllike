@@ -1,6 +1,16 @@
 ﻿<Wizard x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.WizardTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="Wizard1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestWizard"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    CurrentStep="0"
+    Result="Sample"
+    Result="Sample"
+    Result="Sample">
+  
+  <!-- Wizard with properties: CurrentStep, Result, Result, Result -->
+  
+</Wizard>

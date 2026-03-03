@@ -11,13 +11,19 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class HexViewTest : Terminal.Gui.Views.HexView
     {
-        private Terminal.Gui.Views.HexView HexView1 = null!;
+        private Terminal.Gui.Views.HexView TestHexView = null!;
 
         private void InitializeComponent()
         {
-            HexView1 = this;
-            HexView1.X = Pos.Center();
-            HexView1.Y = Pos.Center();
+            TestHexView = this;
+            TestHexView.X = 5;
+            TestHexView.Y = 2;
+            TestHexView.Width = 30;
+            TestHexView.Height = 5;
+            TestHexView.Address = "Sample";
+            TestHexView.AddressWidth = "Sample";
+            TestHexView.BytesPerLine = "Sample";
+            TestHexView.Source = "";
         }
     }
 }

@@ -11,11 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class DateFieldTestView : Terminal.Gui.Views.DateField
     {
+        private Terminal.Gui.Views.DateField TestDateField = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestDateField = this;
+            TestDateField.X = 5;
+            TestDateField.Y = 2;
+            TestDateField.Width = 30;
+            TestDateField.Height = 5;
+            TestDateField.Autocomplete = Terminal.Gui.Views.IAutocomplete.Sample;
+            TestDateField.Culture = "Sample";
+            TestDateField.InsertionPoint = "Sample";
+            TestDateField.Secret = Sample;
+            TestDateField.SelectedStart = 0;
         }
     }
 }

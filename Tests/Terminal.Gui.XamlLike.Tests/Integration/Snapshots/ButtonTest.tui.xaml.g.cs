@@ -11,14 +11,18 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class ButtonTest : Terminal.Gui.Views.Button
     {
-        private Terminal.Gui.Views.Button ButtonTest1 = null!;
+        private Terminal.Gui.Views.Button TestButton = null!;
 
         private void InitializeComponent()
         {
-            ButtonTest1 = this;
-            ButtonTest1.Text = "Click Me!";
-            ButtonTest1.X = Pos.Center();
-            ButtonTest1.Y = Pos.Center();
+            TestButton = this;
+            TestButton.X = 5;
+            TestButton.Y = 2;
+            TestButton.Width = 30;
+            TestButton.Height = 5;
+            TestButton.IsDefault = true;
+            TestButton.NoDecorations = true;
+            TestButton.NoPadding = true;
         }
     }
 }

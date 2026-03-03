@@ -11,11 +11,19 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class ComboBoxTestView : Terminal.Gui.Views.ComboBox
     {
+        private Terminal.Gui.Views.ComboBox TestComboBox = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestComboBox = this;
+            TestComboBox.X = 5;
+            TestComboBox.Y = 2;
+            TestComboBox.Width = 30;
+            TestComboBox.Height = 5;
+            TestComboBox.HideDropdownListOnClick = Sample;
+            TestComboBox.SearchText = "Sample";
+            TestComboBox.SelectedItem = 0;
+            TestComboBox.Source = Terminal.Gui.Views.IListDataSource.;
         }
     }
 }

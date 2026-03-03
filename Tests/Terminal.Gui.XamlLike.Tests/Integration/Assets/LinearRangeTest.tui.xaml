@@ -1,6 +1,17 @@
 ﻿<LinearRange x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.LinearRangeTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="LinearRange1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestLinearRange"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    AllowEmpty="Sample"
+    FocusedOption="Sample"
+    LegendsOrientation="Sample"
+    MinimumInnerSpacing="Sample"
+    Options="Sample">
+  
+  <!-- LinearRange with properties: AllowEmpty, FocusedOption, LegendsOrientation, MinimumInnerSpacing, Options -->
+  
+</LinearRange>

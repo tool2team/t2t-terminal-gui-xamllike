@@ -1,6 +1,15 @@
 ﻿<CheckBox x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.CheckBoxTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="CheckBox1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestCheckBox"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    Value="CheckState.Checked"
+    AllowCheckStateNone="True"
+    RadioStyle="False">
+  
+  <!-- CheckBox with properties: Value, AllowCheckStateNone, RadioStyle -->
+  
+</CheckBox>

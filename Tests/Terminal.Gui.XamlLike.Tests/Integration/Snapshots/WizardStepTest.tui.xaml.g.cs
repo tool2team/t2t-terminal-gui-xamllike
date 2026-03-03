@@ -11,13 +11,18 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class WizardStepTest : Terminal.Gui.Views.WizardStep
     {
-        private Terminal.Gui.Views.WizardStep WizardStep1 = null!;
+        private Terminal.Gui.Views.WizardStep TestWizardStep = null!;
 
         private void InitializeComponent()
         {
-            WizardStep1 = this;
-            WizardStep1.X = Pos.Center();
-            WizardStep1.Y = Pos.Center();
+            TestWizardStep = this;
+            TestWizardStep.X = 5;
+            TestWizardStep.Y = 2;
+            TestWizardStep.Width = 30;
+            TestWizardStep.Height = 5;
+            TestWizardStep.BackButtonText = "Sample";
+            TestWizardStep.HelpText = "Sample";
+            TestWizardStep.NextButtonText = "Sample";
         }
     }
 }

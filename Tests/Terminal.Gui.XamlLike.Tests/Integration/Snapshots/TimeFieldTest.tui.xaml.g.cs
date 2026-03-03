@@ -11,11 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class TimeFieldTestView : Terminal.Gui.Views.TimeField
     {
+        private Terminal.Gui.Views.TimeField TestTimeField = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestTimeField = this;
+            TestTimeField.X = 5;
+            TestTimeField.Y = 2;
+            TestTimeField.Width = 30;
+            TestTimeField.Height = 5;
+            TestTimeField.Autocomplete = Terminal.Gui.Views.IAutocomplete.Sample;
+            TestTimeField.InsertionPoint = "Sample";
+            TestTimeField.IsShortFormat = Sample;
+            TestTimeField.Secret = Sample;
+            TestTimeField.SelectedStart = 0;
         }
     }
 }

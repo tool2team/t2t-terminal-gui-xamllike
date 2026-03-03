@@ -1,6 +1,17 @@
 ﻿<TreeView x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.TreeViewTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="TreeView1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestTreeView"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    AllowLetterBasedNavigation="Sample"
+    AspectGetter="Sample"
+    ColorGetter="Color.Blue"
+    MaxDepth="Sample"
+    MultiSelect="Sample">
+  
+  <!-- TreeView with properties: AllowLetterBasedNavigation, AspectGetter, ColorGetter, MaxDepth, MultiSelect -->
+  
+</TreeView>

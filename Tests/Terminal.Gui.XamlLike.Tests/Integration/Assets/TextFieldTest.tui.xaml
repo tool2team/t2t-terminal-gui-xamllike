@@ -1,6 +1,17 @@
 ﻿<TextField x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.TextFieldTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="TextField1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestTextField"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    Autocomplete="Sample"
+    InsertionPoint="Sample"
+    Secret="Sample"
+    SelectedStart="0"
+    SelectWordOnlyOnDoubleClick="Sample">
+  
+  <!-- TextField with properties: Autocomplete, InsertionPoint, Secret, SelectedStart, SelectWordOnlyOnDoubleClick -->
+  
+</TextField>

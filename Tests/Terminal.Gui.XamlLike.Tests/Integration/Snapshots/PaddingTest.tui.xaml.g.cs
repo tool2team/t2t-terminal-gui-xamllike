@@ -11,11 +11,14 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class PaddingTestView : Terminal.Gui.ViewBase.Padding
     {
+        private Terminal.Gui.ViewBase.Padding TestPadding = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestPadding = this;
+            TestPadding.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.Sample;
+            TestPadding.Parent = Terminal.Gui.ViewBase.View.Sample;
+            TestPadding.Thickness = Terminal.Gui.Drawing.Thickness.1;
         }
     }
 }

@@ -11,11 +11,17 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class AttributePickerTest : Terminal.Gui.Views.AttributePicker
     {
-        private Terminal.Gui.Views.AttributePicker AttributePicker1 = null!;
+        private Terminal.Gui.Views.AttributePicker TestAttributePicker = null!;
 
         private void InitializeComponent()
         {
-            AttributePicker1 = this;
+            TestAttributePicker = this;
+            TestAttributePicker.X = 5;
+            TestAttributePicker.Y = 2;
+            TestAttributePicker.Width = 30;
+            TestAttributePicker.Height = 5;
+            TestAttributePicker.SampleText = "Sample";
+            TestAttributePicker.Value = "0";
         }
     }
 }

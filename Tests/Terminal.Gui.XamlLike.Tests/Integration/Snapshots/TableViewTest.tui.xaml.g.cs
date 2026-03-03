@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class TableViewTest : Terminal.Gui.Views.TableView
     {
-        private Terminal.Gui.Views.TableView TableView1 = null!;
+        private Terminal.Gui.Views.TableView TestTableView = null!;
 
         private void InitializeComponent()
         {
-            TableView1 = this;
-            TableView1.X = Pos.Center();
-            TableView1.Y = Pos.Center();
+            TestTableView = this;
+            TestTableView.X = 5;
+            TestTableView.Y = 2;
+            TestTableView.Width = 30;
+            TestTableView.Height = 5;
+            TestTableView.CellActivationKey = Terminal.Gui.Drivers.KeyCode.Sample;
+            TestTableView.CollectionNavigator = Terminal.Gui.Views.ICollectionNavigator.Sample;
+            TestTableView.ColumnOffset = "Sample";
+            TestTableView.FullRowSelect = Sample;
+            TestTableView.MaxCellWidth = "Sample";
         }
     }
 }

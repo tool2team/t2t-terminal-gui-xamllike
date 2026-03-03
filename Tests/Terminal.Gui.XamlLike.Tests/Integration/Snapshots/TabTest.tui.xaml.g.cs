@@ -11,13 +11,17 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class TabTest : Terminal.Gui.Views.Tab
     {
-        private Terminal.Gui.Views.Tab Tab1 = null!;
+        private Terminal.Gui.Views.Tab TestTab = null!;
 
         private void InitializeComponent()
         {
-            Tab1 = this;
-            Tab1.X = Pos.Center();
-            Tab1.Y = Pos.Center();
+            TestTab = this;
+            TestTab.X = 5;
+            TestTab.Y = 2;
+            TestTab.Width = 30;
+            TestTab.Height = 5;
+            TestTab.DisplayText = "Display";
+            TestTab.View = Terminal.Gui.ViewBase.View.Sample;
         }
     }
 }

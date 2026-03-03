@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class OpenDialogTest : Terminal.Gui.Views.OpenDialog
     {
-        private Terminal.Gui.Views.OpenDialog OpenDialog1 = null!;
+        private Terminal.Gui.Views.OpenDialog TestOpenDialog = null!;
 
         private void InitializeComponent()
         {
-            OpenDialog1 = this;
-            OpenDialog1.X = Pos.Center();
-            OpenDialog1.Y = Pos.Center();
+            TestOpenDialog = this;
+            TestOpenDialog.X = 5;
+            TestOpenDialog.Y = 2;
+            TestOpenDialog.Width = 30;
+            TestOpenDialog.Height = 5;
+            TestOpenDialog.AllowedTypes = "Sample";
+            TestOpenDialog.AllowsMultipleSelection = Sample;
+            TestOpenDialog.FileOperationsHandler = Terminal.Gui.FileServices.IFileOperations.Sample;
+            TestOpenDialog.MustExist = Sample;
+            TestOpenDialog.OpenMode = Terminal.Gui.Views.OpenMode.Sample;
         }
     }
 }

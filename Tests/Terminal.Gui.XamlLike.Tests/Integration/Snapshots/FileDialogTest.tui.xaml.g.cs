@@ -11,11 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class FileDialogTestView : Terminal.Gui.Views.FileDialog
     {
+        private Terminal.Gui.Views.FileDialog TestFileDialog = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestFileDialog = this;
+            TestFileDialog.X = 5;
+            TestFileDialog.Y = 2;
+            TestFileDialog.Width = 30;
+            TestFileDialog.Height = 5;
+            TestFileDialog.AllowedTypes = "Sample";
+            TestFileDialog.AllowsMultipleSelection = Sample;
+            TestFileDialog.FileOperationsHandler = Terminal.Gui.FileServices.IFileOperations.Sample;
+            TestFileDialog.MustExist = Sample;
+            TestFileDialog.OpenMode = Terminal.Gui.Views.OpenMode.Sample;
         }
     }
 }

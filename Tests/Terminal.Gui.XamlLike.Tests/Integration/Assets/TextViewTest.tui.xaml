@@ -1,6 +1,17 @@
 ﻿<TextView x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.TextViewTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="TextView1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestTextView"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    EnterKeyAddsLine="Sample"
+    InheritsPreviousAttribute="Sample"
+    InsertionPoint="Sample"
+    IsSelecting="Sample"
+    Multiline="False">
+  
+  <!-- TextView with properties: EnterKeyAddsLine, InheritsPreviousAttribute, InsertionPoint, IsSelecting, Multiline -->
+  
+</TextView>

@@ -1,6 +1,9 @@
 ﻿<Window x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.WindowTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="Window1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestWindow"
+    Result="Sample">
+  
+  <!-- Window with properties: Result -->
+  
+</Window>

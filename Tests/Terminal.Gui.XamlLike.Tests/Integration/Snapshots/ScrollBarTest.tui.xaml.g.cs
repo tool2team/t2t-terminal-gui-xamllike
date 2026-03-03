@@ -11,13 +11,20 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class ScrollBarTest : Terminal.Gui.Views.ScrollBar
     {
-        private Terminal.Gui.Views.ScrollBar ScrollBar1 = null!;
+        private Terminal.Gui.Views.ScrollBar TestScrollBar = null!;
 
         private void InitializeComponent()
         {
-            ScrollBar1 = this;
-            ScrollBar1.X = Pos.Center();
-            ScrollBar1.Y = Pos.Center();
+            TestScrollBar = this;
+            TestScrollBar.X = 5;
+            TestScrollBar.Y = 2;
+            TestScrollBar.Width = 30;
+            TestScrollBar.Height = 5;
+            TestScrollBar.Increment = "Sample";
+            TestScrollBar.ScrollableContentSize = "Sample";
+            TestScrollBar.Value = "0";
+            TestScrollBar.VisibilityMode = Terminal.Gui.Views.ScrollBarVisibilityMode.Sample;
+            TestScrollBar.VisibleContentSize = "Sample";
         }
     }
 }

@@ -1,6 +1,17 @@
 ﻿<ScrollBar x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.ScrollBarTest"
-    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="ScrollBar1"
-    X="Pos.Center()"
-    Y="Pos.Center()" />
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestScrollBar"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    Increment="Sample"
+    ScrollableContentSize="Sample"
+    Value="0"
+    VisibilityMode="Sample"
+    VisibleContentSize="Sample">
+  
+  <!-- ScrollBar with properties: Increment, ScrollableContentSize, Value, VisibilityMode, VisibleContentSize -->
+  
+</ScrollBar>

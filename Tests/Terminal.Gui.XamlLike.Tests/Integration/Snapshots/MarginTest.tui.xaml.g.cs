@@ -11,11 +11,15 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class MarginTestView : Terminal.Gui.ViewBase.Margin
     {
+        private Terminal.Gui.ViewBase.Margin TestMargin = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestMargin = this;
+            TestMargin.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.Sample;
+            TestMargin.Parent = Terminal.Gui.ViewBase.View.Sample;
+            TestMargin.ShadowSize = "Sample";
+            TestMargin.Thickness = Terminal.Gui.Drawing.Thickness.1;
         }
     }
 }

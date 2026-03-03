@@ -1,9 +1,17 @@
 ﻿<DateField x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.DateFieldTestView"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-       Width="40"
-       Height="10">
-
-  <!-- Basic DateField test -->
-
+    x:Name="TestDateField"
+    X="5"
+    Y="2"
+    Width="30"
+    Height="5"
+    Autocomplete="Sample"
+    Culture="Sample"
+    InsertionPoint="Sample"
+    Secret="Sample"
+    SelectedStart="0">
+  
+  <!-- DateField with properties: Autocomplete, Culture, InsertionPoint, Secret, SelectedStart -->
+  
 </DateField>
