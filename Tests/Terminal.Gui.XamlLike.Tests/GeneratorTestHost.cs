@@ -16,7 +16,7 @@ internal static class GeneratorTestHost
         var syntaxTrees = sources.Select(s =>
             CSharpSyntaxTree.ParseText(s.content, parseOptions, path: s.filename));
 
-        // Références minimales : mscorlib + System.Runtime + LINQ
+        // Minimal references: mscorlib + System.Runtime + LINQ
         var refs = new[]
         {
             MetadataReference.CreateFromFile(typeof(object).Assembly.Location),

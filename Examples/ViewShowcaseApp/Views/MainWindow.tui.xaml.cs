@@ -23,10 +23,10 @@ public partial class MainWindow : Window
         }
         catch (ArgumentException ex)
         {
-            // Log l'exception pour déboguer
-            System.Diagnostics.Debug.WriteLine($"ArgumentException dans MainWindow constructor: {ex.Message}");
+            // Log exception for debugging
+            System.Diagnostics.Debug.WriteLine($"ArgumentException in MainWindow constructor: {ex.Message}");
             System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
-            throw; // Re-throw pour que le debugger s'arrête ici
+            throw; // Re-throw so debugger stops here
         }
     }
  

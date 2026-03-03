@@ -37,7 +37,7 @@ public abstract class BaseViewTests<T> where T : View
     {
         var generator = new Terminal.Gui.XamlLike.TuiXamlGenerator();
 
-        // Source C# minimal pour que la compilation existe
+        // Minimal C# source for compilation to exist
         var sources = new[]
         {       
             ("Dummy.cs", """
@@ -51,7 +51,7 @@ public abstract class BaseViewTests<T> where T : View
             sources: [],
             additionalFiles: new[] { (XamlName, GetXamlContent()) });
 
-        // 1) Vérifie qu'il y a au moins une source générée
+        // 1) Verify that at least one source was generated
         Assert.True(result.Results.Length > 0);
 
         var generated = result
@@ -61,13 +61,13 @@ public abstract class BaseViewTests<T> where T : View
 
         Assert.NotEmpty(generated);
 
-        // 2) Vérifie que le bon fichier (hintName) existe
+        // 2) Verify that the correct file (hintName) exists
         Assert.Contains(generated, g => g.HintName == SnapshotName);
 
         var file = generated.First(g => g.HintName == SnapshotName);
         var text = file!.SourceText.ToString();
 
-        // 3) Vérifie la correspondance avec le snapshot
+        // 3) Verify snapshot match
         Assert.Equal(GetSnapshotContent(), text);
     }
 }

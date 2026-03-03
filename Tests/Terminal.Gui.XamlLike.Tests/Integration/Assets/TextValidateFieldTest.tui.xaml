@@ -1,0 +1,9 @@
+﻿<TextValidateField x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.TextValidateFieldTestView"
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       Width="40"
+       Height="10">
+
+  <!-- Basic TextValidateField test -->
+
+</TextValidateField>
