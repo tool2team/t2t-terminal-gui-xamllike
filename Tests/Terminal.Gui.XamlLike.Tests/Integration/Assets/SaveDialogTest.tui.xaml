@@ -10,7 +10,7 @@
     AllowsMultipleSelection="Sample"
     FileOperationsHandler="Sample"
     MustExist="Sample"
-    OpenMode="Sample">
+    OpenMode="OpenMode.File">
   
   <!-- SaveDialog with properties: AllowedTypes, AllowsMultipleSelection, FileOperationsHandler, MustExist, OpenMode -->
   

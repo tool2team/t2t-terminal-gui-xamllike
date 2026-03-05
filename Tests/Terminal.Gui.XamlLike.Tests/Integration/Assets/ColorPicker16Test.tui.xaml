@@ -9,8 +9,8 @@
     BoxHeight="4"
     BoxWidth="4"
     Caret="Sample"
-    SelectedColor="0"
-    Value="0">
+    SelectedColor="ColorName16.Yellow"
+    Value="ColorName16.Blue">
   
   <!-- ColorPicker16 with properties: BoxHeight, BoxWidth, Caret, SelectedColor, Value -->
   

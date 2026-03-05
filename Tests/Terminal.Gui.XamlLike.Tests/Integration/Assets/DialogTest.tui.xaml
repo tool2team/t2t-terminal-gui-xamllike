@@ -2,8 +2,6 @@
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="TestDialog"
-    Result="Sample"
-    Result="Sample"
     Result="Sample">
   
   <!-- Dialog with properties: Result, Result, Result -->

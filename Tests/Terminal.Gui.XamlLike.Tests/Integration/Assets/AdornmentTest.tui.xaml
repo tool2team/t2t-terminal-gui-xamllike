@@ -3,7 +3,6 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="TestAdornment"
     Diagnostics="ViewDiagnosticFlags.DrawIndicator"
-    Parent="Sample"
     Thickness="Thickness.Empty">
   
   <!-- Adornment with properties: Diagnostics, Parent, Thickness -->

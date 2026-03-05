@@ -17,6 +17,8 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
         {
             TestBorder = this;
             TestBorder.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.DrawIndicator;
+            TestBorder.LineStyle = Terminal.Gui.Drawing.LineStyle.Dotted;
+            TestBorder.Settings = Terminal.Gui.ViewBase.BorderSettings.Gradient;
             TestBorder.Thickness = Terminal.Gui.Drawing.Thickness.Empty;
         }
     }

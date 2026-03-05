@@ -3,9 +3,8 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="TestBorder"
     Diagnostics="ViewDiagnosticFlags.DrawIndicator"
-    LineStyle="Sample"
-    Parent="Sample"
-    Settings="Sample"
+    LineStyle="LineStyle.Dotted"
+    Settings="BorderSettings.Gradient"
     Thickness="Thickness.Empty">
   
   <!-- Border with properties: Diagnostics, LineStyle, Parent, Settings, Thickness -->

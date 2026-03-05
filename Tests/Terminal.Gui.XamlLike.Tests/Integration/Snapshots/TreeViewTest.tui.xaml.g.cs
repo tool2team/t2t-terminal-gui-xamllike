@@ -20,6 +20,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTreeView.Y = 2;
             TestTreeView.Width = 30;
             TestTreeView.Height = 5;
+            TestTreeView.AspectGetter = Terminal.Gui.Views.AspectGetterDelegate<ITreeNode>.Sample;
         }
     }
 }

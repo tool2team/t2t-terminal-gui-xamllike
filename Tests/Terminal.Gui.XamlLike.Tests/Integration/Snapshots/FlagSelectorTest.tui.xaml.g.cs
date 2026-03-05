@@ -22,6 +22,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestFlagSelector.Height = 5;
             TestFlagSelector.DoubleClickAccepts = true;
             TestFlagSelector.HorizontalSpace = 2;
+            TestFlagSelector.Styles = Terminal.Gui.Views.SelectorStyles.Sample;
         }
     }
 }

@@ -6,9 +6,8 @@
     Y="2"
     Width="30"
     Height="5"
-    SelectedColor="0"
-    Style="Sample"
-    Value="0">
+    SelectedColor="Color.Yellow"
+    Value="Color.Blue">
   
   <!-- ColorPicker with properties: SelectedColor, Style, Value -->
   

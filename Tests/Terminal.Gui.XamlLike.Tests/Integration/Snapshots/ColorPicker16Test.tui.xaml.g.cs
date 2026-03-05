@@ -22,6 +22,8 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestColorPicker16.Height = 5;
             TestColorPicker16.BoxHeight = 4;
             TestColorPicker16.BoxWidth = 4;
+            TestColorPicker16.SelectedColor = Terminal.Gui.Drawing.ColorName16.Yellow;
+            TestColorPicker16.Value = Terminal.Gui.Drawing.ColorName16.Blue;
         }
     }
 }

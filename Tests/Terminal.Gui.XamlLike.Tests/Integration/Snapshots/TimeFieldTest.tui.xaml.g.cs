@@ -20,6 +20,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
             TestTimeField.Y = 2;
             TestTimeField.Width = 30;
             TestTimeField.Height = 5;
+            TestTimeField.Autocomplete = Terminal.Gui.Views.IAutocomplete.Sample;
             TestTimeField.SelectedStart = 0;
         }
     }

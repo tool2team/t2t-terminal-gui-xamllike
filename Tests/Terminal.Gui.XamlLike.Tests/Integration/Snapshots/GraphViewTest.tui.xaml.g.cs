@@ -20,6 +20,8 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestGraphView.Y = 2;
             TestGraphView.Width = 30;
             TestGraphView.Height = 5;
+            TestGraphView.AxisX = Terminal.Gui.Views.HorizontalAxis.Sample;
+            TestGraphView.AxisY = Terminal.Gui.Views.VerticalAxis.Sample;
         }
     }
 }

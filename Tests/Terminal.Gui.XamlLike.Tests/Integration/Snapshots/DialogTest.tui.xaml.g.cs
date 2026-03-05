@@ -11,11 +11,11 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
     partial class DialogTestView : Terminal.Gui.Views.Dialog
     {
+        private Terminal.Gui.Views.Dialog TestDialog = null!;
 
         private void InitializeComponent()
         {
-            this.Width = 40;
-            this.Height = 10;
+            TestDialog = this;
         }
     }
 }

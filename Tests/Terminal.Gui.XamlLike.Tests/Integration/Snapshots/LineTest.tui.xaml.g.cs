@@ -21,6 +21,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestLine.Width = 30;
             TestLine.Height = 5;
             TestLine.Length = Dim.Auto();
+            TestLine.Style = Terminal.Gui.Drawing.LineStyle.Sample;
         }
     }
 }

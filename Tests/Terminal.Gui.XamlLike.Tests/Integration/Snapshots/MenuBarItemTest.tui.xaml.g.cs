@@ -20,6 +20,8 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestMenuBarItem.Y = 2;
             TestMenuBarItem.Width = 30;
             TestMenuBarItem.Height = 5;
+            TestMenuBarItem.Command = Terminal.Gui.Input.Command.Sample;
+            TestMenuBarItem.CommandView = Terminal.Gui.ViewBase.View.Sample;
             TestMenuBarItem.HelpText = "Sample";
         }
     }

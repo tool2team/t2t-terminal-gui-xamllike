@@ -382,7 +382,7 @@ class Program
             .Select(g => g.Key)
             .ToHashSet();
 
-        if (commonPropertyNames.Any())
+        if (commonPropertyNames.Count > 0)
         {
             sb.AppendLine("        [\"Common\"] = new Dictionary<string, PropertyMapping>");
             sb.AppendLine("        {");
@@ -419,7 +419,7 @@ class Program
                 }
             }
 
-            if (specificProps.Any() || manualPropertyOverrides.ContainsKey(view.TypeName))
+            if (specificProps.Count > 0 || manualPropertyOverrides.ContainsKey(view.TypeName))
             {
                 if (view.TypeName == "CheckBox")
                 {
@@ -501,7 +501,7 @@ class Program
                 }
             }
 
-            if (bindings.Any())
+            if (bindings.Count > 0)
             {
                 result[view.TypeName] = bindings;
             }

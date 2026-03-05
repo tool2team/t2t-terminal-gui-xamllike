@@ -11,13 +11,15 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
 {
     partial class WizardTest : Terminal.Gui.Views.Wizard
     {
-        private Terminal.Gui.Views.Wizard Wizard1 = null!;
+        private Terminal.Gui.Views.Wizard TestWizard = null!;
 
         private void InitializeComponent()
         {
-            Wizard1 = this;
-            Wizard1.X = Pos.Center();
-            Wizard1.Y = Pos.Center();
+            TestWizard = this;
+            TestWizard.X = 5;
+            TestWizard.Y = 2;
+            TestWizard.Width = 30;
+            TestWizard.Height = 5;
         }
     }
 }
