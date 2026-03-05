@@ -16,9 +16,8 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
         private void InitializeComponent()
         {
             TestAdornment = this;
-            TestAdornment.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.Sample;
-            TestAdornment.Parent = Terminal.Gui.ViewBase.View.Sample;
-            TestAdornment.Thickness = Terminal.Gui.Drawing.Thickness.1;
+            TestAdornment.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.DrawIndicator;
+            TestAdornment.Thickness = Terminal.Gui.Drawing.Thickness.Empty;
         }
     }
 }

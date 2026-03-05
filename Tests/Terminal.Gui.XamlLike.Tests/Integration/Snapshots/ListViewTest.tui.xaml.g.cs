@@ -20,11 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestListView.Y = 2;
             TestListView.Width = 30;
             TestListView.Height = 5;
-            TestListView.MarkMultiple = Sample;
-            TestListView.SelectedItem = 0;
-            TestListView.ShowMarks = Sample;
-            TestListView.Source = Terminal.Gui.Views.IListDataSource.;
-            TestListView.TopItem = "Sample";
         }
     }
 }

@@ -20,11 +20,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestScrollBar.Y = 2;
             TestScrollBar.Width = 30;
             TestScrollBar.Height = 5;
-            TestScrollBar.Increment = "Sample";
-            TestScrollBar.ScrollableContentSize = "Sample";
-            TestScrollBar.Value = "0";
-            TestScrollBar.VisibilityMode = Terminal.Gui.Views.ScrollBarVisibilityMode.Sample;
-            TestScrollBar.VisibleContentSize = "Sample";
+            TestScrollBar.Value = 0;
         }
     }
 }

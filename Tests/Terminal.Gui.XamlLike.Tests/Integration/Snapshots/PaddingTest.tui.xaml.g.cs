@@ -16,9 +16,8 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
         private void InitializeComponent()
         {
             TestPadding = this;
-            TestPadding.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.Sample;
-            TestPadding.Parent = Terminal.Gui.ViewBase.View.Sample;
-            TestPadding.Thickness = Terminal.Gui.Drawing.Thickness.1;
+            TestPadding.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.DrawIndicator;
+            TestPadding.Thickness = Terminal.Gui.Drawing.Thickness.Empty;
         }
     }
 }

@@ -20,10 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestShortcut.Y = 2;
             TestShortcut.Width = 30;
             TestShortcut.Height = 5;
-            TestShortcut.Action = "Sample";
-            TestShortcut.BindKeyToApplication = Sample;
-            TestShortcut.Command = Terminal.Gui.Input.Command.Sample;
-            TestShortcut.CommandView = Terminal.Gui.ViewBase.View.Sample;
             TestShortcut.HelpText = "Sample";
         }
     }

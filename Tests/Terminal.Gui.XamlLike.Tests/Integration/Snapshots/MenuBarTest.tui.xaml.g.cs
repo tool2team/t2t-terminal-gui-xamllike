@@ -16,9 +16,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
         private void InitializeComponent()
         {
             TestMenuBar = this;
-            TestMenuBar.Menus = Terminal.Gui.Views.MenuBarItem[].Sample;
-            TestMenuBar.SuperMenuItem = Terminal.Gui.Views.MenuItem.Sample;
-            TestMenuBar.Value = Terminal.Gui.Views.MenuItem.0;
         }
     }
 }

@@ -20,11 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestProgressBar.Y = 2;
             TestProgressBar.Width = 30;
             TestProgressBar.Height = 5;
-            TestProgressBar.BidirectionalMarquee = Sample;
-            TestProgressBar.Fraction = 0.5f;
-            TestProgressBar.ProgressBarFormat = Terminal.Gui.Views.ProgressBarFormat.Sample;
-            TestProgressBar.ProgressBarStyle = Terminal.Gui.Views.ProgressBarStyle.Sample;
-            TestProgressBar.SegmentCharacter = "Sample";
         }
     }
 }

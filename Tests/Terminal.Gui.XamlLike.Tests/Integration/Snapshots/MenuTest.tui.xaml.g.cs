@@ -20,8 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestMenu.Y = 2;
             TestMenu.Width = 30;
             TestMenu.Height = 5;
-            TestMenu.SuperMenuItem = Terminal.Gui.Views.MenuItem.Sample;
-            TestMenu.Value = Terminal.Gui.Views.MenuItem.0;
         }
     }
 }

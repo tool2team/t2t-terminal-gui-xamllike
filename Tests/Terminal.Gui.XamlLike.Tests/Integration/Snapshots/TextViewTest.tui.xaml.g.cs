@@ -20,10 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTextView.Y = 2;
             TestTextView.Width = 30;
             TestTextView.Height = 5;
-            TestTextView.EnterKeyAddsLine = Sample;
-            TestTextView.InheritsPreviousAttribute = Sample;
-            TestTextView.InsertionPoint = "Sample";
-            TestTextView.IsSelecting = Sample;
             TestTextView.Multiline = false;
         }
     }

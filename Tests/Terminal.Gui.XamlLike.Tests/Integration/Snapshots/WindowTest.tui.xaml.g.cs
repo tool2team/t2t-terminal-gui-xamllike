@@ -16,7 +16,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
         private void InitializeComponent()
         {
             TestWindow = this;
-            TestWindow.Result = "Sample";
         }
     }
 }

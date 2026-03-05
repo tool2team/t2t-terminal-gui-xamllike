@@ -20,9 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestColorPicker.Y = 2;
             TestColorPicker.Width = 30;
             TestColorPicker.Height = 5;
-            TestColorPicker.SelectedColor = Terminal.Gui.Drawing.Color.0;
-            TestColorPicker.Style = Terminal.Gui.Views.ColorPickerStyle.Sample;
-            TestColorPicker.Value = "0";
         }
     }
 }

@@ -20,11 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestSpinnerView.Y = 2;
             TestSpinnerView.Width = 30;
             TestSpinnerView.Height = 5;
-            TestSpinnerView.AutoSpin = Sample;
-            TestSpinnerView.Sequence = "Sample";
-            TestSpinnerView.SpinBounce = Sample;
-            TestSpinnerView.SpinDelay = "Sample";
-            TestSpinnerView.SpinReverse = Sample;
         }
     }
 }

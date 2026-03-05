@@ -21,10 +21,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestCharMap.Width = 30;
             TestCharMap.Height = 5;
             TestCharMap.SelectedCodePoint = 0;
-            TestCharMap.ShowGlyphWidths = Sample;
-            TestCharMap.ShowUnicodeCategory = "Sample";
-            TestCharMap.StartCodePoint = "Sample";
-            TestCharMap.Value = "0";
         }
     }
 }

@@ -6,9 +6,9 @@
     Y="2"
     Width="30"
     Height="5"
-    DoubleClickAccepts="Sample"
+    DoubleClickAccepts="True"
     FocusedItem="Sample"
-    HorizontalSpace="Sample"
+    HorizontalSpace="2"
     Labels="Sample"
     Styles="Sample">
   

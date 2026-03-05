@@ -16,10 +16,8 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
         private void InitializeComponent()
         {
             TestMargin = this;
-            TestMargin.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.Sample;
-            TestMargin.Parent = Terminal.Gui.ViewBase.View.Sample;
-            TestMargin.ShadowSize = "Sample";
-            TestMargin.Thickness = Terminal.Gui.Drawing.Thickness.1;
+            TestMargin.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.DrawIndicator;
+            TestMargin.Thickness = Terminal.Gui.Drawing.Thickness.Empty;
         }
     }
 }

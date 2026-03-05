@@ -20,10 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
             TestDateField.Y = 2;
             TestDateField.Width = 30;
             TestDateField.Height = 5;
-            TestDateField.Autocomplete = Terminal.Gui.Views.IAutocomplete.Sample;
-            TestDateField.Culture = "Sample";
-            TestDateField.InsertionPoint = "Sample";
-            TestDateField.Secret = Sample;
             TestDateField.SelectedStart = 0;
         }
     }

@@ -20,11 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestOpenDialog.Y = 2;
             TestOpenDialog.Width = 30;
             TestOpenDialog.Height = 5;
-            TestOpenDialog.AllowedTypes = "Sample";
-            TestOpenDialog.AllowsMultipleSelection = Sample;
-            TestOpenDialog.FileOperationsHandler = Terminal.Gui.FileServices.IFileOperations.Sample;
-            TestOpenDialog.MustExist = Sample;
-            TestOpenDialog.OpenMode = Terminal.Gui.Views.OpenMode.Sample;
         }
     }
 }

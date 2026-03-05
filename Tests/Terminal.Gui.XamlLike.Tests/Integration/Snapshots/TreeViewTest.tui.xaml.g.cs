@@ -20,11 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTreeView.Y = 2;
             TestTreeView.Width = 30;
             TestTreeView.Height = 5;
-            TestTreeView.AllowLetterBasedNavigation = Sample;
-            TestTreeView.AspectGetter = Terminal.Gui.Views.AspectGetterDelegate<ITreeNode>.Sample;
-            TestTreeView.ColorGetter = "Color.Blue";
-            TestTreeView.MaxDepth = "Sample";
-            TestTreeView.MultiSelect = Sample;
         }
     }
 }

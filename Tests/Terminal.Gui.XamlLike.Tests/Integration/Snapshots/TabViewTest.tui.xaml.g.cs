@@ -20,10 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTabView.Y = 2;
             TestTabView.Width = 30;
             TestTabView.Height = 5;
-            TestTabView.MaxTabTextWidth = "Sample";
-            TestTabView.SelectedTab = Terminal.Gui.Views.Tab.0;
-            TestTabView.Style = Terminal.Gui.Views.TabStyle.Sample;
-            TestTabView.TabScrollOffset = "Sample";
         }
     }
 }

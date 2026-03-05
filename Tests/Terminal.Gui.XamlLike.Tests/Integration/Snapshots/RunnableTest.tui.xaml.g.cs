@@ -20,7 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
             TestRunnable.Y = 2;
             TestRunnable.Width = 30;
             TestRunnable.Height = 5;
-            TestRunnable.Result = "Sample";
         }
     }
 }

@@ -2,9 +2,9 @@
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="TestAdornment"
-    Diagnostics="Sample"
+    Diagnostics="ViewDiagnosticFlags.DrawIndicator"
     Parent="Sample"
-    Thickness="1">
+    Thickness="Thickness.Empty">
   
   <!-- Adornment with properties: Diagnostics, Parent, Thickness -->
   

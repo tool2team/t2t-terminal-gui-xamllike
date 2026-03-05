@@ -20,11 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestLinearRange.Y = 2;
             TestLinearRange.Width = 30;
             TestLinearRange.Height = 5;
-            TestLinearRange.AllowEmpty = Sample;
-            TestLinearRange.FocusedOption = "Sample";
-            TestLinearRange.LegendsOrientation = Terminal.Gui.ViewBase.Orientation.Sample;
-            TestLinearRange.MinimumInnerSpacing = "Sample";
-            TestLinearRange.Options = "Sample";
         }
     }
 }
