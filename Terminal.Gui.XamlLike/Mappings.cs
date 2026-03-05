@@ -7077,14 +7077,11 @@ public static class Mappings
         },
         ["Dialog"] = new Dictionary<string, PropertyMapping>
         {
-            ["Result"] = new PropertyMapping("Result", "System.Nullable<int>", "Result property"),
             ["Result"] = new PropertyMapping("Result", "System.Int32", "Result property"),
-            ["Result"] = new PropertyMapping("Result", "System.Object", "Result property"),
         },
         ["Dialog`1"] = new Dictionary<string, PropertyMapping>
         {
             ["Result"] = new PropertyMapping("Result", "TResult", "Result property"),
-            ["Result"] = new PropertyMapping("Result", "System.Object", "Result property"),
         },
         ["FileDialog"] = new Dictionary<string, PropertyMapping>
         {
@@ -7094,9 +7091,7 @@ public static class Mappings
             ["MustExist"] = new PropertyMapping("MustExist", "System.Boolean", "MustExist property"),
             ["OpenMode"] = new PropertyMapping("OpenMode", "Terminal.Gui.Views.OpenMode", "OpenMode property"),
             ["Path"] = new PropertyMapping("Path", "System.String", "Path property"),
-            ["Result"] = new PropertyMapping("Result", "System.Nullable<int>", "Result property"),
             ["Result"] = new PropertyMapping("Result", "System.Int32", "Result property"),
-            ["Result"] = new PropertyMapping("Result", "System.Object", "Result property"),
             ["SearchMatcher"] = new PropertyMapping("SearchMatcher", "Terminal.Gui.FileServices.ISearchMatcher", "SearchMatcher property"),
         },
         ["FlagSelector"] = new Dictionary<string, PropertyMapping>
@@ -7532,7 +7527,7 @@ public static class Mappings
     {
         // Check control-specific properties first if control name is provided
         if (!string.IsNullOrEmpty(controlName) &&
-            PropertyMappings.TryGetValue(controlName, out Dictionary<string, PropertyMapping>? controlProperties) &&
+            PropertyMappings.TryGetValue(controlName!, out Dictionary<string, PropertyMapping>? controlProperties) &&
             controlProperties.TryGetValue(propertyName, out PropertyMapping? controlMapping))
         {
             return controlMapping;

@@ -472,6 +472,13 @@ public sealed class CodeEmitter
             }
 
             var csharpValue = GetPropertyValue(element.Name, propName, value);
+
+            // Skip properties that couldn't be converted (return null)
+            if (csharpValue == null)
+            {
+                continue;
+            }
+
             AppendLine($"{variableName}.{propName} = {csharpValue};");
         }
 
@@ -913,105 +920,116 @@ public sealed class CodeEmitter
     private static bool IsBindingExpression(string value) =>
         value.Trim().StartsWith("{Bind ") && value.Trim().EndsWith("}");
 
-    private static string GetPropertyValue(string controlName, string propName, string value)
+    private static string? GetPropertyValue(string controlName, string propName, string value)
     {
-        // Check if property is a Terminal.Gui type (includes Pos, Dim, Key, Enum, etc.)
-        // Pass controlName to get control-specific property types
+        // Check if property has a mapping with type information
         var propertyMapping = Mappings.GetPropertyMapping(propName, controlName);
-        if (propertyMapping != null && propertyMapping.TargetType.StartsWith("Terminal.Gui."))
-        {
-            var fullType = propertyMapping.TargetType;
 
-            // Special handling for Pos and Dim types
-            if (fullType == "Terminal.Gui.ViewBase.Pos" || fullType == "Terminal.Gui.ViewBase.Dim")
+        if (propertyMapping != null)
+        {
+            var targetType = propertyMapping.TargetType;
+
+            // Handle Terminal.Gui types (Pos, Dim, Key, Enum, etc.)
+            if (targetType.StartsWith("Terminal.Gui."))
             {
-                // If value contains parentheses, it's already an expression like Dim.Fill()
-                if (value.Contains("("))
+                // Special handling for Pos and Dim types
+                if (targetType == "Terminal.Gui.ViewBase.Pos" || targetType == "Terminal.Gui.ViewBase.Dim")
                 {
+                    // If value contains parentheses, it's already an expression like Dim.Fill()
+                    if (value.Contains("("))
+                    {
+                        return value;
+                    }
+
+                    // For numeric values, convert to appropriate Terminal.Gui v2 types  
+                    if (int.TryParse(value, out _))
+                    {
+                        return value; // Terminal.Gui v2 accepts int directly for Pos/Dim
+                    }
+
+                    // If not numeric, treat as expression
                     return value;
                 }
 
-                // For numeric values, convert to appropriate Terminal.Gui v2 types  
-                if (int.TryParse(value, out _))
-                {
-                    return value; // Terminal.Gui v2 accepts int directly for Pos/Dim
-                }
-
-                // If not numeric, treat as expression
-                return value;
-            }
-
-            // For other Terminal.Gui types (Key, Enum, etc.), add full namespace
-            if (fullType != null)
-            {
+                // For other Terminal.Gui types (Key, Enum, etc.), add full namespace
                 // Handle values like "Key.F1" or "Key.Q.WithCtrl" or just "F1"
                 // Or "CheckState.Checked" → "Terminal.Gui.Views.CheckState.Checked"
-                // Split by dots to analyze the structure
+
+                // Skip generic/placeholder values
+                if (string.IsNullOrEmpty(value))
+                {
+                    return null; // Skip this property - can't generate valid code
+                }
+
                 var parts = value.Split('.');
 
                 if (parts.Length == 1)
                 {
                     // Just the value: "F1" → "Terminal.Gui.Input.Key.F1"
-                    return $"{fullType}.{value}";
+                    return $"{targetType}.{value}";
                 }
                 else if (parts.Length >= 2)
                 {
                     // Has dots: "Key.F1" or "Key.Q.WithCtrl" or "CheckState.Checked"
                     // Check if first part matches the type name
-                    var typeShortName = fullType.Substring(fullType.LastIndexOf('.') + 1);
+                    var typeShortName = targetType.Substring(targetType.LastIndexOf('.') + 1);
 
                     if (parts[0] == typeShortName)
                     {
                         // Remove the type prefix and add the full namespace
-                        // "Key.F1" → "Terminal.Gui.Input.Key.F1"
-                        // "Key.Q.WithCtrl" → "Terminal.Gui.Input.Key.Q.WithCtrl"
-                        // "CheckState.Checked" → "Terminal.Gui.Views.CheckState.Checked"
                         var valuePart = string.Join(".", parts.Skip(1));
-                        return $"{fullType}.{valuePart}";
+                        return $"{targetType}.{valuePart}";
                     }
                     else
                     {
                         // Doesn't start with type name, prefix the whole thing
-                        return $"{fullType}.{value}";
+                        return $"{targetType}.{value}";
                     }
                 }
             }
-            // Fallback: return as-is if we can't get the full type
-            return value;
-        }
 
-        // Check if property is boolean (case-insensitive)
-        if (Mappings.IsBooleanProperty(propName))
-        {
-            // Parse boolean values (case-insensitive)
-            if (bool.TryParse(value, out var boolValue))
+            // Handle System types based on TargetType
+            if (targetType == "System.Boolean" || targetType == "bool")
             {
-                return boolValue ? "true" : "false";
+                if (bool.TryParse(value, out var boolValue))
+                {
+                    return boolValue ? "true" : "false";
+                }
+                // If not a valid boolean, skip it
+                return null;
             }
-            // If not a valid boolean, treat as expression
-            return value;
-        }
 
-        // Check if property is float (like Fraction in ProgressBar)
-        if (Mappings.IsFloatProperty(propName))
-        {
-            // Parse float values using invariant culture (decimal point)
-            if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
+            if (targetType == "System.Single" || targetType == "float")
             {
-                // Ensure float literal has 'f' suffix
-                return value.Contains('.') ? $"{value}f" : $"{value}.0f";
+                if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
+                {
+                    // Ensure float literal has 'f' suffix
+                    return value.Contains('.') ? $"{value}f" : $"{value}.0f";
+                }
+                return null;
             }
-            // If not a valid float, treat as expression
-            return value;
+
+            if (targetType == "System.Int32" || targetType == "int" || 
+                targetType == "System.Int64" || targetType == "long" ||
+                targetType == "System.Byte" || targetType == "byte")
+            {
+                if (int.TryParse(value, out _))
+                {
+                    return value; // Return numeric value without quotes
+                }
+                return null;
+            }
+
+            // For all other types (including interfaces, complex types, etc.)
+            // Skip properties we can't set from literals
+            if (targetType != "System.String" && targetType != "string")
+            {
+                // Complex types - skip them
+                return null;
+            }
         }
 
-        // Check if property is numeric int (like SelectedItem)
-        if (Mappings.IsIntProperty(propName) && int.TryParse(value, out _))
-        {
-            return value; // Return numeric value without quotes
-        }
-
-        // Regular string property
+        // Default: treat as string property
         return $"\"{value.Replace("\"", "\\\"")}\"";
     }
 
