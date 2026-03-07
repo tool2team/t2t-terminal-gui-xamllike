@@ -1,0 +1,144 @@
+name: PR Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main, develop ]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  validate-pr:
+    name: Validate Pull Request
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout PR code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Check code formatting
+      run: dotnet format --verify-no-changes --verbosity diagnostic
+      continue-on-error: true
+      id: format_check
+      
+    - name: Build solution
+      run: dotnet build --no-restore --configuration Debug
+      id: build
+      
+    - name: Run all tests
+      run: dotnet test --no-build --configuration Debug --verbosity normal --logger "trx" --collect:"XPlat Code Coverage"
+      id: tests
+      
+    - name: Generate coverage report
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.3.11
+      with:
+        reports: '**/coverage.cobertura.xml'
+        targetdir: 'coveragereport'
+        reporttypes: 'HtmlInline;Badges'
+        
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: coverage-report
+        path: coveragereport
+        retention-days: 7
+        
+    - name: Comment PR with results
+      uses: actions/github-script@v7
+      if: always()
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          const formatResult = '${{ steps.format_check.outcome }}';
+          const buildResult = '${{ steps.build.outcome }}';
+          const testResult = '${{ steps.tests.outcome }}';
+          
+          const formatIcon = formatResult === 'success' ? '✅' : '❌';
+          const buildIcon = buildResult === 'success' ? '✅' : '❌';
+          const testIcon = testResult === 'success' ? '✅' : '❌';
+          
+          const comment = `## 🔍 PR Validation Results
+          
+          | Check | Status |
+          |-------|--------|
+          | Code Formatting | ${formatIcon} ${formatResult} |
+          | Build | ${buildIcon} ${buildResult} |
+          | Tests | ${testIcon} ${testResult} |
+          
+          ${formatResult !== 'success' ? '⚠️ **Code formatting issues detected.** Run `dotnet format` to fix.\n' : ''}
+          ${buildResult !== 'success' ? '❌ **Build failed.** Please fix compilation errors.\n' : ''}
+          ${testResult !== 'success' ? '❌ **Tests failed.** Please check test results.\n' : ''}
+          ${formatResult === 'success' && buildResult === 'success' && testResult === 'success' ? '🎉 **All checks passed!** This PR is ready for review.\n' : ''}
+          
+          📊 Coverage report available in artifacts.
+          `;
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+
+  check-breaking-changes:
+    name: Check for Breaking Changes
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout PR branch
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Checkout base branch
+      run: |
+        git fetch origin ${{ github.base_ref }}
+        git checkout origin/${{ github.base_ref }}
+        
+    - name: Check public API changes
+      run: |
+        echo "Checking for breaking changes in public API..."
+        # Add your breaking change detection logic here
+        # For example: compare public API surface using tools like PublicApiAnalyzer
+        
+    - name: Comment if breaking changes detected
+      uses: actions/github-script@v7
+      if: failure()
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '⚠️ **Breaking changes detected** in this PR. Please review and update the changelog accordingly.'
+          });
+
+  pr-labeler:
+    name: Auto-label PR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    
+    steps:
+    - name: Label PR based on files changed
+      uses: actions/labeler@v5
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        configuration-path: .github/labeler.yml

@@ -1,0 +1,53 @@
+# Auto-labeling configuration for pull requests
+# https://github.com/actions/labeler
+
+# Core generator changes
+'area: generator':
+  - changed-files:
+    - any-glob-to-any-file: 'Terminal.Gui.XamlLike/Generator.cs'
+    - any-glob-to-any-file: 'Terminal.Gui.XamlLike/CodeEmitter.cs'
+
+# Parser changes
+'area: parser':
+  - changed-files:
+    - any-glob-to-any-file: 'Terminal.Gui.XamlLike/XamlParser.cs'
+    - any-glob-to-any-file: 'Terminal.Gui.XamlLike/XamlDocument.cs'
+
+# Mappings changes
+'area: mappings':
+  - changed-files:
+    - any-glob-to-any-file: 'Terminal.Gui.XamlLike/Mappings.cs'
+    - any-glob-to-any-file: 'Tools/Terminal.Gui.MetadataExtractor/**'
+
+# Test changes
+'area: tests':
+  - changed-files:
+    - any-glob-to-any-file: 'Tests/**'
+
+# Documentation changes
+'documentation':
+  - changed-files:
+    - any-glob-to-any-file: '**/*.md'
+    - any-glob-to-any-file: 'docs/**'
+
+# Example changes
+'area: examples':
+  - changed-files:
+    - any-glob-to-any-file: 'Examples/**'
+
+# CI/CD changes
+'ci/cd':
+  - changed-files:
+    - any-glob-to-any-file: '.github/workflows/**'
+    - any-glob-to-any-file: '.github/**'
+
+# Dependencies
+'dependencies':
+  - changed-files:
+    - any-glob-to-any-file: '**/*.csproj'
+    - any-glob-to-any-file: '**/packages.lock.json'
+
+# Breaking changes (manual review needed)
+'breaking change':
+  - changed-files:
+    - any-glob-to-any-file: 'Terminal.Gui.XamlLike/Public/**'
