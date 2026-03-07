@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class DateFieldTestView : Terminal.Gui.Views.DateField
+    partial class DateFieldTest : Terminal.Gui.Views.DateField
     {
         private Terminal.Gui.Views.DateField TestDateField = null!;
 

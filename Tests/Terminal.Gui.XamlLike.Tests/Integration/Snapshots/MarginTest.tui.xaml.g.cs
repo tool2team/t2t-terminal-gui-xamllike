@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class MarginTestView : Terminal.Gui.ViewBase.Margin
+    partial class MarginTest : Terminal.Gui.ViewBase.Margin
     {
         private Terminal.Gui.ViewBase.Margin TestMargin = null!;
 

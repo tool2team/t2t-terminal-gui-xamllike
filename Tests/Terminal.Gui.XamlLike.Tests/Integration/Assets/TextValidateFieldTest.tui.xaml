@@ -1,4 +1,4 @@
-﻿<TextValidateField x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.TextValidateFieldTestView"
+﻿<TextValidateField x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.TextValidateFieldTest"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="TestTextValidateField"

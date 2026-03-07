@@ -47,7 +47,10 @@
 		<AdditionalFiles Include="Integration\Assets\*.tui.xaml" />
 		<!-- Exclude snapshots from build -->
 		<Compile Remove="Integration\Snapshots\*.tui.xaml.g.cs" />
-		<None Remove="Integration\Snapshots\*.tui.xaml.g.cs" />
+		<!-- Exclude snapshots from compilation but keep them visible in Solution Explorer -->
+		<None Include="Integration\Snapshots\*.tui.xaml.g.cs">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>

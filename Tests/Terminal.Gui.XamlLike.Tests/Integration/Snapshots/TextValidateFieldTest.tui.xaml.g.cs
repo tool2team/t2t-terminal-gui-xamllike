@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class TextValidateFieldTestView : Terminal.Gui.Views.TextValidateField
+    partial class TextValidateFieldTest : Terminal.Gui.Views.TextValidateField
     {
         private Terminal.Gui.Views.TextValidateField TestTextValidateField = null!;
 

@@ -1,4 +1,4 @@
-﻿<DateField x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.DateFieldTestView"
+﻿<DateField x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.DateFieldTest"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="TestDateField"

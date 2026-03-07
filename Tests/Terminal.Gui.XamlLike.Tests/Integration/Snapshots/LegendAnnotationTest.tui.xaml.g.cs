@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class LegendAnnotationTestView : Terminal.Gui.Views.LegendAnnotation
+    partial class LegendAnnotationTest : Terminal.Gui.Views.LegendAnnotation
     {
         private Terminal.Gui.Views.LegendAnnotation TestControl = null!;
 

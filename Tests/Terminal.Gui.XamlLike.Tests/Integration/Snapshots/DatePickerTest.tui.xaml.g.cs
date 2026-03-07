@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class DatePickerTestView : Terminal.Gui.Views.DatePicker
+    partial class DatePickerTest : Terminal.Gui.Views.DatePicker
     {
         private Terminal.Gui.Views.DatePicker TestDatePicker = null!;
 

@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class PopoverMenuTestView : Terminal.Gui.Views.PopoverMenu
+    partial class PopoverMenuTest : Terminal.Gui.Views.PopoverMenu
     {
         private Terminal.Gui.Views.PopoverMenu TestPopoverMenu = null!;
 

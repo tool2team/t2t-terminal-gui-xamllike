@@ -1,4 +1,4 @@
-﻿<MenuItem x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.MenuItemTestView"
+﻿<MenuItem x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.MenuItemTest"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="TestMenuItem"

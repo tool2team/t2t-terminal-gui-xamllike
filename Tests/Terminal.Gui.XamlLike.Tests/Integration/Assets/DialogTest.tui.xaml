@@ -1,4 +1,4 @@
-﻿<Dialog x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.DialogTestView"
+﻿<Dialog x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.DialogTest"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="TestDialog"

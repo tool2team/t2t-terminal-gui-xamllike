@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class MenuItemTestView : Terminal.Gui.Views.MenuItem
+    partial class MenuItemTest : Terminal.Gui.Views.MenuItem
     {
         private Terminal.Gui.Views.MenuItem TestMenuItem = null!;
 

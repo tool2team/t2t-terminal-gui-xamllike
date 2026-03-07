@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class AdornmentTestView : Terminal.Gui.ViewBase.Adornment
+    partial class AdornmentTest : Terminal.Gui.ViewBase.Adornment
     {
         private Terminal.Gui.ViewBase.Adornment TestAdornment = null!;
 

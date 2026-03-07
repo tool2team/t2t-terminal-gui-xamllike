@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class RunnableTestView : Terminal.Gui.Views.Runnable
+    partial class RunnableTest : Terminal.Gui.Views.Runnable
     {
         private Terminal.Gui.Views.Runnable TestRunnable = null!;
 

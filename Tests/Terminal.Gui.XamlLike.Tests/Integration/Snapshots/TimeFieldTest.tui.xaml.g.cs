@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class TimeFieldTestView : Terminal.Gui.Views.TimeField
+    partial class TimeFieldTest : Terminal.Gui.Views.TimeField
     {
         private Terminal.Gui.Views.TimeField TestTimeField = null!;
 

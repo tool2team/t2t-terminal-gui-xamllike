@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class BorderTestView : Terminal.Gui.ViewBase.Border
+    partial class BorderTest : Terminal.Gui.ViewBase.Border
     {
         private Terminal.Gui.ViewBase.Border TestBorder = null!;
 

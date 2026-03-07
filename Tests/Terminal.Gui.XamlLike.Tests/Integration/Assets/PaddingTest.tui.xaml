@@ -1,4 +1,4 @@
-﻿<Padding x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.PaddingTestView"
+﻿<Padding x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.PaddingTest"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="TestPadding"

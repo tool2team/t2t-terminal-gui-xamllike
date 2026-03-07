@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class PaddingTestView : Terminal.Gui.ViewBase.Padding
+    partial class PaddingTest : Terminal.Gui.ViewBase.Padding
     {
         private Terminal.Gui.ViewBase.Padding TestPadding = null!;
 

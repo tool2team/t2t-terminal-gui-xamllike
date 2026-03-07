@@ -9,7 +9,7 @@ using Terminal.Gui.ViewBase;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views
 {
-    partial class FileDialogTestView : Terminal.Gui.Views.FileDialog
+    partial class FileDialogTest : Terminal.Gui.Views.FileDialog
     {
         private Terminal.Gui.Views.FileDialog TestFileDialog = null!;
 
