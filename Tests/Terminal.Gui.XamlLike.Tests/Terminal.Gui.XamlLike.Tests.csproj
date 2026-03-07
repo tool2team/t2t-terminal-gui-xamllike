@@ -27,7 +27,7 @@
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
 	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
-	  <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.5121" />
+	  <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.5125" />
 	  <PackageReference Include="xunit.v3" Version="3.2.2" />
 </ItemGroup>
 	
