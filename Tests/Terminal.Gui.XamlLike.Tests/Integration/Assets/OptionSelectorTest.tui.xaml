@@ -10,7 +10,7 @@
     FocusedItem="Sample"
     HorizontalSpace="2"
     Labels="Sample"
-    Styles="Sample">
+    Styles="SelectorStyles.All">
   
   <!-- OptionSelector with properties: DoubleClickAccepts, FocusedItem, HorizontalSpace, Labels, Styles -->
   

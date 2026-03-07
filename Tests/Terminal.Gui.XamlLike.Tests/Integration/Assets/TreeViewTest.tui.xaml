@@ -7,7 +7,6 @@
     Width="30"
     Height="5"
     AllowLetterBasedNavigation="Sample"
-    AspectGetter="Sample"
     ColorGetter="Color.Blue"
     MaxDepth="Sample"
     MultiSelect="Sample">

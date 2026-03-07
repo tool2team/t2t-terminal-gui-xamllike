@@ -6,9 +6,7 @@
     Y="2"
     Width="30"
     Height="5"
-    MouseFlags="Sample"
-    Owner="Sample"
-    Root="Sample"
+    MouseFlags="MouseFlags.LeftButtonPressed"
     Target="Sample">
   
   <!-- PopoverMenu with properties: MouseFlags, Owner, Root, Target -->

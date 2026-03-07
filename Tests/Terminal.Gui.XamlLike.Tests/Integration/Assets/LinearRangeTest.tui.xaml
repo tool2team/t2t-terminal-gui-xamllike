@@ -8,7 +8,7 @@
     Height="5"
     AllowEmpty="Sample"
     FocusedOption="Sample"
-    LegendsOrientation="Sample"
+    LegendsOrientation="Orientation.Horizontal"
     MinimumInnerSpacing="Sample"
     Options="Sample">
   

@@ -20,9 +20,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
             TestPopoverMenu.Y = 2;
             TestPopoverMenu.Width = 30;
             TestPopoverMenu.Height = 5;
-            TestPopoverMenu.MouseFlags = Terminal.Gui.Input.MouseFlags.Sample;
-            TestPopoverMenu.Owner = Terminal.Gui.App.IRunnable.Sample;
-            TestPopoverMenu.Root = Terminal.Gui.Views.Menu.Sample;
+            TestPopoverMenu.MouseFlags = Terminal.Gui.Input.MouseFlags.LeftButtonPressed;
         }
     }
 }

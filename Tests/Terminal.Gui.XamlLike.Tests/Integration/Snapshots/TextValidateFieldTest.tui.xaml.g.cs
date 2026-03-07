@@ -20,7 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
             TestTextValidateField.Y = 2;
             TestTextValidateField.Width = 30;
             TestTextValidateField.Height = 5;
-            TestTextValidateField.Provider = Terminal.Gui.Views.ITextValidateProvider.Sample;
         }
     }
 }

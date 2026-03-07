@@ -8,8 +8,8 @@
     Height="5"
     BidirectionalMarquee="Sample"
     Fraction="0.5f"
-    ProgressBarFormat="Sample"
-    ProgressBarStyle="Sample"
+    ProgressBarFormat="ProgressBarFormat.Simple"
+    ProgressBarStyle="ProgressBarStyle.Continuous"
     SegmentCharacter="Sample">
   
   <!-- ProgressBar with properties: BidirectionalMarquee, Fraction, ProgressBarFormat, ProgressBarStyle, SegmentCharacter -->

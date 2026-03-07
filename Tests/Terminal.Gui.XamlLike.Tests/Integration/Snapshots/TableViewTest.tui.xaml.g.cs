@@ -20,8 +20,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTableView.Y = 2;
             TestTableView.Width = 30;
             TestTableView.Height = 5;
-            TestTableView.CellActivationKey = Terminal.Gui.Drivers.KeyCode.Sample;
-            TestTableView.CollectionNavigator = Terminal.Gui.Views.ICollectionNavigator.Sample;
+            TestTableView.CellActivationKey = Terminal.Gui.Drivers.KeyCode.Z;
         }
     }
 }

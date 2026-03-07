@@ -9,8 +9,8 @@
     DoubleClickAccepts="True"
     HorizontalSpace="2"
     Labels="Sample"
-    Styles="Sample"
-    TabBehavior="Sample">
+    Styles="SelectorStyles.All"
+    TabBehavior="SelectorStyles.All">
   
   <!-- FlagSelector with properties: DoubleClickAccepts, HorizontalSpace, Labels, Styles, TabBehavior -->
   

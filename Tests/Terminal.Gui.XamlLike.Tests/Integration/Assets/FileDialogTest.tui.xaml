@@ -8,7 +8,6 @@
     Height="5"
     AllowedTypes="Sample"
     AllowsMultipleSelection="Sample"
-    FileOperationsHandler="Sample"
     MustExist="Sample"
     OpenMode="OpenMode.File">
   

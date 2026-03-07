@@ -20,7 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTextField.Y = 2;
             TestTextField.Width = 30;
             TestTextField.Height = 5;
-            TestTextField.Autocomplete = Terminal.Gui.Views.IAutocomplete.Sample;
             TestTextField.SelectedStart = 0;
         }
     }

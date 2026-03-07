@@ -20,7 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
             TestFileDialog.Y = 2;
             TestFileDialog.Width = 30;
             TestFileDialog.Height = 5;
-            TestFileDialog.FileOperationsHandler = Terminal.Gui.FileServices.IFileOperations.Sample;
             TestFileDialog.OpenMode = Terminal.Gui.Views.OpenMode.File;
         }
     }

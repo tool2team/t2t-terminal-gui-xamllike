@@ -20,7 +20,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestLinearRange.Y = 2;
             TestLinearRange.Width = 30;
             TestLinearRange.Height = 5;
-            TestLinearRange.LegendsOrientation = Terminal.Gui.ViewBase.Orientation.Sample;
+            TestLinearRange.LegendsOrientation = Terminal.Gui.ViewBase.Orientation.Horizontal;
         }
     }
 }

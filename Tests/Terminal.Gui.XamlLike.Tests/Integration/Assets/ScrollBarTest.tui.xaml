@@ -9,7 +9,7 @@
     Increment="Sample"
     ScrollableContentSize="Sample"
     Value="0"
-    VisibilityMode="Sample"
+    VisibilityMode="ScrollBarVisibilityMode.Auto"
     VisibleContentSize="Sample">
   
   <!-- ScrollBar with properties: Increment, ScrollableContentSize, Value, VisibilityMode, VisibleContentSize -->

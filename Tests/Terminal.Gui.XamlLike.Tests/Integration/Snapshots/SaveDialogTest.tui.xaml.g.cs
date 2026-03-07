@@ -20,7 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestSaveDialog.Y = 2;
             TestSaveDialog.Width = 30;
             TestSaveDialog.Height = 5;
-            TestSaveDialog.FileOperationsHandler = Terminal.Gui.FileServices.IFileOperations.Sample;
             TestSaveDialog.OpenMode = Terminal.Gui.Views.OpenMode.File;
         }
     }
