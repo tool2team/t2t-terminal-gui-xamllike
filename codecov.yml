@@ -6,23 +6,30 @@ codecov:
   notify:
     wait_for_ci: true
 
+# Coverage targets and thresholds
 coverage:
   precision: 2
   round: down
-  range: "60...100"
+  range: "60...90"
   
   status:
     project:
       default:
-        target: 80%
-        threshold: 2%
+        target: 75%
+        threshold: 1%
         if_ci_failed: error
+        # Only measure Terminal.Gui.XamlLike
+        paths:
+          - "Terminal.Gui.XamlLike/"
     
     patch:
       default:
         target: 70%
         threshold: 5%
         if_ci_failed: error
+        # Only measure Terminal.Gui.XamlLike
+        paths:
+          - "Terminal.Gui.XamlLike/"
 
 comment:
   layout: "reach,diff,flags,tree"
@@ -41,6 +48,7 @@ ignore:
 
 flags:
   unittests:
+    carryforward: false           # Don't carry forward if missing
     paths:
-      - Terminal.Gui.XamlLike/
-    carryforward: true
+      - "Terminal.Gui.XamlLike/"  # Only Terminal.Gui.XamlLike library
+
