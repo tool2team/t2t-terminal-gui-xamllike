@@ -30,11 +30,11 @@ jobs:
       
     - name: Restore dependencies
       run: dotnet restore
-      
+
     - name: Build solution
       run: dotnet build --no-restore --configuration Release
-      
-    - name: Run tests
+
+    - name: Run all tests
       run: dotnet test --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"
       
     - name: Publish test results

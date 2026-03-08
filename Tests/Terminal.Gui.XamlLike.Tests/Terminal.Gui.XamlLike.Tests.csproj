@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants);BUILD_TESTS</DefineConstants>
-  </PropertyGroup>
+	<DefineConstants>$(DefineConstants);</DefineConstants>
+  </PropertyGroup>	
 
   <ItemGroup>
 	  <PackageReference Include="coverlet.collector" Version="8.0.0">
@@ -30,8 +30,9 @@
 	  <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.5125" />
 	  <PackageReference Include="xunit.v3" Version="3.2.2" />
 </ItemGroup>
-	
-	<ItemGroup Condition="$(DefineConstants.Contains('BUILD_TESTS'))">
+
+	<!-- Default mode: Normal project reference for testing -->
+	<ItemGroup Condition="!$(DefineConstants.Contains('BUILD_SNAPSHOTS'))">
 		<ProjectReference Include="..\..\Terminal.Gui.XamlLike\Terminal.Gui.XamlLike.csproj" />
 		<None Include="Integration\Assets\*.tui.xaml" CopyToOutputDirectory="PreserveNewest" />
 		<None Include="Integration\Snapshots\*.tui.xaml.g.cs" CopyToOutputDirectory="PreserveNewest" />

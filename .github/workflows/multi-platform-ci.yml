@@ -41,17 +41,14 @@ jobs:
         echo "OS: ${{ matrix.os }}"
         echo "Runner: ${{ runner.os }}"
       
-    - name: Restore dependencies
+      - name: Restore dependencies
       run: dotnet restore
-      
+
     - name: Build Terminal.Gui.XamlLike
       run: dotnet build Terminal.Gui.XamlLike/Terminal.Gui.XamlLike.csproj --no-restore --configuration Release
-      
-    - name: Build Tests
-      run: dotnet build Tests/Terminal.Gui.XamlLike.Tests/Terminal.Gui.XamlLike.Tests.csproj --no-restore --configuration Release /p:DefineConstants="BUILD_TESTS"
-      
-    - name: Run unit tests
-      run: dotnet test Tests/Terminal.Gui.XamlLike.Tests/Terminal.Gui.XamlLike.Tests.csproj --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results-${{ matrix.os }}.trx" --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true
+
+    - name: Build and run tests
+      run: dotnet test Tests/Terminal.Gui.XamlLike.Tests/Terminal.Gui.XamlLike.Tests.csproj --no-restore --configuration Release --verbosity normal --logger "trx;LogFileName=test-results-${{ matrix.os }}.trx" --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true
       
     - name: Publish test results (${{ matrix.os }})
       uses: EnricoMi/publish-unit-test-result-action@v2
