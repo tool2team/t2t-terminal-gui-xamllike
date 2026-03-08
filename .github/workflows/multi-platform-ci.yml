@@ -40,8 +40,8 @@ jobs:
         dotnet --info
         echo "OS: ${{ matrix.os }}"
         echo "Runner: ${{ runner.os }}"
-      
-      - name: Restore dependencies
+
+    - name: Restore dependencies
       run: dotnet restore
 
     - name: Build Terminal.Gui.XamlLike
