@@ -1,5 +1,9 @@
 # Terminal.Gui.XamlLike
 
+[![CI](https://github.com/tool2team/t2t-terminal-gui-xamllike/workflows/CI%20-%20Build%20and%20Test/badge.svg)](https://github.com/tool2team/t2t-terminal-gui-xamllike/actions)
+[![Multi-Platform CI](https://github.com/tool2team/t2t-terminal-gui-xamllike/workflows/Multi-Platform%20CI/badge.svg)](https://github.com/tool2team/t2t-terminal-gui-xamllike/actions)
+[![codecov](https://codecov.io/gh/tool2team/t2t-terminal-gui-xamllike/branch/main/graph/badge.svg)](https://codecov.io/gh/tool2team/t2t-terminal-gui-xamllike)
+
 A C# source generator that brings **XAML-like syntax** to [Terminal.Gui v2](https://github.com/gui-cs/Terminal.Gui), enabling rapid development of terminal-based applications with familiar markup and full MVVM support.
 
 ```xml
