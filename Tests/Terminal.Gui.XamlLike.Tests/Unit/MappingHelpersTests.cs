@@ -278,8 +278,8 @@ public class MappingHelpersTests
     }
 
     [Theory]
-    [InlineData("SelectedItem", true)]
-    [InlineData("TabStop", true)]
+    [InlineData("BoxHeight", true)]
+    [InlineData("BoxWidth", true)]
     [InlineData("Text", false)]
     [InlineData("Fraction", false)]
     public void IsIntProperty_VariousProperties_ReturnsExpectedResult(string propertyName, bool expected)

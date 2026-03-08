@@ -129,7 +129,7 @@ Tests property type detection for code generation.
 
 **Scenarios:**
 - ✅ Boolean properties (Enabled, Visible, CanFocus)
-- ✅ Integer properties (SelectedItem, TabStop)
+- ✅ Integer properties (BoxHeight, BoxWidth)
 - ✅ Float properties (Fraction)
 - ✅ Terminal.Gui types (X, Y, Width, Height)
 - ✅ Fully qualified type names
@@ -192,6 +192,7 @@ dotnet test --collect:"XPlat Code Coverage"
 ### Tested Properties
 - **Common:** X, Y, Width, Height, Enabled, Visible, CanFocus, Text
 - **Control-Specific:** IsDefault (Button), Fraction (ProgressBar)
+- **Integer:** BoxHeight, BoxWidth
 - **TwoWay Bindable:** TextField.Text, CheckBox.Value
 
 ### Tested Events
@@ -234,3 +235,4 @@ These tests are automatically run in:
 Expected execution time: **< 1 second** for all 39 tests
 
 No external dependencies or I/O operations - tests run entirely in-memory using the static `Mappings` dictionaries.
+

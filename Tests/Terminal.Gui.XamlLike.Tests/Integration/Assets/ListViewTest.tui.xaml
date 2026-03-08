@@ -9,9 +9,8 @@
     MarkMultiple="Sample"
     SelectedItem="0"
     ShowMarks="Sample"
-    Source=""
-    TopItem="Sample">
+    Source="">
   
-  <!-- ListView with properties: MarkMultiple, SelectedItem, ShowMarks, Source, TopItem -->
+  <!-- ListView with properties: MarkMultiple, SelectedItem, ShowMarks, Source -->
   
 </ListView>

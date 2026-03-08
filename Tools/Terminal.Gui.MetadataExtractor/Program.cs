@@ -473,9 +473,17 @@ class Program
         {
             var bindings = new Dictionary<string, string>();
 
-            // Look for properties that have a corresponding change event
+            // Only process controls that accept user input
+            if (!IsUserInputControl(view.TypeName))
+                continue;
+
+            // Look for properties that are both user-modifiable and have a corresponding change event
             foreach (var prop in view.Properties)
             {
+                // Skip read-only or configuration properties
+                if (!IsUserModifiableProperty(view.TypeName, prop.Name))
+                    continue;
+
                 // Common patterns for change events
                 var possibleEventNames = new[]
                 {
@@ -483,7 +491,8 @@ class Program
                     "TextChanged",
                     "ValueChanged",
                     "SelectedItemChanged",
-                    "SourceChanged"
+                    "SourceChanged",
+                    "CheckedChanged"
                 };
 
                 foreach (var eventName in possibleEventNames)
@@ -503,6 +512,90 @@ class Program
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// Determines if a control accepts user input and can have TwoWay bindings
+    /// </summary>
+    static bool IsUserInputControl(string typeName)
+    {
+        var inputControls = new HashSet<string>
+        {
+            // Text input
+            "TextField", "TextView", "TextValidateField", "AutocompleteTextField",
+            "DateField", "TimeField",
+
+            // Selection
+            "CheckBox", "RadioGroup", "ComboBox", "ListView", "TreeView",
+            "OptionSelector", "FlagSelector", "LinearRange",
+
+            // Numeric input
+            "NumericUpDown", "Slider", "ScrollBar",
+
+            // Color/Attribute selection
+            "ColorPicker", "ColorPicker16", "AttributePicker",
+
+            // Other interactive
+            "CharMap", "HexView", "TableView"
+        };
+
+        return inputControls.Contains(typeName);
+    }
+
+    /// <summary>
+    /// Determines if a property is user-modifiable (not just configuration)
+    /// </summary>
+    static bool IsUserModifiableProperty(string controlType, string propertyName)
+    {
+        // Common user-modifiable properties across controls
+        var alwaysModifiable = new HashSet<string>
+        {
+            "Text", "Value", "SelectedItem", "SelectedIndex", 
+            "Checked", "Selected", "CurrentValue"
+        };
+
+        if (alwaysModifiable.Contains(propertyName))
+            return true;
+
+        // Control-specific user-modifiable properties
+        var controlSpecific = new Dictionary<string, HashSet<string>>
+        {
+            ["CheckBox"] = new() { "CheckedState", "Checked" },
+            ["RadioGroup"] = new() { "SelectedItem", "Selected" },
+            ["ListView"] = new() { "SelectedItem", "SelectedItems", "Source" },
+            ["TreeView"] = new() { "SelectedObject", "Objects" },
+            ["ComboBox"] = new() { "SelectedItem", "Source" },
+            ["ColorPicker"] = new() { "SelectedColor" },
+            ["ColorPicker16"] = new() { "SelectedColor" },
+            ["TableView"] = new() { "SelectedRow", "SelectedColumn" },
+            ["HexView"] = new() { "Position", "Address" },
+            ["CharMap"] = new() { "SelectedCodePoint" },
+            ["ScrollBar"] = new() { "Position" },
+            ["Slider"] = new() { "Value", "CurrentValue" },
+            ["NumericUpDown"] = new() { "Value" },
+            ["OptionSelector"] = new() { "Selected", "SelectedOption" },
+            ["FlagSelector"] = new() { "Flags" },
+            ["LinearRange"] = new() { "SelectedOption" }
+        };
+
+        if (controlSpecific.TryGetValue(controlType, out var specificProps))
+        {
+            return specificProps.Contains(propertyName);
+        }
+
+        // Configuration/Layout properties - NOT user-modifiable
+        var nonModifiable = new HashSet<string>
+        {
+            "Width", "Height", "X", "Y", "Title", "BorderStyle",
+            "Visible", "Enabled", "CanFocus", "TabStop", "TabIndex",
+            "ColorScheme", "Cursor", "Frame", "Id", "IsDefault",
+            "SuperView", "Subviews", "Parent", "Bounds",
+            // Many more configuration properties...
+            "AutoSize", "TextAlignment", "VerticalTextAlignment",
+            "HotKey", "HotKeySpecifier", "IsInitialized", "WantContinuousButtonPressed"
+        };
+
+        return !nonModifiable.Contains(propertyName);
     }
 
 }
