@@ -6,8 +6,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views;
 
 public abstract class BaseViewTests<T> where T : View
 {
-    private static readonly Encoding Utf8NoBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
-
     public string XamlName => $"{typeof(T).Name}Test.tui.xaml";
     public string XamlPath => Path.Combine(AppContext.BaseDirectory, "Integration", "Assets", XamlName);
 
