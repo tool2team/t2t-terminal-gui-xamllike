@@ -228,7 +228,7 @@ public sealed class CodeEmitter
         }
 
         // Determine base class from root element (use full name for inheritance)
-        var rootElementType = Mappings.GetFullTypeName(document.RootElement.Name);
+        var rootElementType = MappingHelpers.GetFullTypeName(document.RootElement.Name);
 
         if (rootElementType == null)
         {
@@ -295,7 +295,7 @@ public sealed class CodeEmitter
         // Generate field if element has explicit x:Name
         if (!string.IsNullOrEmpty(element.XName))
         {
-            var typeName = Mappings.GetFullTypeName(element.Name, element.XType);
+            var typeName = MappingHelpers.GetFullTypeName(element.Name, element.XType);
             if (typeName == null)
             {
                 _diagnostics?.Add(Diagnostic.Create(
@@ -327,7 +327,7 @@ public sealed class CodeEmitter
         {
             if (!control.HasExplicitName)
             {
-                var typeName = Mappings.GetFullTypeName(control.ElementName, control.GenericType);
+                var typeName = MappingHelpers.GetFullTypeName(control.ElementName, control.GenericType);
                 if (typeName == null)
                 {
                     _diagnostics?.Add(Diagnostic.Create(
@@ -354,7 +354,7 @@ public sealed class CodeEmitter
                 var fieldName = GenerateAnonymousFieldName(element.Name);
                 _elementToFieldName[element] = fieldName;
 
-                var typeName = Mappings.GetFullTypeName(element.Name, element.XType);
+                var typeName = MappingHelpers.GetFullTypeName(element.Name, element.XType);
                 if (typeName == null)
                 {
                     _diagnostics?.Add(Diagnostic.Create(
@@ -405,7 +405,7 @@ public sealed class CodeEmitter
     private void GenerateElementCode(XamlElement element, bool isRoot = false)
     {
         // Get control type name with optional generic type
-        var typeName = Mappings.GetFullTypeName(element.Name, element.XType);
+        var typeName = MappingHelpers.GetFullTypeName(element.Name, element.XType);
 
         if (typeName == null)
         {
@@ -489,7 +489,7 @@ public sealed class CodeEmitter
             var handlerName = kvp.Value;
 
             // Check if event is obsolete
-            EventMapping? eventMapping = Mappings.GetEventMapping(element.Name, xamlEventName);
+            EventMapping? eventMapping = MappingHelpers.GetEventMapping(element.Name, xamlEventName);
             if (eventMapping?.IsObsolete == true)
             {
                 // Emit diagnostic with file location and skip code generation
@@ -804,7 +804,7 @@ public sealed class CodeEmitter
                 string eventArgType = "System.EventArgs";
                 if (eventName != null)
                 {
-                    EventMapping? eventMapping = Mappings.GetEventMapping(control.ElementName, eventName);
+                    EventMapping? eventMapping = MappingHelpers.GetEventMapping(control.ElementName, eventName);
                     if (eventMapping != null)
                     {
                         // Extract TEventArgs from EventHandler<TEventArgs> using regex
@@ -923,7 +923,7 @@ public sealed class CodeEmitter
     private static string? GetPropertyValue(string controlName, string propName, string value)
     {
         // Check if property has a mapping with type information
-        var propertyMapping = Mappings.GetPropertyMapping(propName, controlName);
+        var propertyMapping = MappingHelpers.GetPropertyMapping(propName, controlName);
 
         if (propertyMapping != null)
         {

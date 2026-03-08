@@ -132,7 +132,7 @@ public class XamlElement
     /// <summary>
     /// Checks if an attribute name represents an event (uses Mappings.EventMappings)
     /// </summary>
-    private static bool IsEventAttribute(string attributeName) => Mappings.IsKnownEvent(attributeName);
+    private static bool IsEventAttribute(string attributeName) => MappingHelpers.IsKnownEvent(attributeName);
 
     /// <summary>
     /// Determines if this Button should be added as a dialog button (via AddButton) or regular child (via Add)

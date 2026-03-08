@@ -1,0 +1,167 @@
+// Utility methods for accessing Terminal.Gui mappings
+// This file contains helper methods - data is in auto-generated Mappings.cs
+
+#nullable enable
+
+using System.Collections.Generic;
+
+namespace Terminal.Gui.XamlLike;
+
+/// <summary>
+/// Provides utility methods to access Terminal.Gui control mappings
+/// The actual data dictionaries are in the auto-generated Mappings.cs file (partial class)
+/// </summary>
+public static partial class MappingHelpers
+{
+    /// <summary>
+    /// Gets the full type name for a control, with optional generic type parameter
+    /// </summary>
+    public static string? GetFullTypeName(string elementName, string? genericType = null)
+    {
+        if (!Mappings.ControlMappings.TryGetValue(elementName, out ControlMapping? mapping))
+            return null; // Type not found - caller should generate diagnostic
+
+        var typeName = mapping.FullTypeName;
+
+        // If this control supports generics and a generic type is specified, add it
+        if (!string.IsNullOrEmpty(genericType) && elementName == "OptionSelector")
+        {
+            typeName = $"{typeName}<{genericType}>";
+        }
+
+        return typeName;
+    }
+
+    /// <summary>
+    /// Checks if a control is a container (can have children)
+    /// </summary>
+    public static bool IsContainer(string elementName) =>
+        Mappings.ControlMappings.TryGetValue(elementName, out ControlMapping? mapping) && mapping.IsContainer;
+
+    /// <summary>
+    /// Gets the event mapping for a control/event combination
+    /// </summary>
+    public static EventMapping? GetEventMapping(string controlName, string eventName) =>
+        Mappings.EventMappings.TryGetValue(controlName, out Dictionary<string, EventMapping>? events) &&
+        events.TryGetValue(eventName, out EventMapping? eventMapping)
+            ? eventMapping
+            : null;
+
+    /// <summary>
+    /// Gets TwoWay binding information for a control/property combination
+    /// </summary>
+    public static TwoWayBinding? GetTwoWayBinding(string controlName, string propertyName) =>
+        Mappings.TwoWayBindings.TryGetValue(controlName, out Dictionary<string, TwoWayBinding>? properties) &&
+        properties.TryGetValue(propertyName, out TwoWayBinding? binding)
+            ? binding
+            : null;
+
+    /// <summary>
+    /// Checks if a property supports TwoWay binding
+    /// </summary>
+    public static bool SupportsTwoWayBinding(string controlName, string propertyName) =>
+        GetTwoWayBinding(controlName, propertyName) != null;
+
+    /// <summary>
+    /// Gets property mapping information by property name and optionally control name
+    /// </summary>
+    public static PropertyMapping? GetPropertyMapping(string propertyName, string? controlName = null)
+    {
+        // Check control-specific properties first if control name is provided
+        if (!string.IsNullOrEmpty(controlName) &&
+            Mappings.PropertyMappings.TryGetValue(controlName!, out Dictionary<string, PropertyMapping>? controlProperties) &&
+            controlProperties.TryGetValue(propertyName, out PropertyMapping? controlMapping))
+        {
+            return controlMapping;
+        }
+
+        // Check Common properties
+        if (Mappings.PropertyMappings.TryGetValue("Common", out Dictionary<string, PropertyMapping>? commonProperties) &&
+            commonProperties.TryGetValue(propertyName, out PropertyMapping? commonMapping))
+        {
+            return commonMapping;
+        }
+
+        // Search in all control-specific properties if not found yet
+        foreach (Dictionary<string, PropertyMapping> properties in Mappings.PropertyMappings.Values)
+        {
+            if (properties.TryGetValue(propertyName, out PropertyMapping? mapping))
+            {
+                return mapping;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Checks if an attribute name is a known event for any control type
+    /// </summary>
+    public static bool IsKnownEvent(string eventName)
+    {
+        foreach (Dictionary<string, EventMapping> controlEvents in Mappings.EventMappings.Values)
+        {
+            if (controlEvents.ContainsKey(eventName))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Determines if a property should be treated as a boolean value
+    /// </summary>
+    public static bool IsBooleanProperty(string propertyName)
+    {
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
+        return mapping?.TargetType == "System.Boolean";
+    }
+
+    /// <summary>
+    /// Determines if a property should be treated as an integer value
+    /// </summary>
+    public static bool IsIntProperty(string propertyName)
+    {
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
+        return mapping?.TargetType == "System.Int32";
+    }
+
+    /// <summary>
+    /// Determines if a property should be treated as a float value
+    /// </summary>
+    public static bool IsFloatProperty(string propertyName)
+    {
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
+        return mapping?.TargetType == "System.Single" || mapping?.TargetType == "System.Double";
+    }
+
+    /// <summary>
+    /// Determines if a property expects an array type
+    /// </summary>
+    public static bool IsArrayProperty(string propertyName)
+    {
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
+        return mapping?.TargetType.EndsWith("[]") ?? false;
+    }
+
+    /// <summary>
+    /// Determines if a property is a Terminal.Gui type that needs full namespace qualification
+    /// </summary>
+    public static bool IsTerminalGuiType(string propertyName)
+    {
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
+        if (mapping == null) return false;
+
+        return mapping.TargetType.StartsWith("Terminal.Gui.");
+    }
+
+    /// <summary>
+    /// Gets the fully qualified type name for a property
+    /// </summary>
+    public static string? GetFullyQualifiedType(string propertyName)
+    {
+        PropertyMapping? mapping = GetPropertyMapping(propertyName);
+        return mapping?.TargetType;
+    }
+}

@@ -141,7 +141,7 @@ public static class XamlParser
     private static void ValidateElement(XamlElement element, string filePath, List<TuiDiagnostic> diagnostics, string? dataType = null)
     {
         // Validate control type exists
-        var controlType = Mappings.GetFullTypeName(element.Name);
+        var controlType = MappingHelpers.GetFullTypeName(element.Name);
         if (!IsKnownControlType(element.Name))
         {
             diagnostics.Add(TuiDiagnostics.UnknownControlType.Create(filePath, element.Name));
@@ -165,7 +165,7 @@ public static class XamlParser
                 // Validate TwoWay binding is only used on supported controls/properties
                 if (binding.Mode == BindingMode.TwoWay)
                 {
-                    if (!Mappings.SupportsTwoWayBinding(element.Name, propName))
+                    if (!MappingHelpers.SupportsTwoWayBinding(element.Name, propName))
                     {
                         diagnostics.Add(TuiDiagnostics.UnsupportedTwoWayBinding.Create(
                             filePath, element.Name, propName));

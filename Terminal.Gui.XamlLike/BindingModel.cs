@@ -176,7 +176,7 @@ public class BoundProperty
             return null;
         }
 
-        TwoWayBinding? twoWayBinding = Mappings.GetTwoWayBinding(_controlType!, PropertyName);
+        TwoWayBinding? twoWayBinding = MappingHelpers.GetTwoWayBinding(_controlType!, PropertyName);
         return twoWayBinding?.ChangeEventName;
     }
 
