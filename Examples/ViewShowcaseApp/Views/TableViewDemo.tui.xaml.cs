@@ -33,7 +33,7 @@ public partial class TableViewDemo : View
 
     private void OnCellActivated(object? sender, CellActivatedEventArgs e)
     {
-        DataTableSource table = (DataTableSource)EmployeeTable.Table;
+        DataTableSource table = (DataTableSource)EmployeeTable.Table!;
         var row = e.Row;
         var col = e.Col;
         
