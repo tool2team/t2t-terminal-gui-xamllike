@@ -147,7 +147,7 @@ public static class XamlParser
             diagnostics.Add(TuiDiagnostics.UnknownControlType.Create(filePath, element.Name));
         }
 
-        // Validate bindings
+        // Validate property attributes
         foreach (KeyValuePair<string, string> kvp in element.PropertyAttributes)
         {
             var propName = kvp.Key;
@@ -170,6 +170,16 @@ public static class XamlParser
                         diagnostics.Add(TuiDiagnostics.UnsupportedTwoWayBinding.Create(
                             filePath, element.Name, propName));
                     }
+                }
+            }
+
+            // Validate property exists for this control (only for known controls)
+            if (IsKnownControlType(element.Name))
+            {
+                var propertyMapping = MappingHelpers.GetPropertyMapping(propName, element.Name);
+                if (propertyMapping == null)
+                {
+                    diagnostics.Add(TuiDiagnostics.UnknownProperty.Create(filePath, element.Name, propName));
                 }
             }
         }

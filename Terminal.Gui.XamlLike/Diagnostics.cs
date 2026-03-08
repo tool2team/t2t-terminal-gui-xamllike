@@ -228,6 +228,18 @@ public static readonly DiagnosticDescriptor UnknownControlTypeInGeneration = new
     defaultSeverity: DiagnosticSeverity.Error,
     isEnabledByDefault: true,
     description: "The control type is not recognized during code generation.");
+
+/// <summary>
+/// Unknown property for control type
+/// </summary>
+public static readonly DiagnosticDescriptor UnknownProperty = new(
+    id: "TUI019",
+    title: "Unknown property",
+    messageFormat: "Unknown property '{1}' for control type '{0}'. Check Terminal.Gui v2 documentation for available properties.",
+    category: Category,
+    defaultSeverity: DiagnosticSeverity.Warning,
+    isEnabledByDefault: true,
+    description: "The specified property name may not exist on the control type.");
 }
 
 public static class DiagnosticExtensions
