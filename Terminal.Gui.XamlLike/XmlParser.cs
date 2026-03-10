@@ -1,8 +1,9 @@
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
-using Microsoft.CodeAnalysis;
 
 namespace Terminal.Gui.XamlLike;
 
@@ -11,6 +12,8 @@ namespace Terminal.Gui.XamlLike;
 /// </summary>
 public static class XamlParser
 {
+     static readonly string[] SpecialAttributes = ["xmlns", "xmlns:x", "x:Name", "x:DataType", "x:Class"];
+
     /// <summary>
     /// Parses a .tui.xaml file content into a XamlDocument
     /// </summary>
@@ -147,58 +150,49 @@ public static class XamlParser
             diagnostics.Add(TuiDiagnostics.UnknownControlType.Create(filePath, element.Name));
         }
 
-        // Validate property attributes
-        foreach (KeyValuePair<string, string> kvp in element.PropertyAttributes)
+        foreach (KeyValuePair<string, string> kvp in element.Attributes)
         {
             var propName = kvp.Key;
             var value = kvp.Value;
 
-            if (IsBindingExpression(value))
+            if (SpecialAttributes.Contains(propName))
             {
-                BindingExpression? binding = BindingExpression.Parse(value, dataType);
-                if (binding == null)
-                {
-                    diagnostics.Add(TuiDiagnostics.InvalidBinding.Create(filePath, value));
-                    continue;
-                }
+                // Skip special attributes
+                continue;
+            }
 
-                // Validate TwoWay binding is only used on supported controls/properties
-                if (binding.Mode == BindingMode.TwoWay)
+            if (MappingHelpers.GetPropertyMapping(element.Name, propName) is PropertyMapping)
+            {
+                if (IsBindingExpression(value))
                 {
-                    if (!MappingHelpers.SupportsTwoWayBinding(element.Name, propName))
+                    BindingExpression? binding = BindingExpression.Parse(value, dataType);
+                    if (binding == null)
                     {
-                        diagnostics.Add(TuiDiagnostics.UnsupportedTwoWayBinding.Create(
-                            filePath, element.Name, propName));
+                        diagnostics.Add(TuiDiagnostics.InvalidBinding.Create(filePath, value));
+                        continue;
+                    }
+
+                    // Validate TwoWay binding is only used on supported controls/properties
+                    if (binding.Mode == BindingMode.TwoWay)
+                    {
+                        if (MappingHelpers.GetTwoWayBinding(element.Name, propName) is not TwoWayBinding)
+                        {
+                            diagnostics.Add(TuiDiagnostics.UnsupportedTwoWayBinding.Create(
+                                filePath, element.Name, propName));
+                        }
                     }
                 }
             }
-
-            // Validate property exists for this control (only for known controls)
-            if (IsKnownControlType(element.Name))
+            else if (MappingHelpers.GetEventMapping(element.Name, propName) is EventMapping)
             {
-                var propertyMapping = MappingHelpers.GetPropertyMapping(propName, element.Name);
-                if (propertyMapping == null)
+                if (string.IsNullOrWhiteSpace(propName))
                 {
-                    diagnostics.Add(TuiDiagnostics.UnknownProperty.Create(filePath, element.Name, propName));
+                    diagnostics.Add(TuiDiagnostics.EmptyEventHandler.Create(filePath, propName));
                 }
             }
-        }
-
-        // Validate event handlers
-        foreach (KeyValuePair<string, string> kvp in element.EventAttributes)
-        {
-            var eventName = kvp.Key;
-            var handlerName = kvp.Value;
-
-            if (!IsKnownEventName(element.Name, eventName))
+            else
             {
-                diagnostics.Add(TuiDiagnostics.UnknownEvent.Create(filePath, element.Name, eventName));
-            }
-            // Note: Obsolete event diagnostic is emitted during code generation in Generator.cs
-
-            if (string.IsNullOrWhiteSpace(handlerName))
-            {
-                diagnostics.Add(TuiDiagnostics.EmptyEventHandler.Create(filePath, eventName));
+                diagnostics.Add(TuiDiagnostics.UnknownProperty.Create(filePath, element.Name, propName));
             }
         }
 
@@ -230,6 +224,7 @@ public static class XamlParser
     private static bool IsKnownEventName(string controlName, string eventName) =>
         Mappings.EventMappings.TryGetValue(controlName, out Dictionary<string, EventMapping>? events) && 
         events.ContainsKey(eventName);
+
 }
 
 /// <summary>

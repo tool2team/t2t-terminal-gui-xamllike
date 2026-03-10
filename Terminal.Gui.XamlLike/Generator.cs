@@ -454,13 +454,13 @@ public sealed class CodeEmitter
         }
 
         // Set properties
-        foreach (KeyValuePair<string, string> kvp in element.PropertyAttributes)
+        foreach (KeyValuePair<string, string> kvp in element.Attributes)
         {
             var propName = kvp.Key;
             var value = kvp.Value;
 
-            // Skip IsDialogButton - it's a meta-property for generation only
-            if (propName == "IsDialogButton")
+            var propertyMapping = MappingHelpers.GetPropertyMapping(element.Name, propName);
+            if (propertyMapping is null)
             {
                 continue;
             }
@@ -483,25 +483,16 @@ public sealed class CodeEmitter
         }
 
         // Wire up events
-        foreach (KeyValuePair<string, string> kvp in element.EventAttributes)
+        foreach (KeyValuePair<string, string> kvp in element.Attributes)
         {
             var xamlEventName = kvp.Key;
             var handlerName = kvp.Value;
 
             // Check if event is obsolete
             EventMapping? eventMapping = MappingHelpers.GetEventMapping(element.Name, xamlEventName);
-            if (eventMapping?.IsObsolete == true)
+            if (eventMapping is null)
             {
-                // Emit diagnostic with file location and skip code generation
-                var obsoleteMessage = eventMapping.GetObsoleteMessage() ?? "";
-                ReportDiagnostic(
-                    TuiDiagnostics.ObsoleteEvent,
-                    element,
-                    xamlEventName,
-                    element.Name,
-                    obsoleteMessage
-                );
-                continue; // Skip generating code for obsolete event
+                continue;
             }
 
             // Map XAML event name to actual Terminal.Gui event name
@@ -846,7 +837,7 @@ public sealed class CodeEmitter
     {
         List<BoundProperty> boundProperties = new List<BoundProperty>();
 
-        foreach (KeyValuePair<string, string> kvp in element.PropertyAttributes)
+        foreach (KeyValuePair<string, string> kvp in element.Attributes)
         {
             var propName = kvp.Key;
             var value = kvp.Value;
@@ -923,7 +914,7 @@ public sealed class CodeEmitter
     private static string? GetPropertyValue(string controlName, string propName, string value)
     {
         // Check if property has a mapping with type information
-        var propertyMapping = MappingHelpers.GetPropertyMapping(propName, controlName);
+        var propertyMapping = MappingHelpers.GetPropertyMapping(controlName, propName);
 
         if (propertyMapping != null)
         {
@@ -936,7 +927,7 @@ public sealed class CodeEmitter
                 if (targetType == "Terminal.Gui.ViewBase.Pos" || targetType == "Terminal.Gui.ViewBase.Dim")
                 {
                     // If value contains parentheses, it's already an expression like Dim.Fill()
-                    if (value.Contains("("))
+                    if (value.Contains("(") && value.Contains(")"))
                     {
                         return value;
                     }

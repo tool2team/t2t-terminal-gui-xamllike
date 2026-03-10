@@ -76,65 +76,6 @@ public class XamlElement
     public bool HasAttribute(string name) => Attributes.ContainsKey(name);
 
     /// <summary>
-    /// Gets all non-xmlns and non-x: attributes (property attributes)
-    /// </summary>
-    public Dictionary<string, string> PropertyAttributes
-    {
-        get
-        {
-            Dictionary<string, string> result = new Dictionary<string, string>();
-            foreach (KeyValuePair<string, string> kvp in Attributes)
-            {
-                var key = kvp.Key;
-                var value = kvp.Value;
-                if (!key.StartsWith("x:") && !key.StartsWith("xmlns") && !IsEventAttribute(key))
-                {
-                    result[key] = value;
-                }
-            }
-            return result;
-        }
-    }
-
-    /// <summary>
-    /// Gets all event attributes (those that don't contain bindings or expressions)
-    /// </summary>
-    public Dictionary<string, string> EventAttributes
-    {
-        get
-        {
-            Dictionary<string, string> result = new Dictionary<string, string>();
-            foreach (KeyValuePair<string, string> kvp in Attributes)
-            {
-                var key = kvp.Key;
-                var value = kvp.Value;
-                if (!key.StartsWith("x:") && !key.StartsWith("xmlns") && IsEventAttribute(key) && !IsBinding(value) && !IsExpression(value))
-                {
-                    result[key] = value;
-                }
-            }
-            return result;
-        }
-    }
-
-    /// <summary>
-    /// Checks if a value is a binding expression {Bind ...}
-    /// </summary>
-    private static bool IsBinding(string value) =>
-        value.Trim().StartsWith("{Bind ") && value.Trim().EndsWith("}");
-
-    /// <summary>
-    /// Checks if a value is an expression like Dim.Fill()
-    /// </summary>
-    private static bool IsExpression(string value) =>
-        value.Contains("(") && value.Contains(")");
-
-    /// <summary>
-    /// Checks if an attribute name represents an event (uses Mappings.EventMappings)
-    /// </summary>
-    private static bool IsEventAttribute(string attributeName) => MappingHelpers.IsKnownEvent(attributeName);
-
-    /// <summary>
     /// Determines if this Button should be added as a dialog button (via AddButton) or regular child (via Add)
     /// </summary>
     /// <param name="parentElement">The parent element (should be Dialog)</param>

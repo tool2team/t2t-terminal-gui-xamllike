@@ -35,24 +35,13 @@ public class EventMapping
     public string EventName { get; }
     public string DelegateType { get; }
     public string Description { get; }
-    public bool IsObsolete { get; }
-    public string? ReplacementEvent { get; }
 
-    public EventMapping(string eventName, string delegateType, string description, bool isObsolete = false, string? replacementEvent = null)
+    public EventMapping(string eventName, string delegateType, string description)
     {
         EventName = eventName;
         DelegateType = delegateType;
         Description = description;
-        IsObsolete = isObsolete;
-        ReplacementEvent = replacementEvent;
     }
-
-    /// <summary>
-    /// Gets the obsolete message if this event is obsolete
-    /// </summary>
-    public string? GetObsoleteMessage() => IsObsolete && ReplacementEvent != null
-        ? $"Use '{ReplacementEvent}' instead"
-        : null;
 }
 
 /// <summary>

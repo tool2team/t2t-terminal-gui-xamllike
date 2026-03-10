@@ -34,24 +34,20 @@ public static BindingExpression? Parse(string expression, string? dataType = nul
         return null;
 
     // Remove "{Bind " and "}"
-    var content = trimmed.Substring(6, trimmed.Length - 7).Trim();
+    var content = trimmed.TrimStart("{Bind ").TrimEnd("}").Trim().ToString();
 
     // Split by comma to handle Mode parameter
     var parts = content.Split(',');
     var propertyPath = parts[0].Trim();
-        BindingMode mode = BindingMode.OneWay; // default
+    BindingMode mode = BindingMode.OneWay; // default
 
     // Check for Mode parameter
-    for (int i = 1; i < parts.Length; i++)
+    if (parts.Length > 1 && parts[1].StartsWith("Mode="))
     {
-        var part = parts[i].Trim();
-        if (part.StartsWith("Mode=", System.StringComparison.OrdinalIgnoreCase))
+        string modeValue = parts[1].Split('=')[1];
+        if (Enum.TryParse(modeValue, out BindingMode parsedMode))
         {
-            var modeValue = part.Substring(5).Trim();
-            if (System.Enum.TryParse(modeValue, true, out BindingMode parsedMode))
-            {
-                mode = parsedMode;
-            }
+            mode = parsedMode;
         }
     }
 
@@ -59,15 +55,9 @@ public static BindingExpression? Parse(string expression, string? dataType = nul
     // If dataType is specified and propertyPath doesn't contain a dot, prepend dataType
     // If propertyPath already contains a dot (e.g., "ViewModel.Property"), use it as-is
     // Otherwise (no dataType, no dot), it's a self-binding property
-    string sourceExpression;
-    if (!string.IsNullOrEmpty(dataType) && !propertyPath.Contains("."))
-    {
-        sourceExpression = $"{dataType}.{propertyPath}";
-    }
-    else
-    {
-        sourceExpression = propertyPath;
-    }
+    string sourceExpression = !string.IsNullOrEmpty(dataType) && !propertyPath.Contains(".")
+        ? $"{dataType}.{propertyPath}"
+        : propertyPath;
 
     return new BindingExpression(propertyPath, mode, sourceExpression);
 }

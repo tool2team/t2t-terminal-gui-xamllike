@@ -33,10 +33,12 @@ public static partial class MappingHelpers
     }
 
     /// <summary>
-    /// Checks if a control is a container (can have children)
+    /// Gets the control mapping for a control
     /// </summary>
-    public static bool IsContainer(string elementName) =>
-        Mappings.ControlMappings.TryGetValue(elementName, out ControlMapping? mapping) && mapping.IsContainer;
+    public static ControlMapping? GetControlMapping(string controlName) =>
+        Mappings.ControlMappings.TryGetValue(controlName, out ControlMapping? mapping)
+            ? mapping
+            : null;
 
     /// <summary>
     /// Gets the event mapping for a control/event combination
@@ -57,19 +59,12 @@ public static partial class MappingHelpers
             : null;
 
     /// <summary>
-    /// Checks if a property supports TwoWay binding
-    /// </summary>
-    public static bool SupportsTwoWayBinding(string controlName, string propertyName) =>
-        GetTwoWayBinding(controlName, propertyName) != null;
-
-    /// <summary>
     /// Gets property mapping information by property name and optionally control name
     /// </summary>
-    public static PropertyMapping? GetPropertyMapping(string propertyName, string? controlName = null)
+    public static PropertyMapping? GetPropertyMapping(string controlName, string propertyName)
     {
         // Check control-specific properties first if control name is provided
-        if (!string.IsNullOrEmpty(controlName) &&
-            Mappings.PropertyMappings.TryGetValue(controlName!, out Dictionary<string, PropertyMapping>? controlProperties) &&
+        if (Mappings.PropertyMappings.TryGetValue(controlName, out Dictionary<string, PropertyMapping>? controlProperties) &&
             controlProperties.TryGetValue(propertyName, out PropertyMapping? controlMapping))
         {
             return controlMapping;
@@ -81,68 +76,7 @@ public static partial class MappingHelpers
         {
             return commonMapping;
         }
-
-        // Search in all control-specific properties if not found yet
-        foreach (Dictionary<string, PropertyMapping> properties in Mappings.PropertyMappings.Values)
-        {
-            if (properties.TryGetValue(propertyName, out PropertyMapping? mapping))
-            {
-                return mapping;
-            }
-        }
-
         return null;
-    }
-
-    /// <summary>
-    /// Checks if an attribute name is a known event for any control type
-    /// </summary>
-    public static bool IsKnownEvent(string eventName)
-    {
-        foreach (Dictionary<string, EventMapping> controlEvents in Mappings.EventMappings.Values)
-        {
-            if (controlEvents.ContainsKey(eventName))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// Determines if a property should be treated as a boolean value
-    /// </summary>
-    public static bool IsBooleanProperty(string propertyName)
-    {
-        PropertyMapping? mapping = GetPropertyMapping(propertyName);
-        return mapping?.TargetType == "System.Boolean";
-    }
-
-    /// <summary>
-    /// Determines if a property should be treated as an integer value
-    /// </summary>
-    public static bool IsIntProperty(string propertyName)
-    {
-        PropertyMapping? mapping = GetPropertyMapping(propertyName);
-        return mapping?.TargetType == "System.Int32";
-    }
-
-    /// <summary>
-    /// Determines if a property should be treated as a float value
-    /// </summary>
-    public static bool IsFloatProperty(string propertyName)
-    {
-        PropertyMapping? mapping = GetPropertyMapping(propertyName);
-        return mapping?.TargetType == "System.Single" || mapping?.TargetType == "System.Double";
-    }
-
-    /// <summary>
-    /// Determines if a property expects an array type
-    /// </summary>
-    public static bool IsArrayProperty(string propertyName)
-    {
-        PropertyMapping? mapping = GetPropertyMapping(propertyName);
-        return mapping?.TargetType.EndsWith("[]") ?? false;
     }
 
     /// <summary>
@@ -150,18 +84,14 @@ public static partial class MappingHelpers
     /// </summary>
     public static bool IsTerminalGuiType(string propertyName)
     {
-        PropertyMapping? mapping = GetPropertyMapping(propertyName);
-        if (mapping == null) return false;
-
-        return mapping.TargetType.StartsWith("Terminal.Gui.");
-    }
-
-    /// <summary>
-    /// Gets the fully qualified type name for a property
-    /// </summary>
-    public static string? GetFullyQualifiedType(string propertyName)
-    {
-        PropertyMapping? mapping = GetPropertyMapping(propertyName);
-        return mapping?.TargetType;
+        // Search in all control-specific properties if not found yet
+        foreach (Dictionary<string, PropertyMapping> properties in Mappings.PropertyMappings.Values)
+        {
+            if (properties.TryGetValue(propertyName, out PropertyMapping? mapping))
+            {
+                return mapping.TargetType.StartsWith("Terminal.Gui.");
+            }
+        }
+        return false;
     }
 }
