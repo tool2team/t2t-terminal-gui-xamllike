@@ -97,10 +97,10 @@ public static readonly DiagnosticDescriptor UnknownEvent = new(
     isEnabledByDefault: true,
     description: "The specified event name may not exist on the control type or may have changed in Terminal.Gui v2.");
 
-/// <summary>
-/// Empty event handler name
-/// </summary>
-public static readonly DiagnosticDescriptor EmptyEventHandler = new(
+    /// <summary>
+    /// Empty event handler name
+    /// </summary>
+    public static readonly DiagnosticDescriptor EmptyEventHandler = new(
     id: "TUI008",
     title: "Empty event handler",
     messageFormat: "Event '{0}' has an empty handler name. Specify a method name like 'OnButtonClick'.",
@@ -122,52 +122,16 @@ public static readonly DiagnosticDescriptor ParseError = new(
     description: "An unexpected error occurred while parsing the XAML file.");
 
 /// <summary>
-/// Missing ViewModel property
-/// </summary>
-public static readonly DiagnosticDescriptor MissingViewModel = new(
-    id: "TUI010",
-    title: "Missing ViewModel property",
-    messageFormat: "Class '{0}' has data bindings but no 'Vm' property implementing INotifyPropertyChanged",
-    category: Category,
-    defaultSeverity: DiagnosticSeverity.Error,
-    isEnabledByDefault: true,
-    description: "Classes with data bindings must expose a 'Vm' property that implements INotifyPropertyChanged.");
-
-/// <summary>
 /// Duplicate x:Name values
 /// </summary>
 public static readonly DiagnosticDescriptor DuplicateXName = new(
     id: "TUI011",
     title: "Duplicate x:Name",
-    messageFormat: "Duplicate x:Name '{0}' found. Each control must have a unique name within the same XAML file.",
+    messageFormat: "Duplicate x:Name '{0}' found. Each control must have a unique name.",
     category: Category,
     defaultSeverity: DiagnosticSeverity.Error,
     isEnabledByDefault: true,
     description: "x:Name values must be unique within each XAML file to avoid naming conflicts in generated code.");
-
-/// <summary>
-/// Obsolete event used
-/// </summary>
-public static readonly DiagnosticDescriptor ObsoleteEvent = new(
-    id: "TUI012",
-    title: "Obsolete event",
-    messageFormat: "Event '{0}' on control '{1}' is obsolete. {2}. The event will not be generated.",
-    category: Category,
-    defaultSeverity: DiagnosticSeverity.Error,
-    isEnabledByDefault: true,
-    description: "This event has been deprecated in Terminal.Gui v2 and will not be included in the generated code. Please migrate to the recommended event.");
-
-/// <summary>
-/// Invalid property value
-/// </summary>
-public static readonly DiagnosticDescriptor InvalidPropertyValue = new(
-    id: "TUI013",
-    title: "Invalid property value",
-    messageFormat: "Invalid value '{1}' for property '{0}'. {2}.",
-    category: Category,
-    defaultSeverity: DiagnosticSeverity.Warning,
-    isEnabledByDefault: true,
-    description: "The property value may not be compatible with the expected type or format.");
 
 /// <summary>
 /// Generator debug - Processing file
@@ -199,31 +163,19 @@ public static readonly DiagnosticDescriptor GeneratorCodeLength = new(
 public static readonly DiagnosticDescriptor UnknownRootElementType = new(
     id: "TUI016",
     title: "Unknown root element type",
-    messageFormat: "Element '{0}' is not a recognized Terminal.Gui control type. Add it to Mappings.ControlMappings.",
+    messageFormat: "Element '{0}' is not a recognized Terminal.Gui control type",
     category: Category,
     defaultSeverity: DiagnosticSeverity.Error,
     isEnabledByDefault: true,
     description: "The root element must be a valid Terminal.Gui control type.");
 
 /// <summary>
-/// Root element must be a container
-/// </summary>
-public static readonly DiagnosticDescriptor RootElementNotContainer = new(
-    id: "TUI017",
-    title: "Root element type must be a container",
-    messageFormat: "Element '{0}' is not a container type",
-    category: Category,
-    defaultSeverity: DiagnosticSeverity.Error,
-    isEnabledByDefault: true,
-    description: "The root element must be a container control that can have children (Window, View, FrameView, etc.).");
-
-/// <summary>
 /// Unknown control type in code generation
 /// </summary>
 public static readonly DiagnosticDescriptor UnknownControlTypeInGeneration = new(
     id: "TUI018",
-    title: "Unknown control type",
-    messageFormat: "Element '{0}' is not a recognized Terminal.Gui control type. Add it to Mappings.ControlMappings.",
+    title: "Unknown control type in generation",
+    messageFormat: "Element '{0}' is not a recognized Terminal.Gui control type",
     category: Category,
     defaultSeverity: DiagnosticSeverity.Error,
     isEnabledByDefault: true,
@@ -235,11 +187,23 @@ public static readonly DiagnosticDescriptor UnknownControlTypeInGeneration = new
 public static readonly DiagnosticDescriptor UnknownProperty = new(
     id: "TUI019",
     title: "Unknown property",
-    messageFormat: "Unknown property '{1}' for control type '{0}'. Check Terminal.Gui v2 documentation for available properties.",
+    messageFormat: "Unknown property '{1}' for control type '{0}'",
     category: Category,
     defaultSeverity: DiagnosticSeverity.Warning,
     isEnabledByDefault: true,
     description: "The specified property name may not exist on the control type.");
+
+/// <summary>
+/// Type mismatch for property value
+/// </summary>
+public static readonly DiagnosticDescriptor InvalidPropertyValue = new(
+    id: "TUI020",
+    title: "Invalid property value",
+    messageFormat: "Property '{1}' on control '{0}' expects type '{2}'",
+    category: Category,
+    defaultSeverity: DiagnosticSeverity.Warning,
+    isEnabledByDefault: true,
+    description: "The property value type does not match the expected type.");
 }
 
 public static class DiagnosticExtensions

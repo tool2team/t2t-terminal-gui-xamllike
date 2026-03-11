@@ -42,7 +42,7 @@ public static BindingExpression? Parse(string expression, string? dataType = nul
     BindingMode mode = BindingMode.OneWay; // default
 
     // Check for Mode parameter
-    if (parts.Length > 1 && parts[1].StartsWith("Mode="))
+    if (parts.Length > 1 && parts[1].Trim().StartsWith("Mode="))
     {
         string modeValue = parts[1].Split('=')[1];
         if (Enum.TryParse(modeValue, out BindingMode parsedMode))

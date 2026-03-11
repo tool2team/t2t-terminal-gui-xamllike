@@ -145,7 +145,7 @@ public static class XamlParser
     {
         // Validate control type exists
         var controlType = MappingHelpers.GetFullTypeName(element.Name);
-        if (!IsKnownControlType(element.Name))
+        if (controlType == null)
         {
             diagnostics.Add(TuiDiagnostics.UnknownControlType.Create(filePath, element.Name));
         }
@@ -182,10 +182,15 @@ public static class XamlParser
                         }
                     }
                 }
+                
+                if(MappingHelpers.GetPropertyValue(element.Name, propName, value) is null)
+                {
+                    diagnostics.Add(TuiDiagnostics.InvalidPropertyValue.Create(filePath, element.Name, propName, value));
+                }
             }
             else if (MappingHelpers.GetEventMapping(element.Name, propName) is EventMapping)
             {
-                if (string.IsNullOrWhiteSpace(propName))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     diagnostics.Add(TuiDiagnostics.EmptyEventHandler.Create(filePath, propName));
                 }
@@ -211,20 +216,6 @@ public static class XamlParser
         var trimmed = value.Trim();
         return trimmed.StartsWith("{Bind ") && trimmed.EndsWith("}");
     }
-
-    /// <summary>
-    /// Checks if a control type is known/supported
-    /// </summary>
-    private static bool IsKnownControlType(string controlName) =>
-        Mappings.ControlMappings.ContainsKey(controlName);
-
-    /// <summary>
-    /// Checks if an event name is known for a control type
-    /// </summary>
-    private static bool IsKnownEventName(string controlName, string eventName) =>
-        Mappings.EventMappings.TryGetValue(controlName, out Dictionary<string, EventMapping>? events) && 
-        events.ContainsKey(eventName);
-
 }
 
 /// <summary>

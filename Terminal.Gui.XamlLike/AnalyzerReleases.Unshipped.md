@@ -14,12 +14,11 @@ TUI006 | Terminal.Gui.XamlLike | Error | Unsupported TwoWay binding
 TUI007 | Terminal.Gui.XamlLike | Warning | Unknown event
 TUI008 | Terminal.Gui.XamlLike | Error | Empty event handler
 TUI009 | Terminal.Gui.XamlLike | Error | Parse error
-TUI010 | Terminal.Gui.XamlLike | Error | Missing ViewModel property
 TUI011 | Terminal.Gui.XamlLike | Error | Duplicate x:Name
-TUI012 | Terminal.Gui.XamlLike | Error | Obsolete event
-TUI013 | Terminal.Gui.XamlLike | Warning | Invalid property value
-TUI014 | Debug | Info | Generator processing file (debug)
-TUI015 | Debug | Info | Generated code length (debug)
+TUI014 | Debug | Info | Generator processing file
+TUI015 | Debug | Info | Generated code length
 TUI016 | Terminal.Gui.XamlLike | Error | Unknown root element type
-TUI017 | Terminal.Gui.XamlLike | Error | Root element must be container
 TUI018 | Terminal.Gui.XamlLike | Error | Unknown control type in generation
+TUI019 | Terminal.Gui.XamlLike | Warning | Unknown property
+TUI020 | Terminal.Gui.XamlLike | Warning | Type mismatch
+

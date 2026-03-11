@@ -4,6 +4,7 @@
 #nullable enable
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Terminal.Gui.XamlLike;
 
@@ -77,6 +78,119 @@ public static partial class MappingHelpers
             return commonMapping;
         }
         return null;
+    }
+
+    public static string? GetPropertyValue(string controlName, string propName, string value)
+    {
+        // Check if property has a mapping with type information
+        var propertyMapping = GetPropertyMapping(controlName, propName);
+
+        if (propertyMapping != null)
+        {
+            var targetType = propertyMapping.TargetType;
+
+            // Handle Terminal.Gui types (Pos, Dim, Key, Enum, etc.)
+            if (targetType.StartsWith("Terminal.Gui."))
+            {
+                // Special handling for Pos and Dim types
+                if (targetType == "Terminal.Gui.ViewBase.Pos" || targetType == "Terminal.Gui.ViewBase.Dim")
+                {
+                    // If value contains parentheses, it's already an expression like Dim.Fill()
+                    if (value.Contains("(") && value.Contains(")"))
+                    {
+                        return value;
+                    }
+
+                    // For numeric values, convert to appropriate Terminal.Gui v2 types  
+                    if (int.TryParse(value, out _))
+                    {
+                        return value; // Terminal.Gui v2 accepts int directly for Pos/Dim
+                    }
+
+                    // If not numeric, treat as expression
+                    return value;
+                }
+
+                // For other Terminal.Gui types (Key, Enum, etc.), add full namespace
+                // Handle values like "Key.F1" or "Key.Q.WithCtrl" or just "F1"
+                // Or "CheckState.Checked" → "Terminal.Gui.Views.CheckState.Checked"
+
+                // Skip generic/placeholder values
+                if (string.IsNullOrEmpty(value))
+                {
+                    return null; // Skip this property - can't generate valid code
+                }
+
+                var parts = value.Split('.');
+
+                if (parts.Length == 1)
+                {
+                    // Just the value: "F1" → "Terminal.Gui.Input.Key.F1"
+                    return $"{targetType}.{value}";
+                }
+                else if (parts.Length >= 2)
+                {
+                    // Has dots: "Key.F1" or "Key.Q.WithCtrl" or "CheckState.Checked"
+                    // Check if first part matches the type name
+                    var typeShortName = targetType.Split('.').Last();
+
+                    if (parts[0] == typeShortName)
+                    {
+                        // Remove the type prefix and add the full namespace
+                        var valuePart = string.Join(".", parts.Skip(1));
+                        return $"{targetType}.{valuePart}";
+                    }
+                    else
+                    {
+                        // Doesn't start with type name, prefix the whole thing
+                        return $"{targetType}.{value}";
+                    }
+                }
+            }
+
+            // Handle System types based on TargetType
+            if (targetType == "System.Boolean" || targetType == "bool")
+            {
+                if (bool.TryParse(value, out var boolValue))
+                {
+                    return boolValue ? "true" : "false";
+                }
+                // If not a valid boolean, skip it
+                return null;
+            }
+
+            if (targetType == "System.Single" || targetType == "float")
+            {
+                if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
+                {
+                    // Ensure float literal has 'f' suffix
+                    return value.Contains('.') ? $"{value}f" : $"{value}.0f";
+                }
+                return null;
+            }
+
+            if (targetType == "System.Int32" || targetType == "int" ||
+                targetType == "System.Int64" || targetType == "long" ||
+                targetType == "System.Byte" || targetType == "byte")
+            {
+                if (int.TryParse(value, out _))
+                {
+                    return value; // Return numeric value without quotes
+                }
+                return null;
+            }
+
+            // For all other types (including interfaces, complex types, etc.)
+            // Skip properties we can't set from literals
+            if (targetType != "System.String" && targetType != "string")
+            {
+                // Complex types - skip them
+                return null;
+            }
+        }
+
+        // Default: treat as string property
+        return $"\"{value.Replace("\"", "\\\"")}\"";
     }
 
     /// <summary>
