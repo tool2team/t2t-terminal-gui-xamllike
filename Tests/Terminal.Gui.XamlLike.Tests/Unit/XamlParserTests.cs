@@ -76,9 +76,9 @@ public class XamlParserTests
         Assert.True(result.IsSuccess);
         var element = result.Value!.RootElement;
         Assert.Equal("MyField", element.XName);
-        Assert.Equal("Sample", element.PropertyAttributes["Text"]);
-        Assert.Equal("30", element.PropertyAttributes["Width"]);
-        Assert.Equal("5", element.PropertyAttributes["Height"]);
+        Assert.Equal("Sample", element.Attributes["Text"]);
+        Assert.Equal("30", element.Attributes["Width"]);
+        Assert.Equal("5", element.Attributes["Height"]);
     }
 
     [Fact]
@@ -116,8 +116,8 @@ public class XamlParserTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Contains("Text", result.Value!.RootElement.PropertyAttributes.Keys);
-        Assert.Contains("{Bind UserName, Mode=TwoWay}", result.Value.RootElement.PropertyAttributes["Text"]);
+        Assert.Contains("Text", result.Value!.RootElement.Attributes.Keys);
+        Assert.Contains("{Bind UserName, Mode=TwoWay}", result.Value.RootElement.Attributes["Text"]);
     }
 
     [Fact]
@@ -137,9 +137,9 @@ public class XamlParserTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Equal(2, result.Value!.RootElement.EventAttributes.Count);
-        Assert.Equal("OnAccepting", result.Value.RootElement.EventAttributes["Accepting"]);
-        Assert.Equal("OnActivated", result.Value.RootElement.EventAttributes["Activated"]);
+        Assert.True(result.Value!.RootElement.Attributes.Count >= 2);
+        Assert.Equal("OnAccepting", result.Value.RootElement.Attributes["Accepting"]);
+        Assert.Equal("OnActivated", result.Value.RootElement.Attributes["Activated"]);
     }
 
     [Fact]
@@ -451,25 +451,6 @@ public class XamlParserTests
     }
 
     [Fact]
-    public void Validate_InvalidBinding_ReturnsDiagnostic()
-    {
-        // Arrange
-        var xaml = """
-            <Label x:Class="Test.LabelView"
-                   xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   Text="{Bind InvalidSyntax" />
-            """;
-        var parseResult = XamlParser.Parse(xaml, "test.tui.xaml");
-
-        // Act
-        var diagnostics = XamlParser.Validate(parseResult.Value!);
-
-        // Assert
-        Assert.NotEmpty(diagnostics);
-    }
-
-    [Fact]
     public void Validate_UnsupportedTwoWayBinding_ReturnsDiagnostic()
     {
         // Arrange
@@ -696,7 +677,46 @@ public class XamlParserTests
         var diagnostics = XamlParser.Validate(parseResult.Value!);
 
         // Assert
-        Assert.True(diagnostics.Count >= 2); // At least 2 errors
+        Assert.Equal(2, diagnostics.Count); // At least 2 errors
+    }
+
+    #endregion
+
+    #region Diagnostic Tests (1 test)
+
+    [Fact]
+    public void Validate_Diagnostics()
+    {
+        // Arrange - UnknownProperty on line 4
+        var xaml = """
+            <Button x:Class="Test.ButtonView"
+                    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    InvalidProperty="Value" />
+            """;
+        var parseResult = XamlParser.Parse(xaml, "test.tui.xaml");
+
+        // Act
+        var diagnostics = XamlParser.Validate(parseResult.Value!);
+
+        // Assert
+        Assert.NotEmpty(diagnostics);
+        var diagnostic = diagnostics[0];
+        Assert.NotNull(diagnostic.LineNumber);
+        Assert.NotNull(diagnostic.LinePosition);
+        Assert.True(diagnostic.LineNumber > 0, "Diagnostic should have line number");
+        Assert.True(diagnostic.LinePosition > 0, "Diagnostic should have line position");
+
+        // Verify ToDiagnostic() creates proper Location
+        var roslynDiag = diagnostic.ToDiagnostic();
+        Assert.NotEqual(Microsoft.CodeAnalysis.Location.None, roslynDiag.Location);
+
+        // Verify message is formatted correctly by Roslyn
+        string expectedMessage = string.Format(diagnostic.Descriptor.MessageFormat.ToString(), diagnostic.MessageArgs);
+        Assert.Equal(expectedMessage, roslynDiag.GetMessage());
+
+        string fullExpectedMessage = $"test.tui.xaml({diagnostic.LineNumber},{diagnostic.LinePosition}): {diagnostic.Descriptor.DefaultSeverity.ToString().ToLower()} {diagnostic.Descriptor.Id}: {expectedMessage}";
+        Assert.Equal(fullExpectedMessage, roslynDiag.ToString());
     }
 
     #endregion

@@ -1,4 +1,5 @@
 using Microsoft.CodeAnalysis;
+using System;
 
 namespace Terminal.Gui.XamlLike;
 
@@ -208,6 +209,14 @@ public static readonly DiagnosticDescriptor InvalidPropertyValue = new(
 
 public static class DiagnosticExtensions
 {
-    public static TuiDiagnostic Create(this DiagnosticDescriptor descriptor, string filePath, params object[] args) =>
-        new(descriptor, filePath, string.Format(descriptor.MessageFormat.ToString(), args));
+    public static TuiDiagnostic Create(this DiagnosticDescriptor descriptor, string filePath, params object[] args)
+        => TuiDiagnostic.Create(descriptor, filePath, args);
+
+    public static TuiDiagnostic Create(
+        this DiagnosticDescriptor descriptor, 
+        string filePath, 
+        int lineNumber, 
+        int linePosition, 
+        params object[] args)
+        => TuiDiagnostic.Create(descriptor, filePath, lineNumber, linePosition, args);
 }

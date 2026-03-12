@@ -12,7 +12,8 @@ Unit tests for `XamlParser.cs` - parsing and validation of `.tui.xaml` files.
 | Validate - Invalid cases | 7 |
 | ParseResult | 3 |
 | Edge cases | 4 |
-| **Total** | **35** |
+| Diagnostic Location | 1 |
+| **Total** | **36** |
 
 ## Tested Methods
 
@@ -79,6 +80,8 @@ public void Validate_UnknownControl_ReturnsDiagnostic()
 - ✅ Control type validation
 - ✅ TwoWay binding validation
 - ✅ Event validation
+- ✅ Line number and position tracking
+- ✅ Diagnostic location information
 
 ## Notes
 

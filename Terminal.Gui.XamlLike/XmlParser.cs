@@ -1,4 +1,5 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,7 @@ namespace Terminal.Gui.XamlLike;
 /// </summary>
 public static class XamlParser
 {
-     static readonly string[] SpecialAttributes = ["xmlns", "xmlns:x", "x:Name", "x:DataType", "x:Class"];
+     static readonly string[] SpecialAttributes = ["xmlns", "xmlns:x", "x:Name", "x:DataType", "x:Class", "x:Type"];
 
     /// <summary>
     /// Parses a .tui.xaml file content into a XamlDocument
@@ -43,10 +44,21 @@ public static class XamlParser
 
             if (xmlReader.NodeType != XmlNodeType.Element)
             {
-                return ParseResult<XamlDocument>.CreateError(
-                    TuiDiagnostics.InvalidXml,
-                    filePath,
-                    "No root element found");
+                IXmlLineInfo? lineInfo = xmlReader as IXmlLineInfo;
+                int lineNumber = lineInfo?.HasLineInfo() == true ? lineInfo.LineNumber : 0;
+                int linePosition = lineInfo?.HasLineInfo() == true ? lineInfo.LinePosition : 0;
+
+                return lineNumber > 0 
+                    ? ParseResult<XamlDocument>.CreateError(
+                        TuiDiagnostics.InvalidXml,
+                        filePath,
+                        lineNumber,
+                        linePosition,
+                        "No root element found")
+                    : ParseResult<XamlDocument>.CreateError(
+                        TuiDiagnostics.InvalidXml,
+                        filePath,
+                        "No root element found");
             }
 
             XamlElement rootElement = ParseElementWithReader(xmlReader);
@@ -57,17 +69,26 @@ public static class XamlParser
             {
                 return ParseResult<XamlDocument>.CreateError(
                     TuiDiagnostics.MissingXClass,
-                    filePath);
+                    filePath,
+                    rootElement.LineNumber,
+                    rootElement.LinePosition);
             }
 
             return ParseResult<XamlDocument>.Success(xamlDoc);
         }
         catch (XmlException ex)
         {
-            return ParseResult<XamlDocument>.CreateError(
-                TuiDiagnostics.InvalidXml,
-                filePath,
-                ex.Message);
+            return ex.LineNumber > 0
+                ? ParseResult<XamlDocument>.CreateError(
+                    TuiDiagnostics.InvalidXml,
+                    filePath,
+                    ex.LineNumber,
+                    ex.LinePosition,
+                    ex.Message)
+                : ParseResult<XamlDocument>.CreateError(
+                    TuiDiagnostics.InvalidXml,
+                    filePath,
+                    ex.Message);
         }
         catch (Exception ex)
         {
@@ -147,7 +168,8 @@ public static class XamlParser
         var controlType = MappingHelpers.GetFullTypeName(element.Name);
         if (controlType == null)
         {
-            diagnostics.Add(TuiDiagnostics.UnknownControlType.Create(filePath, element.Name));
+            diagnostics.Add(TuiDiagnostics.UnknownControlType.Create(
+                filePath, element.LineNumber, element.LinePosition, element.Name));
         }
 
         foreach (KeyValuePair<string, string> kvp in element.Attributes)
@@ -161,14 +183,15 @@ public static class XamlParser
                 continue;
             }
 
-            if (MappingHelpers.GetPropertyMapping(element.Name, propName) is PropertyMapping)
+            if (MappingHelpers.GetPropertyMapping(element.Name, propName) is PropertyMapping prop)
             {
                 if (IsBindingExpression(value))
                 {
                     BindingExpression? binding = BindingExpression.Parse(value, dataType);
                     if (binding == null)
                     {
-                        diagnostics.Add(TuiDiagnostics.InvalidBinding.Create(filePath, value));
+                        diagnostics.Add(TuiDiagnostics.InvalidBinding.Create(
+                            filePath, element.LineNumber, element.LinePosition, value));
                         continue;
                     }
 
@@ -178,26 +201,28 @@ public static class XamlParser
                         if (MappingHelpers.GetTwoWayBinding(element.Name, propName) is not TwoWayBinding)
                         {
                             diagnostics.Add(TuiDiagnostics.UnsupportedTwoWayBinding.Create(
-                                filePath, element.Name, propName));
+                                filePath, element.LineNumber, element.LinePosition, element.Name, propName));
                         }
                     }
                 }
-                
-                if(MappingHelpers.GetPropertyValue(element.Name, propName, value) is null)
+                else if(MappingHelpers.GetPropertyValue(element.Name, propName, value) is null)
                 {
-                    diagnostics.Add(TuiDiagnostics.InvalidPropertyValue.Create(filePath, element.Name, propName, value));
+                    diagnostics.Add(TuiDiagnostics.InvalidPropertyValue.Create(
+                        filePath, element.LineNumber, element.LinePosition, element.Name, propName, prop.TargetType));
                 }
             }
             else if (MappingHelpers.GetEventMapping(element.Name, propName) is EventMapping)
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    diagnostics.Add(TuiDiagnostics.EmptyEventHandler.Create(filePath, propName));
+                    diagnostics.Add(TuiDiagnostics.EmptyEventHandler.Create(
+                        filePath, element.LineNumber, element.LinePosition, propName));
                 }
             }
             else
             {
-                diagnostics.Add(TuiDiagnostics.UnknownProperty.Create(filePath, element.Name, propName));
+                diagnostics.Add(TuiDiagnostics.UnknownProperty.Create(
+                    filePath, element.LineNumber, element.LinePosition, element.Name, propName));
             }
         }
 
@@ -238,7 +263,22 @@ public class ParseResult<T>
     public static ParseResult<T> CreateError(DiagnosticDescriptor descriptor, string filePath, string? message = null) => new()
     {
         IsSuccess = false,
-        Error = TuiDiagnostic.Create(descriptor, filePath, message)
+        Error = message != null 
+            ? TuiDiagnostic.Create(descriptor, filePath, message)
+            : TuiDiagnostic.Create(descriptor, filePath)
+    };
+
+    public static ParseResult<T> CreateError(
+        DiagnosticDescriptor descriptor, 
+        string filePath, 
+        int lineNumber, 
+        int linePosition, 
+        string? message = null) => new()
+    {
+        IsSuccess = false,
+        Error = message != null
+            ? TuiDiagnostic.Create(descriptor, filePath, lineNumber, linePosition, message)
+            : TuiDiagnostic.Create(descriptor, filePath, lineNumber, linePosition)
     };
 }
 
@@ -249,18 +289,50 @@ public class TuiDiagnostic
 {
     public DiagnosticDescriptor Descriptor { get; }
     public string FilePath { get; }
-    public string? Message { get; }
+    public object[]? MessageArgs { get; }
+    public int? LineNumber { get; }
+    public int? LinePosition { get; }
 
-    public TuiDiagnostic(DiagnosticDescriptor descriptor, string filePath, string? message = null)
+    public TuiDiagnostic(
+        DiagnosticDescriptor descriptor, 
+        string filePath, 
+        object[]? messageArgs = null,
+        int? lineNumber = null,
+        int? linePosition = null)
     {
         Descriptor = descriptor;
         FilePath = filePath;
-        Message = message;
+        MessageArgs = messageArgs;
+        LineNumber = lineNumber;
+        LinePosition = linePosition;
     }
 
-    public static TuiDiagnostic Create(DiagnosticDescriptor descriptor, string filePath, string? message = null) =>
-        new(descriptor, filePath, message);
+    public static TuiDiagnostic Create(
+        DiagnosticDescriptor descriptor, 
+        string filePath, 
+        params object[] args) =>
+        new(descriptor, filePath, args.Length > 0 ? args : null);
 
-    public Diagnostic ToDiagnostic() =>
-        Diagnostic.Create(Descriptor, Location.None, Message ?? Descriptor.MessageFormat);
+    public static TuiDiagnostic Create(
+        DiagnosticDescriptor descriptor,
+        string filePath,
+        int lineNumber,
+        int linePosition,
+        params object[] args) =>
+        new(descriptor, filePath, args.Length > 0 ? args : null, lineNumber, linePosition);
+
+    public Diagnostic ToDiagnostic()
+    {
+        var location = Location.None;
+
+        if (LineNumber.HasValue && LinePosition.HasValue)
+        {
+            var linePos = new LinePosition(LineNumber.Value - 1, LinePosition.Value - 1);
+            var span = new LinePositionSpan(linePos, linePos);
+            location = Location.Create(FilePath, default, span);
+        }
+
+        // Laisser Roslyn faire le formatage avec les arguments
+        return Diagnostic.Create(Descriptor, location, MessageArgs);
+    }
 }

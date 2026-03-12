@@ -15,6 +15,7 @@ Complete unit test suite for `MappingHelpers.cs` utility class with **39 tests**
 | `SupportsTwoWayBinding` | 2 | 100% | ✅ |
 | `GetPropertyMapping` | 4 | 100% | ✅ |
 | `IsKnownEvent` | 2 | 100% | ✅ |
+| `IsKnownProperty` | 3 | 100% | ✅ |
 | `IsBooleanProperty` | 1 | 100% | ✅ |
 | `IsIntProperty` | 1 | 100% | ✅ |
 | `IsFloatProperty` | 1 | 100% | ✅ |
@@ -23,7 +24,7 @@ Complete unit test suite for `MappingHelpers.cs` utility class with **39 tests**
 | `GetFullyQualifiedType` | 2 | 100% | ✅ |
 | **Integration Tests** | 2 | - | ✅ |
 | **Edge Cases** | 4 | - | ✅ |
-| **TOTAL** | **39 tests** | **~95%** | ✅ |
+| **TOTAL** | **42 tests** | **~95%** | ✅ |
 
 ## Test Categories
 
