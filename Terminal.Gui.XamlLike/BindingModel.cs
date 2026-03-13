@@ -174,9 +174,4 @@ public class BoundProperty
     /// Checks if this property supports TwoWay binding
     /// </summary>
     public bool SupportsTwoWay => GetChangeEventName() != null;
-
-    /// <summary>
-    /// Checks if this property is a Command binding
-    /// </summary>
-    public bool IsCommand => PropertyName == "Command";
 }

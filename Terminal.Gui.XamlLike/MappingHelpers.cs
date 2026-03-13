@@ -3,6 +3,7 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -134,7 +135,7 @@ public static partial class MappingHelpers
                     // Check if first part matches the type name
                     var typeShortName = targetType.Split('.').Last();
 
-                    if (parts[0] == typeShortName)
+                    if (parts[0] == typeShortName || $"System.Nullable<{parts[0]}>" == typeShortName)
                     {
                         // Remove the type prefix and add the full namespace
                         var valuePart = string.Join(".", parts.Skip(1));
@@ -149,7 +150,7 @@ public static partial class MappingHelpers
             }
 
             // Handle System types based on TargetType
-            if (targetType == "System.Boolean" || targetType == "bool")
+            if (targetType == "System.Boolean" || targetType == "System.Nullable<System.Boolean>")
             {
                 if (bool.TryParse(value, out var boolValue))
                 {
@@ -159,7 +160,7 @@ public static partial class MappingHelpers
                 return null;
             }
 
-            if (targetType == "System.Single" || targetType == "float")
+            if (targetType == "System.Single" || targetType == "System.Nullable<System.Single>")
             {
                 if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
                 {
@@ -169,13 +170,22 @@ public static partial class MappingHelpers
                 return null;
             }
 
-            if (targetType == "System.Int32" || targetType == "int" ||
-                targetType == "System.Int64" || targetType == "long" ||
-                targetType == "System.Byte" || targetType == "byte")
+            if (targetType == "System.Int32" || targetType == "System.Nullable<System.Int32>" ||
+                targetType == "System.Int64" || targetType == "System.Nullable<<System.Int64>" ||
+                targetType == "System.Byte" || targetType == "System.Nullable<<System.Byte>")
             {
                 if (int.TryParse(value, out _))
                 {
                     return value; // Return numeric value without quotes
+                }
+                return null;
+            }
+
+            if (targetType == "System.DateTime" || targetType == "System.Nullable<System.DateTime>")
+            {
+                if (DateTime.TryParse(value, out _))
+                {
+                    return $"DateTime.Parse(\"{value}\")";
                 }
                 return null;
             }

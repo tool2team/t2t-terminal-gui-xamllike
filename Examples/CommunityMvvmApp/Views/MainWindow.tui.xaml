@@ -29,21 +29,21 @@
   <Button X="2" Y="9"
 		  Text="Increment"
 		  Enabled="{Bind IsEnabled}"
-		  Command="{Bind IncrementCommand}" />
+		  Accepting="{Bind IncrementCommand}" />
 
   <Button X="16" Y="9"
 		  Text="Reset All"
-		  Command="{Bind ResetCommand}" />
+		  Accepting="{Bind ResetCommand}" />
 
   <Button X="30" Y="9"
 		  Text="Save Profile"
 		  Enabled="{Bind IsEnabled}"
-		  Command="{Bind SaveProfileCommand}" />
+		  Accepting="{Bind SaveProfileCommand}" />
 
   <Button X="47" Y="9"
 		  Text="Load Data"
 		  Enabled="{Bind IsEnabled}"
-		  Command="{Bind LoadDataCommand}" />
+		  Accepting="{Bind LoadDataCommand}" />
 
   <Label X="2" Y="11"
 		 Text="Select an item:" />

@@ -164,32 +164,6 @@ public sealed class CodeEmitter
     private List<Diagnostic>? _diagnostics;
     private string? _sourceFilePath;
 
-    /// <summary>
-    /// Creates a diagnostic with location information from the XAML file
-    /// </summary>
-    private void ReportDiagnostic(DiagnosticDescriptor descriptor, XamlElement element, params object[] messageArgs)
-    {
-        if (_diagnostics == null || _sourceFilePath == null)
-            return;
-
-        Location location;
-        if (element.LineNumber > 0)
-        {
-            // Create location with line/column info
-            LinePosition linePosition = new LinePosition(
-                element.LineNumber - 1,  // LinePosition is 0-based
-                element.LinePosition - 1);
-            LinePositionSpan span = new LinePositionSpan(linePosition, linePosition);
-            location = Location.Create(_sourceFilePath, default, span);
-        }
-        else
-        {
-            location = Location.None;
-        }
-
-        _diagnostics.Add(Diagnostic.Create(descriptor, location, messageArgs));
-    }
-
     public string GenerateClass(XamlDocument document, string? resolvedDataTypePropertyName, List<Diagnostic> diagnostics)
     {
         _code.Clear();
@@ -495,6 +469,12 @@ public sealed class CodeEmitter
                 continue;
             }
 
+            if (IsBindingExpression(handlerName))
+            {
+                // Skip bindings - they're handled separately
+                continue;
+            }
+
             // Map XAML event name to actual Terminal.Gui event name
             AppendLine($"{variableName}.{xamlEventName} += {handlerName};");
         }
@@ -641,20 +621,19 @@ public sealed class CodeEmitter
         // Generate initial binding setup
         foreach (BoundControl control in bindings)
         {
+            var fieldName = control.GetFieldName();
             foreach (BoundProperty property in control.BoundProperties)
             {
-                var fieldName = control.GetFieldName();
                 BindingExpression binding = property.Binding;
 
-                if (property.IsCommand)
+                if (MappingHelpers.GetEventMapping(control.ElementName, property.PropertyName) is EventMapping evt)
                 {
-                    // Command binding - wire up Accepting event to invoke command
-                    AppendLine($"// Wire up command: {binding.SourceExpression}");
-                    AppendLine($"{fieldName}.Accepting += (s, e) => {{");
+                    // Command binding - wire up event to invoke command
+                    AppendLine($"{fieldName}.{property.PropertyName} += (s, e) => {{");
                     _indentLevel++;
                     AppendLine($"if ({binding.SourceExpression}?.CanExecute(null) == true)");
                     _indentLevel++;
-                    AppendLine($"{binding.SourceExpression}.Execute(null);");
+                    AppendLine($"{binding.SourceExpression}.Execute(e);");
                     _indentLevel--;
                     _indentLevel--;
                     AppendLine("};");
@@ -696,8 +675,11 @@ public sealed class CodeEmitter
         // Generate Command.CanExecuteChanged handlers
         foreach (BoundControl control in bindings)
         {
-            foreach (BoundProperty? property in control.BoundProperties.Where(p => p.IsCommand))
+            foreach (BoundProperty? property in control.BoundProperties)
             {
+                if (MappingHelpers.GetEventMapping(control.ElementName, property.PropertyName) is not EventMapping)
+                    continue;
+
                 var fieldName = control.GetFieldName();
                 BindingExpression binding = property.Binding;
                 AppendLine($"// Subscribe to CanExecuteChanged for {fieldName}");
@@ -737,7 +719,7 @@ public sealed class CodeEmitter
             foreach (BoundProperty property in control.BoundProperties)
             {
                 // Skip Commands - they don't need PropertyChanged updates
-                if (property.IsCommand)
+                if (MappingHelpers.GetEventMapping(control.ElementName, property.PropertyName) is EventMapping)
                     continue;
 
                 // Extract the property name from the source expression
