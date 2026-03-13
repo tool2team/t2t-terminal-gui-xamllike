@@ -6,8 +6,8 @@
     Y="2"
     Width="30"
     Height="5"
-    Culture="Sample"
-    Value="0">
+    Culture="CultureInfo.InvariantCulture"
+    Value="31/12/2026">
   
   <!-- DatePicker with properties: Culture, Value -->
   

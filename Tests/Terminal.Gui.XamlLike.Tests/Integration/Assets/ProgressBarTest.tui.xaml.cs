@@ -1,4 +1,5 @@
-﻿using Terminal.Gui.Views;
+﻿using System.Text;
+using Terminal.Gui.Views;
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml;
 

@@ -7,9 +7,9 @@
     Width="30"
     Height="5"
     SelectedCodePoint="0"
-    ShowGlyphWidths="Sample"
+    ShowGlyphWidths="True"
     ShowUnicodeCategory="Sample"
-    StartCodePoint="Sample"
+    StartCodePoint="0"
     Value="0">
   
   <!-- CharMap with properties: SelectedCodePoint, ShowGlyphWidths, ShowUnicodeCategory, StartCodePoint, Value -->

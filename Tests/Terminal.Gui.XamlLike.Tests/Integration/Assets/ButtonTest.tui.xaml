@@ -8,7 +8,9 @@
     Height="5"
     IsDefault="True"
     NoDecorations="True"
-    NoPadding="True">
+    NoPadding="True"
+	Accepting="OnAccepting"
+	Accepted="{Bind AcceptCommand}">
   
   <!-- Button with properties: IsDefault, NoDecorations, NoPadding -->
   

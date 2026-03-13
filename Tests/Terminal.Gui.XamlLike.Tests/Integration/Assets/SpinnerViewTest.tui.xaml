@@ -6,11 +6,11 @@
     Y="2"
     Width="30"
     Height="5"
-    AutoSpin="Sample"
-    Sequence="Sample"
-    SpinBounce="Sample"
-    SpinDelay="Sample"
-    SpinReverse="Sample">
+    AutoSpin="True"
+    Sequence="/,-,\,|"
+    SpinBounce="True"
+    SpinDelay="5"
+    SpinReverse="False">
   
   <!-- SpinnerView with properties: AutoSpin, Sequence, SpinBounce, SpinDelay, SpinReverse -->
   

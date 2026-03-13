@@ -6,10 +6,10 @@
     Y="2"
     Width="30"
     Height="5"
-    AllowEmpty="Sample"
-    FocusedOption="Sample"
+    AllowEmpty="False"
+    FocusedOption="True"
     LegendsOrientation="Orientation.Horizontal"
-    MinimumInnerSpacing="Sample"
+    MinimumInnerSpacing="1"
     Options="Sample">
   
   <!-- LinearRange with properties: AllowEmpty, FocusedOption, LegendsOrientation, MinimumInnerSpacing, Options -->

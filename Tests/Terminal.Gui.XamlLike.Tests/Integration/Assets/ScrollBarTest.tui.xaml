@@ -6,11 +6,11 @@
     Y="2"
     Width="30"
     Height="5"
-    Increment="Sample"
-    ScrollableContentSize="Sample"
+    Increment="2"
+    ScrollableContentSize="100"
     Value="0"
     VisibilityMode="ScrollBarVisibilityMode.Auto"
-    VisibleContentSize="Sample">
+    VisibleContentSize="10">
   
   <!-- ScrollBar with properties: Increment, ScrollableContentSize, Value, VisibilityMode, VisibleContentSize -->
   

@@ -6,9 +6,9 @@
     Y="2"
     Width="30"
     Height="5"
-    Address="Sample"
-    AddressWidth="Sample"
-    BytesPerLine="Sample"
+    Address="0x128F"
+    AddressWidth="4"
+    BytesPerLine="8"
     Source="">
   
   <!-- HexView with properties: Address, AddressWidth, BytesPerLine, Source -->

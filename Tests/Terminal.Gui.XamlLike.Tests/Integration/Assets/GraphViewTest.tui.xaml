@@ -8,7 +8,7 @@
     Height="5"
     CellSize="Sample"
     GraphColor="Sample"
-    MarginBottom="Sample">
+    MarginBottom="2">
   
   <!-- GraphView with properties: AxisX, AxisY, CellSize, GraphColor, MarginBottom -->
   

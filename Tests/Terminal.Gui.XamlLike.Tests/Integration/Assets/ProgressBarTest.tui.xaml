@@ -6,7 +6,7 @@
     Y="2"
     Width="30"
     Height="5"
-    BidirectionalMarquee="Sample"
+    BidirectionalMarquee="False"
     Fraction="0.5f"
     ProgressBarFormat="ProgressBarFormat.Simple"
     ProgressBarStyle="ProgressBarStyle.Continuous"
