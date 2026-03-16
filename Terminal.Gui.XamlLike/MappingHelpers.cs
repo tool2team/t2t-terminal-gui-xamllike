@@ -88,7 +88,7 @@ public static partial class MappingHelpers
 
         if (propertyMapping != null)
         {
-            var targetType = propertyMapping.TargetType;
+            var targetType = propertyMapping.TargetType; // TODO isTerminalGUIType
 
             // Handle Terminal.Gui types (Pos, Dim, Key, Enum, etc.)
             if (targetType.StartsWith("Terminal.Gui."))
@@ -149,8 +149,27 @@ public static partial class MappingHelpers
                 }
             }
 
+
             // Handle System types based on TargetType
-            if (targetType == "System.Boolean" || targetType == "System.Nullable<System.Boolean>")
+
+            if (targetType == "System.Drawing.Point")
+            {
+                string[] dims = value.Split(',');
+                // If not a valid Point, skip it
+                if (dims.Length < 1 || dims.Length > 2)
+                {
+                    return null;
+                }
+                var parts = dims.Select(s => int.TryParse(s.Trim(), out int val) ? val : (int?)null);
+                // If not a valid Point, skip it
+                if (parts.Contains(null))
+                {
+                    return null;
+                }                
+                return $"new System.Drawing.Point({string.Join(", ", parts)})";
+            }
+
+            if (targetType == "bool" || targetType == "System.Nullable<bool>")
             {
                 if (bool.TryParse(value, out var boolValue))
                 {
@@ -160,7 +179,7 @@ public static partial class MappingHelpers
                 return null;
             }
 
-            if (targetType == "System.Single" || targetType == "System.Nullable<System.Single>")
+            if (targetType == "float" || targetType == "System.Nullable<float>")
             {
                 if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
                 {
@@ -170,9 +189,9 @@ public static partial class MappingHelpers
                 return null;
             }
 
-            if (targetType == "System.Int32" || targetType == "System.Nullable<System.Int32>" ||
-                targetType == "System.Int64" || targetType == "System.Nullable<<System.Int64>" ||
-                targetType == "System.Byte" || targetType == "System.Nullable<<System.Byte>")
+            if (targetType == "int" || targetType == "System.Nullable<int>" ||
+                targetType == "long" || targetType == "System.Nullable<long>" ||
+                targetType == "byte" || targetType == "System.Nullable<byte>")
             {
                 if (int.TryParse(value, out _))
                 {
@@ -192,7 +211,7 @@ public static partial class MappingHelpers
 
             // For all other types (including interfaces, complex types, etc.)
             // Skip properties we can't set from literals
-            if (targetType != "System.String" && targetType != "string")
+            if (targetType != "string")
             {
                 // Complex types - skip them
                 return null;

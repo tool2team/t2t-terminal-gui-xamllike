@@ -68,12 +68,12 @@ public class PropertyMapping
 {
     public string PropertyName { get; }
     public string TargetType { get; }
-    public string Description { get; }
+    public bool IsNullable { get; }
 
-    public PropertyMapping(string propertyName, string targetType, string description)
+    public PropertyMapping(string propertyName, string targetType, bool isNullable = false)
     {
         PropertyName = propertyName;
         TargetType = targetType;
-        Description = description;
+        IsNullable = isNullable;
     }
 }

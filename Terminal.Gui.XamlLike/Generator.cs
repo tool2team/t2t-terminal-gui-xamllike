@@ -394,13 +394,13 @@ public sealed class CodeEmitter
         // Determine the variable name to use
         string variableName;
 
-        if (isRoot)
-        {
-            variableName = element.XName ?? "this";
-        }
-        else if (!string.IsNullOrEmpty(element.XName))
+        if (!string.IsNullOrEmpty(element.XName))
         {
             variableName = element.XName!;
+        }
+        else if (isRoot)
+        {
+            variableName = "this";
         }
         else if (_elementToFieldName.TryGetValue(element, out var fieldName))
         {
