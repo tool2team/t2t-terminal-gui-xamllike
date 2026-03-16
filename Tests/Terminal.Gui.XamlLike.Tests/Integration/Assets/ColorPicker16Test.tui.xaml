@@ -8,7 +8,7 @@
     Height="5"
     BoxHeight="4"
     BoxWidth="4"
-    Caret="Sample"
+    Caret="0, 0"
     SelectedColor="ColorName16.Yellow"
     Value="ColorName16.Blue">
   
