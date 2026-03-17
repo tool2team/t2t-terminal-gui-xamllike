@@ -118,6 +118,7 @@ class Program
     static List<PropertyMetadata> ExtractProperties(Type type)
     {
         var properties = new List<PropertyMetadata>();
+        var nullabilityContext = new NullabilityInfoContext();
 
         // Get properties from the type and all base types
         foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
@@ -140,9 +141,9 @@ class Program
             {
                 Name = prop.Name,
                 PropertyType = prop.PropertyType.Name,
-                FullPropertyType = GetFullTypeName(prop.PropertyType),
+                FullPropertyType = GetSimplifiedTypeName(prop.PropertyType),
                 IsTerminalGuiType = IsTerminalGuiType(prop.PropertyType),
-                IsNullable = IsNullableType(prop.PropertyType),
+                IsNullable = IsNullableProperty(prop, nullabilityContext),
                 DeclaringType = prop.DeclaringType?.Name ?? type.Name
             };
 
@@ -152,14 +153,20 @@ class Program
         return properties.OrderBy(p => p.Name).ToList();
     }
 
-    static bool IsNullableType(Type type)
+    static bool IsNullableProperty(PropertyInfo prop, NullabilityInfoContext context)
     {
-        // Reference types (classes, interfaces, delegates) are nullable by default
-        if (!type.IsValueType)
-            return true;
+        var type = prop.PropertyType;
 
-        // Check if it's Nullable<T>
-        return Nullable.GetUnderlyingType(type) != null;
+        // Value types: nullable only if Nullable<T>
+        if (type.IsValueType)
+        {
+            return Nullable.GetUnderlyingType(type) != null;
+        }
+
+        // Reference types: use NullabilityInfoContext to detect nullable annotations
+        // This properly handles string vs string? in nullable context
+        var nullabilityInfo = context.Create(prop);
+        return nullabilityInfo.WriteState == NullabilityState.Nullable;
     }
 
     static List<EventMetadata> ExtractEvents(Type type)
@@ -226,14 +233,17 @@ class Program
         return type.Namespace?.StartsWith("Terminal.Gui") == true;
     }
 
-    static string GetFullTypeName(Type type)
-    {
-        return GetSimplifiedTypeName(type);
-    }
-
     static string GetSimplifiedTypeName(Type type)
     {
         // Simplify generic type names for readability in generated code
+        if(Nullable.GetUnderlyingType(type) is Type utype)
+        {
+            var ns = utype.Namespace;
+            var utypename = GetSimplifiedTypeName(utype);
+
+            return $"{utypename}?";
+        }
+
         if (type.IsGenericType)
         {
             var genericArgs = type.GetGenericArguments();
