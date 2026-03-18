@@ -135,7 +135,7 @@ public static partial class MappingHelpers
                     // Check if first part matches the type name
                     var typeShortName = targetType.Split('.').Last();
 
-                    if (parts[0] == typeShortName || $"System.Nullable<{parts[0]}>" == typeShortName)
+                    if (parts[0] == typeShortName || $"{parts[0]}?" == typeShortName)
                     {
                         // Remove the type prefix and add the full namespace
                         var valuePart = string.Join(".", parts.Skip(1));
@@ -169,7 +169,7 @@ public static partial class MappingHelpers
                 return $"new System.Drawing.Point({string.Join(", ", parts)})";
             }
 
-            if (targetType == "bool" || targetType == "System.Nullable<bool>")
+            if (targetType == "bool" || targetType == "bool?")
             {
                 if (bool.TryParse(value, out var boolValue))
                 {
@@ -179,7 +179,7 @@ public static partial class MappingHelpers
                 return null;
             }
 
-            if (targetType == "float" || targetType == "System.Nullable<float>")
+            if (targetType == "float" || targetType == "float?")
             {
                 if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
                 {
@@ -189,9 +189,9 @@ public static partial class MappingHelpers
                 return null;
             }
 
-            if (targetType == "int" || targetType == "System.Nullable<int>" ||
-                targetType == "long" || targetType == "System.Nullable<long>" ||
-                targetType == "byte" || targetType == "System.Nullable<byte>")
+            if (targetType == "int" || targetType == "int?" ||
+                targetType == "long" || targetType == "long?" ||
+                targetType == "byte" || targetType == "byte?")
             {
                 if (int.TryParse(value, out _))
                 {
@@ -200,7 +200,7 @@ public static partial class MappingHelpers
                 return null;
             }
 
-            if (targetType == "System.DateTime" || targetType == "System.Nullable<System.DateTime>")
+            if (targetType == "DateTime" || targetType == "DateTime?")
             {
                 if (DateTime.TryParse(value, out _))
                 {

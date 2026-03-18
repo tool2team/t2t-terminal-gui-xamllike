@@ -179,13 +179,10 @@ class Program
             if (eventHandlerType == null)
                 continue;
 
-            // Simplify the delegate type name for better readability
-            var delegateTypeName = SimplifyDelegateType(eventHandlerType);
-
             var eventMeta = new EventMetadata
             {
                 Name = evt.Name,
-                DelegateType = delegateTypeName
+                DelegateType = SimplifyDelegateType(eventHandlerType)
             };
 
             events.Add(eventMeta);
@@ -200,32 +197,18 @@ class Program
         if (delegateType.IsGenericType && delegateType.GetGenericTypeDefinition() == typeof(EventHandler<>))
         {
             var eventArgsType = delegateType.GetGenericArguments()[0];
-            var simplifiedArg = GetSimplifiedFullTypeName(eventArgsType);
-            return $"System.EventHandler<{simplifiedArg}>";
+            var simplifiedArg = GetSimplifiedTypeName(eventArgsType);
+            return $"EventHandler<{simplifiedArg}>";
         }
 
         // For non-generic EventHandler
         if (delegateType == typeof(EventHandler))
         {
-            return "System.EventHandler";
+            return "EventHandler";
         }
 
         // For other delegate types (like NotifyCollectionChangedEventHandler)
         return delegateType.FullName ?? delegateType.Name;
-    }
-
-    static string GetSimplifiedFullTypeName(Type type)
-    {
-        if (type.IsGenericType)
-        {
-            var genericArgs = type.GetGenericArguments();
-            var genericTypeName = type.Name.Substring(0, type.Name.IndexOf('`'));
-            var args = string.Join(", ", genericArgs.Select(t => GetSimplifiedFullTypeName(t)));
-
-            return $"{type.Namespace}.{genericTypeName}<{args}>";
-        }
-
-        return type.FullName ?? type.Name;
     }
 
     static bool IsTerminalGuiType(Type type)
@@ -337,7 +320,7 @@ class Program
             sb.AppendLine("        {");
             foreach (var evt in view.Events)
             {
-                sb.AppendLine($"            [\"{evt.Name}\"] = new EventMapping(\"{evt.Name}\", \"{evt.DelegateType}\", \"{evt.Name} event\"),");
+                sb.AppendLine($"            [\"{evt.Name}\"] = new EventMapping(\"{evt.Name}\", \"{evt.DelegateType}\"),");
             }
             sb.AppendLine("        },");
         }
@@ -359,7 +342,7 @@ class Program
             sb.AppendLine("        {");
             foreach (var (propName, eventName) in bindings.OrderBy(kvp => kvp.Key))
             {
-                sb.AppendLine($"            [\"{propName}\"] = new TwoWayBinding(\"{propName}\", \"{eventName}\", \"{propName} property with change notification\"),");
+                sb.AppendLine($"            [\"{propName}\"] = new TwoWayBinding(\"{propName}\", \"{eventName}\"),");
             }
             sb.AppendLine("        },");
         }

@@ -34,13 +34,11 @@ public class EventMapping
 {
     public string EventName { get; }
     public string DelegateType { get; }
-    public string Description { get; }
 
-    public EventMapping(string eventName, string delegateType, string description)
+    public EventMapping(string eventName, string delegateType)
     {
         EventName = eventName;
         DelegateType = delegateType;
-        Description = description;
     }
 }
 
@@ -51,13 +49,11 @@ public class TwoWayBinding
 {
     public string PropertyName { get; }
     public string ChangeEventName { get; }
-    public string Description { get; }
 
-    public TwoWayBinding(string propertyName, string changeEventName, string description)
+    public TwoWayBinding(string propertyName, string changeEventName)
     {
         PropertyName = propertyName;
         ChangeEventName = changeEventName;
-        Description = description;
     }
 }
 
