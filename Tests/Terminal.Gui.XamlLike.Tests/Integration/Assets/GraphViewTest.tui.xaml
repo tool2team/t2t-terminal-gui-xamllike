@@ -7,7 +7,7 @@
     Width="30"
     Height="5"
     CellSize="Sample"
-    GraphColor="Sample"
+    GraphColor="Attribute.Default"
     MarginBottom="2">
   
   <!-- GraphView with properties: AxisX, AxisY, CellSize, GraphColor, MarginBottom -->

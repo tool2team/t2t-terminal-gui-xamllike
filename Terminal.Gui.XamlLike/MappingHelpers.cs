@@ -156,7 +156,7 @@ public static partial class MappingHelpers
             {
                 string[] dims = value.Split(',');
                 // If not a valid Point, skip it
-                if (dims.Length < 1 || dims.Length > 2)
+                if (dims.Length != 2)
                 {
                     return null;
                 }
@@ -167,6 +167,23 @@ public static partial class MappingHelpers
                     return null;
                 }                
                 return $"new System.Drawing.Point({string.Join(", ", parts)})";
+            }
+
+            if (targetType == "System.Drawing.PointF")
+            {
+                string[] dims = value.Split(',');
+                // If not a valid PointF, skip it
+                if (dims.Length != 2)
+                {
+                    return null;
+                }
+                var parts = dims.Select(s => int.TryParse(s.Trim(), out int val) ? val : (int?)null);
+                // If not a valid Point, skip it
+                if (parts.Contains(null))
+                {
+                    return null;
+                }
+                return $"new System.Drawing.PointF({string.Join(", ", parts)})";
             }
 
             if (targetType == "bool" || targetType == "bool?")
