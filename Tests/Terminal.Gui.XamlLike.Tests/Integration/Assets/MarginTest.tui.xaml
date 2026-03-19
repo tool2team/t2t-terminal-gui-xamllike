@@ -3,7 +3,7 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="TestMargin"
     Diagnostics="ViewDiagnosticFlags.DrawIndicator"
-    ShadowSize="Sample"
+    ShadowSize="1, 1"
     Thickness="Thickness.Empty">
   
   <!-- Margin with properties: Diagnostics, Parent, ShadowSize, Thickness -->

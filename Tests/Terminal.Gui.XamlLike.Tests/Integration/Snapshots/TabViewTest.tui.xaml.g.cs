@@ -20,6 +20,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTabView.Y = 2;
             TestTabView.Width = 30;
             TestTabView.Height = 5;
+            TestTabView.TabScrollOffset = 2;
         }
     }
 }

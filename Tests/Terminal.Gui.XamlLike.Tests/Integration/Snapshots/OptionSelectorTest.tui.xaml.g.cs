@@ -21,6 +21,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestOptionSelector.Width = 30;
             TestOptionSelector.Height = 5;
             TestOptionSelector.DoubleClickAccepts = true;
+            TestOptionSelector.FocusedItem = 1;
             TestOptionSelector.HorizontalSpace = 2;
             TestOptionSelector.Styles = Terminal.Gui.Views.SelectorStyles.All;
         }

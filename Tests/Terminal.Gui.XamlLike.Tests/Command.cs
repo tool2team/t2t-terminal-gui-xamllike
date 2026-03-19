@@ -11,6 +11,8 @@ namespace Terminal.Gui.XamlLike.Tests
         {
             this.execute = execute;
             this.canExecute = canExecute;
+
+            CanExecuteChanged += (s, e) => { };
         }
 
         public bool CanExecute(object parameter) => canExecute?.Invoke() ?? true;

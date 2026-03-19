@@ -21,6 +21,9 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTableView.Width = 30;
             TestTableView.Height = 5;
             TestTableView.CellActivationKey = Terminal.Gui.Drivers.KeyCode.Z;
+            TestTableView.ColumnOffset = 1;
+            TestTableView.FullRowSelect = true;
+            TestTableView.MaxCellWidth = 4;
         }
     }
 }

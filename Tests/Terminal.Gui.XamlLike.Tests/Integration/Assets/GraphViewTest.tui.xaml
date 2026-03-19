@@ -6,7 +6,7 @@
     Y="2"
     Width="30"
     Height="5"
-    CellSize="Sample"
+    CellSize="8, 8"
     GraphColor="Attribute.Default"
     MarginBottom="2">
   

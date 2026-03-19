@@ -20,6 +20,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
             TestDatePicker.Y = 2;
             TestDatePicker.Width = 30;
             TestDatePicker.Height = 5;
+            TestDatePicker.Value = DateTime.Parse("31/12/2026");
         }
     }
 }

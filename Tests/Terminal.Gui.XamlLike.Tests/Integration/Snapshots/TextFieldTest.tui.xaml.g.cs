@@ -20,7 +20,10 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTextField.Y = 2;
             TestTextField.Width = 30;
             TestTextField.Height = 5;
+            TestTextField.InsertionPoint = 2;
+            TestTextField.Secret = true;
             TestTextField.SelectedStart = 0;
+            TestTextField.SelectWordOnlyOnDoubleClick = true;
         }
     }
 }

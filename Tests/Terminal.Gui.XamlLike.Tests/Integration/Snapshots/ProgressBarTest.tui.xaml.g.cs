@@ -20,6 +20,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestProgressBar.Y = 2;
             TestProgressBar.Width = 30;
             TestProgressBar.Height = 5;
+            TestProgressBar.BidirectionalMarquee = false;
             TestProgressBar.ProgressBarFormat = Terminal.Gui.Views.ProgressBarFormat.Simple;
             TestProgressBar.ProgressBarStyle = Terminal.Gui.Views.ProgressBarStyle.Continuous;
         }

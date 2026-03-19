@@ -20,6 +20,9 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTreeView.Y = 2;
             TestTreeView.Width = 30;
             TestTreeView.Height = 5;
+            TestTreeView.AllowLetterBasedNavigation = false;
+            TestTreeView.MaxDepth = 3;
+            TestTreeView.MultiSelect = true;
         }
     }
 }

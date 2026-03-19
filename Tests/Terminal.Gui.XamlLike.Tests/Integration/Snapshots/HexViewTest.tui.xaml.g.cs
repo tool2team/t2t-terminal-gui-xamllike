@@ -20,6 +20,8 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestHexView.Y = 2;
             TestHexView.Width = 30;
             TestHexView.Height = 5;
+            TestHexView.AddressWidth = 4;
+            TestHexView.BytesPerLine = 8;
         }
     }
 }

@@ -20,6 +20,9 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestListView.Y = 2;
             TestListView.Width = 30;
             TestListView.Height = 5;
+            TestListView.MarkMultiple = true;
+            TestListView.SelectedItem = 0;
+            TestListView.ShowMarks = false;
         }
     }
 }

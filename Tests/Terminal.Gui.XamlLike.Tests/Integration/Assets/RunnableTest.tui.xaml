@@ -5,8 +5,7 @@
     X="5"
     Y="2"
     Width="30"
-    Height="5"
-    Result="Sample">
+    Height="5">
   
   <!-- Runnable with properties: Result -->
   

@@ -20,6 +20,8 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
             TestTimeField.Y = 2;
             TestTimeField.Width = 30;
             TestTimeField.Height = 5;
+            TestTimeField.IsShortFormat = false;
+            TestTimeField.Secret = false;
             TestTimeField.SelectedStart = 0;
         }
     }

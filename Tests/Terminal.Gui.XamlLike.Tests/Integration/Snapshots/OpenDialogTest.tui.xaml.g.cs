@@ -20,6 +20,8 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestOpenDialog.Y = 2;
             TestOpenDialog.Width = 30;
             TestOpenDialog.Height = 5;
+            TestOpenDialog.AllowsMultipleSelection = true;
+            TestOpenDialog.MustExist = true;
             TestOpenDialog.OpenMode = Terminal.Gui.Views.OpenMode.File;
         }
     }

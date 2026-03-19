@@ -8,9 +8,9 @@
     Height="5"
     SelectedCodePoint="0"
     ShowGlyphWidths="True"
-    ShowUnicodeCategory="Sample"
+    ShowUnicodeCategory="UnicodeCategory.UppercaseLetter"
     StartCodePoint="0"
-    Value="0">
+    Value="É">
   
   <!-- CharMap with properties: SelectedCodePoint, ShowGlyphWidths, ShowUnicodeCategory, StartCodePoint, Value -->
   

@@ -21,6 +21,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestNumericUpDown.Width = 30;
             TestNumericUpDown.Height = 5;
             TestNumericUpDown.Format = "Sample";
+            TestNumericUpDown.Increment = 2;
             TestNumericUpDown.Value = 0;
         }
     }

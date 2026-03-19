@@ -93,8 +93,32 @@ public static partial class MappingHelpers
             // Handle Terminal.Gui types (Pos, Dim, Key, Enum, etc.)
             if (targetType.StartsWith("Terminal.Gui."))
             {
-                // Special handling for Pos and Dim types
-                if (targetType == "Terminal.Gui.ViewBase.Pos" || targetType == "Terminal.Gui.ViewBase.Dim")
+                // Special handling for Pos
+                if (targetType.StartsWith("Terminal.Gui.ViewBase.Pos"))
+                {
+                    // If value contains parentheses, it's already an expression like Pos.Auto()
+                    if (value.Contains("(") && value.Contains(")"))
+                    {
+                        return value;
+                    }
+
+                    var dims = value.Split(',').Select(d => d.Trim());
+                    // If not valid, skip it
+                    if (dims.Count() > 2 || !dims.All(d => int.TryParse(d, out _)))
+                    {
+                        return null;
+                    }
+                    if (dims.Count() > 1)
+                    {
+                        return $"new Terminal.Gui.ViewBase.Pos({string.Join(", ", dims)})";
+                    }
+
+                    // If not numeric, treat as expression
+                    return value;
+                }
+
+                // Special handling for Dim type
+                if (targetType.StartsWith("Terminal.Gui.ViewBase.Dim"))
                 {
                     // If value contains parentheses, it's already an expression like Dim.Fill()
                     if (value.Contains("(") && value.Contains(")"))
@@ -102,10 +126,15 @@ public static partial class MappingHelpers
                         return value;
                     }
 
-                    // For numeric values, convert to appropriate Terminal.Gui v2 types  
-                    if (int.TryParse(value, out _))
+                    var dims = value.Split(',').Select(d => d.Trim());
+                    // If not valid, skip it
+                    if (dims.Count() > 2 || !dims.All(d => int.TryParse(d, out _)))
                     {
-                        return value; // Terminal.Gui v2 accepts int directly for Pos/Dim
+                        return null;
+                    }
+                    if (dims.Count() > 1)
+                    {
+                        return $"new Terminal.Gui.ViewBase.Dim({string.Join(", ", dims)})";
                     }
 
                     // If not numeric, treat as expression
@@ -152,7 +181,48 @@ public static partial class MappingHelpers
 
             // Handle System types based on TargetType
 
-            if (targetType == "System.Drawing.Point")
+            if (targetType.StartsWith("bool"))
+            {
+                if (bool.TryParse(value, out var boolValue))
+                {
+                    return boolValue ? "true" : "false";
+                }
+                // If not a valid boolean, skip it
+                return null;
+            }
+
+            if (targetType.StartsWith("float"))
+            {
+                if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
+                {
+                    // Ensure float literal has 'f' suffix
+                    return value.Contains('.') ? $"{value}f" : $"{value}.0f";
+                }
+                return null;
+            }
+
+            if (targetType.StartsWith("int") ||
+                targetType.StartsWith("long") ||
+                targetType.StartsWith("byte"))
+            {
+                if (int.TryParse(value, out _))
+                {
+                    return value; // Return numeric value without quotes
+                }
+                return null;
+            }
+
+            if (targetType.StartsWith("DateTime"))
+            {
+                if (DateTime.TryParse(value, out _))
+                {
+                    return $"DateTime.Parse(\"{value}\")";
+                }
+                return null;
+            }
+
+
+            if (targetType.StartsWith("System.Drawing.Point"))
             {
                 string[] dims = value.Split(',');
                 // If not a valid Point, skip it
@@ -165,11 +235,11 @@ public static partial class MappingHelpers
                 if (parts.Contains(null))
                 {
                     return null;
-                }                
+                }
                 return $"new System.Drawing.Point({string.Join(", ", parts)})";
             }
 
-            if (targetType == "System.Drawing.PointF")
+            if (targetType.StartsWith("System.Drawing.PointF"))
             {
                 string[] dims = value.Split(',');
                 // If not a valid PointF, skip it
@@ -186,44 +256,21 @@ public static partial class MappingHelpers
                 return $"new System.Drawing.PointF({string.Join(", ", parts)})";
             }
 
-            if (targetType == "bool" || targetType == "bool?")
+            if (targetType.StartsWith("System.Text.Rune"))
             {
-                if (bool.TryParse(value, out var boolValue))
+                string[] dims = value.Split(',');
+                // If not a valid Rune, skip it
+                if (dims.Length < 1 || dims.Length > 2)
                 {
-                    return boolValue ? "true" : "false";
+                    return null;
                 }
-                // If not a valid boolean, skip it
-                return null;
+                return $"new System.Text.Rune({string.Join(", ", dims)})";
             }
 
-            if (targetType == "float" || targetType == "float?")
+            if(targetType.StartsWith("IReadOnlyList<string>"))
             {
-                if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
-                {
-                    // Ensure float literal has 'f' suffix
-                    return value.Contains('.') ? $"{value}f" : $"{value}.0f";
-                }
-                return null;
-            }
-
-            if (targetType == "int" || targetType == "int?" ||
-                targetType == "long" || targetType == "long?" ||
-                targetType == "byte" || targetType == "byte?")
-            {
-                if (int.TryParse(value, out _))
-                {
-                    return value; // Return numeric value without quotes
-                }
-                return null;
-            }
-
-            if (targetType == "DateTime" || targetType == "DateTime?")
-            {
-                if (DateTime.TryParse(value, out _))
-                {
-                    return $"DateTime.Parse(\"{value}\")";
-                }
-                return null;
+                string[] dims = value.Split(',');
+                return $"[ {string.Join(", ", dims.Select(d => $"\"{d}\""))} ]";
             }
 
             // For all other types (including interfaces, complex types, etc.)

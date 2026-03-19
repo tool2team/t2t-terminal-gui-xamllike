@@ -10,5 +10,6 @@ public partial class FileDialogTest : FileDialog
     public FileDialogTest()
     {
         InitializeComponent();
+        AllowedTypes = new List<IAllowedType>() { new AllowedType("Plain text", ".txt", ".md") };
     }
 }

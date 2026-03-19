@@ -6,9 +6,8 @@
     Y="2"
     Width="30"
     Height="5"
-    AllowedTypes="Sample"
-    AllowsMultipleSelection="Sample"
-    MustExist="Sample"
+    AllowsMultipleSelection="True"
+    MustExist="False"
     OpenMode="OpenMode.File">
   
   <!-- SaveDialog with properties: AllowedTypes, AllowsMultipleSelection, FileOperationsHandler, MustExist, OpenMode -->

@@ -8,8 +8,7 @@
     Height="5"
     Address="0x128F"
     AddressWidth="4"
-    BytesPerLine="8"
-    Source="">
+    BytesPerLine="8">
   
   <!-- HexView with properties: Address, AddressWidth, BytesPerLine, Source -->
   

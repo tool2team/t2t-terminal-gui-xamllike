@@ -23,6 +23,36 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestButton.IsDefault = true;
             TestButton.NoDecorations = true;
             TestButton.NoPadding = true;
+            TestButton.Accepting += OnAccepting;
+
+            SetupBindings();
+        }
+
+        private void SetupBindings()
+        {
+            TestButton.Accepted += (s, e) => {
+                if (AcceptCommand?.CanExecute(null) == true)
+                    AcceptCommand.Execute(e);
+            };
+
+            // Subscribe to property changes
+            PropertyChanged += OnViewModelPropertyChanged;
+            // Subscribe to CanExecuteChanged for TestButton
+            if (AcceptCommand != null)
+            {
+                AcceptCommand.CanExecuteChanged += (s, e) => {
+                    TestButton.Enabled = AcceptCommand.CanExecute(null);
+                };
+                // Set initial Enabled state
+                TestButton.Enabled = AcceptCommand.CanExecute(null);
+            }
+        }
+
+        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+            }
         }
     }
 }

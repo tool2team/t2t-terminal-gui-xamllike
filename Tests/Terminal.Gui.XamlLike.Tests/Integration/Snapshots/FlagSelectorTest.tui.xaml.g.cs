@@ -23,6 +23,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestFlagSelector.DoubleClickAccepts = true;
             TestFlagSelector.HorizontalSpace = 2;
             TestFlagSelector.Styles = Terminal.Gui.Views.SelectorStyles.All;
+            TestFlagSelector.TabBehavior = Terminal.Gui.ViewBase.TabBehavior?.All;
         }
     }
 }

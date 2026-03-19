@@ -20,6 +20,9 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTextView.Y = 2;
             TestTextView.Width = 30;
             TestTextView.Height = 5;
+            TestTextView.EnterKeyAddsLine = true;
+            TestTextView.InheritsPreviousAttribute = false;
+            TestTextView.IsSelecting = false;
             TestTextView.Multiline = false;
         }
     }

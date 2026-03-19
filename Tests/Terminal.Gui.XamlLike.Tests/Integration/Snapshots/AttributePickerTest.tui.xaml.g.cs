@@ -21,6 +21,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestAttributePicker.Width = 30;
             TestAttributePicker.Height = 5;
             TestAttributePicker.SampleText = "Sample";
+            TestAttributePicker.Value = Terminal.Gui.Drawing.Attribute?.Default;
         }
     }
 }

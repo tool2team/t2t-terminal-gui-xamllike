@@ -6,10 +6,10 @@
     Y="2"
     Width="30"
     Height="5"
-    InsertionPoint="Sample"
-    Secret="Sample"
+    InsertionPoint="2"
+    Secret="True"
     SelectedStart="0"
-    SelectWordOnlyOnDoubleClick="Sample">
+    SelectWordOnlyOnDoubleClick="True">
   
   <!-- TextField with properties: Autocomplete, InsertionPoint, Secret, SelectedStart, SelectWordOnlyOnDoubleClick -->
   

@@ -8,8 +8,7 @@
     Height="5"
     MarkMultiple="True"
     SelectedItem="0"
-    ShowMarks="False"
-    Source="">
+    ShowMarks="False">
   
   <!-- ListView with properties: MarkMultiple, SelectedItem, ShowMarks, Source -->
   

@@ -10,7 +10,7 @@
     Fraction="0.5f"
     ProgressBarFormat="ProgressBarFormat.Simple"
     ProgressBarStyle="ProgressBarStyle.Continuous"
-    SegmentCharacter="Sample">
+    SegmentCharacter="¼">
   
   <!-- ProgressBar with properties: BidirectionalMarquee, Fraction, ProgressBarFormat, ProgressBarStyle, SegmentCharacter -->
   
