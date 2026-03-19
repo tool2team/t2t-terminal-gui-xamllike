@@ -239,6 +239,14 @@ class Program
                 : $"{ns}.{genericTypeName}<{args}>";
         }
 
+        if(type.IsArray)
+        {
+            var elementType = type.GetElementType();
+            var arg = GetSimplifiedTypeName(elementType!);
+
+            return $"{arg}[]";
+        }
+
         // Use simple name for common types
         if (type.Namespace == "System")
         {

@@ -267,10 +267,11 @@ public static partial class MappingHelpers
                 return $"new System.Text.Rune({string.Join(", ", dims)})";
             }
 
-            if(targetType.StartsWith("IReadOnlyList<string>"))
+            if(targetType.StartsWith("System.Collections.Generic.IReadOnlyList<string>")
+                || targetType == "string[]")
             {
                 string[] dims = value.Split(',');
-                return $"[ {string.Join(", ", dims.Select(d => $"\"{d}\""))} ]";
+                return $"[ {string.Join(", ", dims.Select(d => $"\"{d.Replace("\"", "\\\"")}\""))} ]";
             }
 
             // For all other types (including interfaces, complex types, etc.)
