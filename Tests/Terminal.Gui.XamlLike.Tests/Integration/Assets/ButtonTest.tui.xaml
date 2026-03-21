@@ -10,7 +10,7 @@
     NoDecorations="True"
     NoPadding="True"
 	Accepting="OnAccepting"
-	Accepted="{Bind AcceptCommand}">
+	Accepted="{Bind AcceptedCommand}">
   
   <!-- Button with properties: IsDefault, NoDecorations, NoPadding -->
   

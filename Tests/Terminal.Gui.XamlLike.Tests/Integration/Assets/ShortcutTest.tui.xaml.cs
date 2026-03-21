@@ -11,4 +11,9 @@ public partial class ShortcutTest : Shortcut
     {
         InitializeComponent();
     }
+
+    protected void DoIt()
+    {
+
+    }
 }

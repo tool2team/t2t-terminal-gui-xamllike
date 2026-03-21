@@ -31,20 +31,19 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
         private void SetupBindings()
         {
             TestButton.Accepted += (s, e) => {
-                if (AcceptCommand?.CanExecute(null) == true)
-                    AcceptCommand.Execute(e);
+                if (AcceptedCommand?.CanExecute(null) == true)
+                    AcceptedCommand.Execute(e);
             };
 
-            // Subscribe to property changes
             PropertyChanged += OnViewModelPropertyChanged;
             // Subscribe to CanExecuteChanged for TestButton
-            if (AcceptCommand != null)
+            if (AcceptedCommand != null)
             {
-                AcceptCommand.CanExecuteChanged += (s, e) => {
-                    TestButton.Enabled = AcceptCommand.CanExecute(null);
+                AcceptedCommand.CanExecuteChanged += (s, e) => {
+                    TestButton.Enabled = AcceptedCommand.CanExecute(null);
                 };
                 // Set initial Enabled state
-                TestButton.Enabled = AcceptCommand.CanExecute(null);
+                TestButton.Enabled = AcceptedCommand.CanExecute(null);
             }
         }
 

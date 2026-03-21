@@ -10,7 +10,7 @@
     HorizontalSpace="2"
     Labels="One,Two"
     Styles="SelectorStyles.All"
-    TabBehavior="TabBehavior.All">
+    TabBehavior="TabBehavior.NoStop">
   
   <!-- FlagSelector with properties: DoubleClickAccepts, HorizontalSpace, Labels, Styles, TabBehavior -->
   

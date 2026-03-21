@@ -647,7 +647,6 @@ public sealed class CodeEmitter
         }
 
         AppendLine();
-        AppendLine("// Subscribe to property changes");
 
         if (needsPropertyChangedSource)
         {

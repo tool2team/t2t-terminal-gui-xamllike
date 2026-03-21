@@ -23,6 +23,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestOptionSelector.DoubleClickAccepts = true;
             TestOptionSelector.FocusedItem = 1;
             TestOptionSelector.HorizontalSpace = 2;
+            TestOptionSelector.Labels = ["Alpha", " Beta"];
             TestOptionSelector.Styles = Terminal.Gui.Views.SelectorStyles.All;
         }
     }

@@ -88,7 +88,7 @@ public static partial class MappingHelpers
 
         if (propertyMapping != null)
         {
-            var targetType = propertyMapping.TargetType; // TODO isTerminalGUIType
+            var targetType = propertyMapping.TargetType.TrimEnd('?'); // TODO isTerminalGUIType
 
             // Handle Terminal.Gui types (Pos, Dim, Key, Enum, etc.)
             if (targetType.StartsWith("Terminal.Gui."))
@@ -164,7 +164,7 @@ public static partial class MappingHelpers
                     // Check if first part matches the type name
                     var typeShortName = targetType.Split('.').Last();
 
-                    if (parts[0] == typeShortName || $"{parts[0]}?" == typeShortName)
+                    if (parts[0] == typeShortName)
                     {
                         // Remove the type prefix and add the full namespace
                         var valuePart = string.Join(".", parts.Skip(1));
@@ -271,7 +271,7 @@ public static partial class MappingHelpers
                 || targetType == "string[]")
             {
                 string[] dims = value.Split(',');
-                return $"[ {string.Join(", ", dims.Select(d => $"\"{d.Replace("\"", "\\\"")}\""))} ]";
+                return $"[{string.Join(", ", dims.Select(d => $"\"{d.Replace("\"", "\\\"").Replace("\\", "\\\\")}\""))}]";
             }
 
             // For all other types (including interfaces, complex types, etc.)

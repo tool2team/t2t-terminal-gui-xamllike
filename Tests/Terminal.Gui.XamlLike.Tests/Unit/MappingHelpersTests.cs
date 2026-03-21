@@ -134,10 +134,10 @@ public class MappingHelpersTests
     #region GetEventMapping Tests
 
     [Theory]
-    [InlineData("Button", "Accepting", "System.EventHandler<Terminal.Gui.Input.CommandEventArgs>")]
-    [InlineData("AttributePicker", "Activated", "System.EventHandler<Terminal.Gui.App.EventArgs<Terminal.Gui.Input.ICommandContext>>")]
-    [InlineData("Border", "Disposing", "System.EventHandler")]
-    [InlineData("ColorPicker", "FocusedChanged", "System.EventHandler<Terminal.Gui.ViewBase.HasFocusEventArgs>")]
+    [InlineData("Button", "Accepting", "EventHandler<Terminal.Gui.Input.CommandEventArgs>")]
+    [InlineData("AttributePicker", "Activated", "EventHandler<Terminal.Gui.App.EventArgs<Terminal.Gui.Input.ICommandContext>>")]
+    [InlineData("Border", "Disposing", "EventHandler")]
+    [InlineData("ColorPicker", "FocusedChanged", "EventHandler<Terminal.Gui.ViewBase.HasFocusEventArgs>")]
     public void GetEventMapping_UsualEvents_ReturnCorrectTypes(string controlName, string eventName, string expectedType)
     {
         // Act

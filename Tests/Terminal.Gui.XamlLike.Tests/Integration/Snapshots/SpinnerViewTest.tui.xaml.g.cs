@@ -21,6 +21,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestSpinnerView.Width = 30;
             TestSpinnerView.Height = 5;
             TestSpinnerView.AutoSpin = true;
+            TestSpinnerView.Sequence = ["/", "-", "\\", "|"];
             TestSpinnerView.SpinBounce = true;
             TestSpinnerView.SpinDelay = 5;
             TestSpinnerView.SpinReverse = false;

@@ -6,7 +6,7 @@
     Y="2"
     Width="30"
     Height="5"
-    Action="Sample"
+    Action="DoIt"
     BindKeyToApplication="True"
     HelpText="Sample">
   
