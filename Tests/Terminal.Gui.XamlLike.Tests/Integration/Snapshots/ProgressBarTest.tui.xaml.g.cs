@@ -23,6 +23,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestProgressBar.BidirectionalMarquee = false;
             TestProgressBar.ProgressBarFormat = Terminal.Gui.Views.ProgressBarFormat.Simple;
             TestProgressBar.ProgressBarStyle = Terminal.Gui.Views.ProgressBarStyle.Continuous;
+            TestProgressBar.SegmentCharacter = new System.Text.Rune('¼');
         }
     }
 }

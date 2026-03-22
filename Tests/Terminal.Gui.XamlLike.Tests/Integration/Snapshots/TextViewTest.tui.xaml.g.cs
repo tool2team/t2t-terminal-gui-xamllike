@@ -22,6 +22,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTextView.Height = 5;
             TestTextView.EnterKeyAddsLine = true;
             TestTextView.InheritsPreviousAttribute = false;
+            TestTextView.InsertionPoint = new System.Drawing.Point(2, 2);
             TestTextView.IsSelecting = false;
             TestTextView.Multiline = false;
         }

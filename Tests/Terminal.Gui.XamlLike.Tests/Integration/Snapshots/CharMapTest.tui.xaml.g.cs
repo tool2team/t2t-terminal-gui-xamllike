@@ -23,6 +23,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestCharMap.SelectedCodePoint = 0;
             TestCharMap.ShowGlyphWidths = true;
             TestCharMap.StartCodePoint = 0;
+            TestCharMap.Value = new System.Text.Rune('É');
         }
     }
 }

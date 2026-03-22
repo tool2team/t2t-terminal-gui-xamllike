@@ -265,7 +265,7 @@ class Program
             };
         }
 
-        return IsTerminalGuiType(type) ? type.FullName! : type.Name;
+        return type.FullName ?? type.Name;
     }
 
     static string GenerateMappingCode(List<ViewMetadata> metadata)

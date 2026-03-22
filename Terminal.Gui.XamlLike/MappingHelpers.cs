@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Terminal.Gui.XamlLike;
@@ -15,6 +16,18 @@ namespace Terminal.Gui.XamlLike;
 /// </summary>
 public static partial class MappingHelpers
 {
+    //static bool FullStartsWith(this string str, string value) => new Regex($"{value}\\W").IsMatch(str);
+
+    static bool FullStartsWith(this string str, string value)
+    {
+        if (!str.StartsWith(value))
+            return false;
+        
+        // If exact match or followed by non-letter/digit character
+        return str.Length == value.Length || 
+               !char.IsLetterOrDigit(str[value.Length]);
+    }
+
     /// <summary>
     /// Gets the full type name for a control, with optional generic type parameter
     /// </summary>
@@ -91,10 +104,10 @@ public static partial class MappingHelpers
             var targetType = propertyMapping.TargetType.TrimEnd('?'); // TODO isTerminalGUIType
 
             // Handle Terminal.Gui types (Pos, Dim, Key, Enum, etc.)
-            if (targetType.StartsWith("Terminal.Gui."))
+            if (targetType.FullStartsWith("Terminal.Gui"))
             {
                 // Special handling for Pos
-                if (targetType.StartsWith("Terminal.Gui.ViewBase.Pos"))
+                if (targetType.FullStartsWith("Terminal.Gui.ViewBase.Pos"))
                 {
                     // If value contains parentheses, it's already an expression like Pos.Auto()
                     if (value.Contains("(") && value.Contains(")"))
@@ -118,7 +131,7 @@ public static partial class MappingHelpers
                 }
 
                 // Special handling for Dim type
-                if (targetType.StartsWith("Terminal.Gui.ViewBase.Dim"))
+                if (targetType.FullStartsWith("Terminal.Gui.ViewBase.Dim"))
                 {
                     // If value contains parentheses, it's already an expression like Dim.Fill()
                     if (value.Contains("(") && value.Contains(")"))
@@ -181,7 +194,7 @@ public static partial class MappingHelpers
 
             // Handle System types based on TargetType
 
-            if (targetType.StartsWith("bool"))
+            if (targetType.FullStartsWith("bool"))
             {
                 if (bool.TryParse(value, out var boolValue))
                 {
@@ -191,7 +204,7 @@ public static partial class MappingHelpers
                 return null;
             }
 
-            if (targetType.StartsWith("float"))
+            if (targetType.FullStartsWith("float"))
             {
                 if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
                 {
@@ -201,20 +214,20 @@ public static partial class MappingHelpers
                 return null;
             }
 
-            if (targetType.StartsWith("int") ||
-                targetType.StartsWith("long") ||
-                targetType.StartsWith("byte"))
+            if (targetType.FullStartsWith("int") ||
+                targetType.FullStartsWith("long") ||
+                targetType.FullStartsWith("byte"))
             {
                 if (int.TryParse(value, out _))
                 {
-                    return value; // Return numeric value without quotes
+                    return value;
                 }
                 return null;
             }
 
-            if (targetType.StartsWith("DateTime"))
+            if (targetType.FullStartsWith("DateTime"))
             {
-                if (DateTime.TryParse(value, out _))
+                if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
                 {
                     return $"DateTime.Parse(\"{value}\")";
                 }
@@ -222,7 +235,7 @@ public static partial class MappingHelpers
             }
 
 
-            if (targetType.StartsWith("System.Drawing.Point"))
+            if (targetType.FullStartsWith("System.Drawing.Point"))
             {
                 string[] dims = value.Split(',');
                 // If not a valid Point, skip it
@@ -239,7 +252,7 @@ public static partial class MappingHelpers
                 return $"new System.Drawing.Point({string.Join(", ", parts)})";
             }
 
-            if (targetType.StartsWith("System.Drawing.PointF"))
+            if (targetType.FullStartsWith("System.Drawing.PointF"))
             {
                 string[] dims = value.Split(',');
                 // If not a valid PointF, skip it
@@ -247,7 +260,7 @@ public static partial class MappingHelpers
                 {
                     return null;
                 }
-                var parts = dims.Select(s => int.TryParse(s.Trim(), out int val) ? val : (int?)null);
+                var parts = dims.Select(s => float.TryParse(s.Trim(), out float val) ? val : (float?)null);
                 // If not a valid Point, skip it
                 if (parts.Contains(null))
                 {
@@ -256,18 +269,12 @@ public static partial class MappingHelpers
                 return $"new System.Drawing.PointF({string.Join(", ", parts)})";
             }
 
-            if (targetType.StartsWith("System.Text.Rune"))
+            if (targetType.FullStartsWith("System.Text.Rune"))
             {
-                string[] dims = value.Split(',');
-                // If not a valid Rune, skip it
-                if (dims.Length < 1 || dims.Length > 2)
-                {
-                    return null;
-                }
-                return $"new System.Text.Rune({string.Join(", ", dims)})";
+                return $"new System.Text.Rune('{value}')";
             }
 
-            if(targetType.StartsWith("System.Collections.Generic.IReadOnlyList<string>")
+            if(targetType.FullStartsWith("System.Collections.Generic.IReadOnlyList<string>")
                 || targetType == "string[]")
             {
                 string[] dims = value.Split(',');
@@ -285,21 +292,5 @@ public static partial class MappingHelpers
 
         // Default: treat as string property
         return $"\"{value.Replace("\"", "\\\"")}\"";
-    }
-
-    /// <summary>
-    /// Determines if a property is a Terminal.Gui type that needs full namespace qualification
-    /// </summary>
-    public static bool IsTerminalGuiType(string propertyName)
-    {
-        // Search in all control-specific properties if not found yet
-        foreach (Dictionary<string, PropertyMapping> properties in Mappings.PropertyMappings.Values)
-        {
-            if (properties.TryGetValue(propertyName, out PropertyMapping? mapping))
-            {
-                return mapping.TargetType.StartsWith("Terminal.Gui.");
-            }
-        }
-        return false;
     }
 }

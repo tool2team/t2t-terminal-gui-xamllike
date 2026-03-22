@@ -163,21 +163,6 @@ public class MappingHelpersTests
         Assert.Equal(expected, result is not null);
     }
 
-    [Theory]
-    [InlineData("X", true)]
-    [InlineData("Y", true)]
-    [InlineData("Width", true)]
-    [InlineData("Height", true)]
-    [InlineData("Text", false)]
-    public void IsTerminalGuiType_VariousProperties_ReturnsExpectedResult(string propertyName, bool expected)
-    {
-        // Act
-        var result = MappingHelpers.IsTerminalGuiType(propertyName);
-
-        // Assert
-        Assert.Equal(expected, result);
-    }
-
     #endregion
 
     #region Edge Cases Tests (4 tests)
