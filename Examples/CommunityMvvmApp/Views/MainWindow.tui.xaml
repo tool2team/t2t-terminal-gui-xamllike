@@ -55,7 +55,7 @@
 
   <Button X="49" Y="13"
 		  Text="Toggle Enable"
-		  Command="{Bind ToggleCommand}" />
+		  Accepting="{Bind ToggleCommand}" />
 
   <Label X="2" Y="17"
 		 Text="{Bind StatusMessage}" />
@@ -65,6 +65,6 @@
 
   <Button X="Pos.Right(Root) - 10" Y="Pos.Bottom(Root) - 3"
 		  Text="Exit"
-		  Command="{Bind ExitCommand}" />
+		  Accepting="{Bind ExitCommand}" />
 
 </Window>

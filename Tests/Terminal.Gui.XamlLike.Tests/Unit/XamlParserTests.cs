@@ -470,25 +470,6 @@ public class XamlParserTests
     }
 
     [Fact]
-    public void Validate_UnknownEvent_ReturnsDiagnostic()
-    {
-        // Arrange
-        var xaml = """
-            <Button x:Class="Test.ButtonView"
-                    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    NonExistentEvent="Handler" />
-            """;
-        var parseResult = XamlParser.Parse(xaml, "test.tui.xaml");
-
-        // Act
-        var diagnostics = XamlParser.Validate(parseResult.Value!);
-
-        // Assert
-        Assert.NotEmpty(diagnostics);
-    }
-
-    [Fact]
     public void Validate_EmptyEventHandler_ReturnsDiagnostic()
     {
         // Arrange

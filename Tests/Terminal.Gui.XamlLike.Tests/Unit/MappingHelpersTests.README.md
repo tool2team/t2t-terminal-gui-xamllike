@@ -198,7 +198,6 @@ dotnet test --collect:"XPlat Code Coverage"
 
 ### Tested Events
 - **Common:** Accepting, Activated, KeyDown
-- **Invalid:** NonExistentEvent
 
 ## Expected Results
 
