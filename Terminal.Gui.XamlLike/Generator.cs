@@ -773,7 +773,7 @@ public sealed class CodeEmitter
                 var eventName = property.GetChangeEventName();
 
                 // Get the correct event argument type from EventMappings
-                string eventArgType = "System.EventArgs";
+                string eventArgType = "EventArgs";
                 if (eventName != null)
                 {
                     EventMapping? eventMapping = MappingHelpers.GetEventMapping(control.ElementName, eventName);
@@ -781,14 +781,14 @@ public sealed class CodeEmitter
                     {
                         // Extract TEventArgs from EventHandler<TEventArgs> using regex
                         var delegateType = eventMapping.DelegateType;
-                        Match match = Regex.Match(delegateType, @"System\.EventHandler<(.+)>$");
+                        Match match = Regex.Match(delegateType, @"EventHandler<(.+)>$");
                         if (match.Success)
                         {
                             eventArgType = match.Groups[1].Value;
                         }
-                        else if (delegateType == "System.EventHandler")
+                        else if (delegateType == "EventHandler")
                         {
-                            eventArgType = "System.EventArgs";
+                            eventArgType = "EventArgs";
                         }
                     }
                 }

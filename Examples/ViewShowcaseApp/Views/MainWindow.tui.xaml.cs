@@ -1,7 +1,5 @@
-using Terminal.Gui.App;
 using Terminal.Gui.ViewBase;
 using Terminal.Gui.Views;
-using ViewShowcaseApp.Models;
 using ViewShowcaseApp.ViewModels;
 
 namespace ViewShowcaseApp.Views;
@@ -13,21 +11,11 @@ public partial class MainWindow : Window
 
     public MainWindow(MainViewModel viewModel)
     {
-        try
-        {
-            ViewModel = viewModel;
-            InitializeComponent();
-            UpdatePlaceholderVisibility();
+        ViewModel = viewModel;
+        InitializeComponent();
+        UpdatePlaceholderVisibility();
 
-            ViewModel.ViewSelectionChanged += OnViewSelectionChanged;
-        }
-        catch (ArgumentException ex)
-        {
-            // Log exception for debugging
-            System.Diagnostics.Debug.WriteLine($"ArgumentException in MainWindow constructor: {ex.Message}");
-            System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
-            throw; // Re-throw so debugger stops here
-        }
+        ViewModel.ViewSelectionChanged += OnViewSelectionChanged;
     }
  
     private void OnViewSelectionChanged(object? sender, View demoView)
