@@ -1,0 +1,7 @@
+﻿<Link x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.LinkTest"
+    xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="Link1"
+    X="Pos.Center()"
+    Y="Pos.Center()"
+	Url="https://github.com/tool2team/t2t-terminal-gui-xamllike" />

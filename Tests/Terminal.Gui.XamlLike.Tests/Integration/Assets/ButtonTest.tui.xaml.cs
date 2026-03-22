@@ -13,6 +13,8 @@ public partial class ButtonTest : Button, INotifyPropertyChanged
     public ButtonTest()
     {
         InitializeComponent();
+        PropertyChanged += (s, e) => { };
+        PropertyChanged.Invoke(this, null);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

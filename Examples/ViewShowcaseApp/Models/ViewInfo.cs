@@ -46,6 +46,13 @@ public static class ViewInfoCollection
             Description = "Checkbox control",
             CreateView = () => new CheckBoxDemo() 
         },
+        new ViewInfo()
+        {
+            Name = "Link",
+            Category = "Basic Controls",
+            Description = "Link control",
+            CreateView = () => new LinkDemo()
+        },
         new ViewInfo() 
         { 
             Name = "ProgressBar", 

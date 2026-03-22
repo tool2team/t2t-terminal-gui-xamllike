@@ -2,6 +2,6 @@
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views;
 
-public class DateFieldTests : BaseViewTests<DateField>
+public class DateEditorTests : BaseViewTests<DateEditor>
 {
 }

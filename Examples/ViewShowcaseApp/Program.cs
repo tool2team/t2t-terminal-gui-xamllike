@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 using Terminal.Gui.App;
 using ViewShowcaseApp.Views;
 
@@ -8,6 +9,9 @@ class Program
 {
     static void Main(string[] args)
     {
+
+        Console.OutputEncoding = Encoding.Default;
+
         Console.WriteLine("Starting View Showcase...");
 
         try

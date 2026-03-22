@@ -2,6 +2,6 @@
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views;
 
-public class TimeFieldTests : BaseViewTests<TimeField>
+public class LinkTests : BaseViewTests<Link>
 {
 }

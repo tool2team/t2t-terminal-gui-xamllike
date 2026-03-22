@@ -36,7 +36,7 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ViewName))]
     [NotifyPropertyChangedFor(nameof(ViewDescription))]
-    private int? selectedViewIndex;
+    int? selectedViewIndex;
 
     partial void OnSelectedViewIndexChanged(int? value)
     {

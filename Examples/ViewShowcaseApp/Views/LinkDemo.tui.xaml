@@ -1,0 +1,21 @@
+<View x:Class="ViewShowcaseApp.Views.LinkDemo"
+      xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Width="Dim.Fill()"
+      Height="Dim.Fill()">
+
+	<Link x:Name="DemoLink"
+		Text="Sample Link"
+		X="Pos.Center()"
+		Y="Pos.Center()"
+		Url="https://github.com/tool2team/t2t-terminal-gui-xamllike"/>
+		
+	<StatusBar>
+		<Label x:Name="StatusLabel"
+			X="50"
+			Y="0"
+			Width="Dim.Fill()"
+			Height="1" />
+	</StatusBar>	
+
+</View>

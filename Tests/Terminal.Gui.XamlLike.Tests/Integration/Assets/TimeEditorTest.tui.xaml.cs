@@ -3,11 +3,11 @@
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views;
 
 /// <summary>
-/// Partial class for DateFieldTest test view
+/// Partial class for TimeFieldTest test view
 /// </summary>
-public partial class DateFieldTest : DateField
+public partial class TimeEditorTest : TimeEditor
 {
-    public DateFieldTest()
+    public TimeEditorTest()
     {
         InitializeComponent();
     }
