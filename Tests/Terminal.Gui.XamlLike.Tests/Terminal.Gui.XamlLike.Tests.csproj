@@ -36,6 +36,7 @@
 		<ProjectReference Include="..\..\Terminal.Gui.XamlLike\Terminal.Gui.XamlLike.csproj" />
 		<None Include="Integration\Assets\*.tui.xaml" CopyToOutputDirectory="PreserveNewest" />
 		<None Include="Integration\Snapshots\*.tui.xaml.g.cs" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="logo48.png" Pack="true" Visible="false" PackagePath="logo48.png" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="$(DefineConstants.Contains('BUILD_SNAPSHOTS'))">
