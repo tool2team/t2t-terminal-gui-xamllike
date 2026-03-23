@@ -40,6 +40,7 @@
 
     <!-- Package README for NuGet.org -->
     <None Include="README.md" Pack="true" PackagePath="\" />
+	<None Include="logo48.png" Pack="true" Visible="false" PackagePath="logo48.png" />
   </ItemGroup>
 
 </Project>
