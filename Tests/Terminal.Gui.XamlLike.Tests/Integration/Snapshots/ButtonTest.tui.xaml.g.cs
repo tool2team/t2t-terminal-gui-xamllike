@@ -51,8 +51,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
         {
             switch (e.PropertyName)
             {
-                default:
-                    break;
             }
         }
     }
