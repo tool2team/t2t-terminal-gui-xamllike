@@ -278,6 +278,10 @@ class Program
             ["CheckBox"] = new Dictionary<string, (string, string, string, bool)>
             {
                 ["Value"] = ("Value", "Terminal.Gui.Views.CheckState", "Checked state", false) // CheckState is an enum (value type)
+            },
+            ["Button"] = new Dictionary<string, (string, string, string, bool)>
+            {
+                ["IsDialogButton"] = ("IsDialogButton", "bool", "Indicates if button should be added via AddButton (Dialog)", false) // Generator-only property
             }
         };
 

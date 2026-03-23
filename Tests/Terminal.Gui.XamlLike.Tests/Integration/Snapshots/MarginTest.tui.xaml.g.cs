@@ -17,6 +17,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
         {
             TestMargin = this;
             TestMargin.Diagnostics = Terminal.Gui.ViewBase.ViewDiagnosticFlags.DrawIndicator;
+            TestMargin.ShadowSize = new System.Drawing.Size(1, 1);
             TestMargin.Thickness = Terminal.Gui.Drawing.Thickness.Empty;
         }
     }

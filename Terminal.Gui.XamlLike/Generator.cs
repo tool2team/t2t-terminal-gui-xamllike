@@ -433,6 +433,12 @@ public sealed class CodeEmitter
             var propName = kvp.Key;
             var value = kvp.Value;
 
+            // Skip generator-only directives (not actual Terminal.Gui properties)
+            if (propName == "IsDialogButton")
+            {
+                continue;
+            }
+
             var propertyMapping = MappingHelpers.GetPropertyMapping(element.Name, propName);
             if (propertyMapping is null)
             {

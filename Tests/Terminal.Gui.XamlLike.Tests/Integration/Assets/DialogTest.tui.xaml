@@ -1,9 +1,11 @@
 ﻿<Dialog x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.DialogTest"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="TestDialog"
-    Result="Sample">
-  
+    x:Name="TestDialog">
+
+	<Button x:Name="ContentButton" Text="Yo!" />
+	<Button x:Name="DialogtButton" Text="Ho! Ho!" IsDialogButton="True" />
+	
   <!-- Dialog with properties: Result, Result, Result -->
   
 </Dialog>

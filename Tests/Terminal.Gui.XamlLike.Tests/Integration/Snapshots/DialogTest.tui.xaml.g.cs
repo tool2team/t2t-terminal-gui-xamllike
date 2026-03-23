@@ -12,10 +12,18 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Views
     partial class DialogTest : Terminal.Gui.Views.Dialog
     {
         private Terminal.Gui.Views.Dialog TestDialog = null!;
+        private Terminal.Gui.Views.Button ContentButton = null!;
+        private Terminal.Gui.Views.Button DialogtButton = null!;
 
         private void InitializeComponent()
         {
             TestDialog = this;
+            ContentButton = new Terminal.Gui.Views.Button();
+            ContentButton.Text = "Yo!";
+            TestDialog.Add(ContentButton);
+            DialogtButton = new Terminal.Gui.Views.Button();
+            DialogtButton.Text = "Ho! Ho!";
+            TestDialog.AddButton(DialogtButton);
         }
     }
 }

@@ -252,6 +252,23 @@ public static partial class MappingHelpers
                 return $"new System.Drawing.Point({string.Join(", ", parts)})";
             }
 
+            if (targetType.FullStartsWith("System.Drawing.Size"))
+            {
+                string[] dims = value.Split(',');
+                // If not a valid Point, skip it
+                if (dims.Length != 2)
+                {
+                    return null;
+                }
+                var parts = dims.Select(s => int.TryParse(s.Trim(), out int val) ? val : (int?)null);
+                // If not a valid Point, skip it
+                if (parts.Contains(null))
+                {
+                    return null;
+                }
+                return $"new System.Drawing.Size({string.Join(", ", parts)})";
+            }
+
             if (targetType.FullStartsWith("System.Drawing.PointF"))
             {
                 string[] dims = value.Split(',');
