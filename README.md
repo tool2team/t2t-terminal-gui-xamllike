@@ -7,10 +7,11 @@
 A C# source generator that brings **XAML-like syntax** to [Terminal.Gui v2](https://github.com/gui-cs/Terminal.Gui), enabling rapid development of terminal-based applications with familiar markup and full MVVM support.
 
 ```xml
-<Dialog Title="Hello Terminal!" Width="40" Height="10">
-  <Label Text="{Bind WelcomeMessage}" X="Pos.Center()" Y="2" />
-  <Button Text="OK" IsDialogButton="true" IsDefault="true" />
-</Dialog>
+<Window Title="My App" Width="Dim.Fill()" Height="Dim.Fill()">
+  <Label Text="Welcome to Terminal.Gui!" X="Pos.Center()" Y="2" />
+  <TextField Text="Enter your name" Y="4" Width="30" />
+  <Button Text="Save" Y="6" Accepting="OnSaveClicked" />
+</Window>
 ```
 
 **Write declarative UI, get type-safe code at compile time.** 🚀
@@ -29,9 +30,37 @@ A C# source generator that brings **XAML-like syntax** to [Terminal.Gui v2](http
 
 ## 📦 Installation
 
-*Coming soon: NuGet Package*
+### Via NuGet (Recommended)
 
-For now, clone the repository and add a project reference:
+Install the package from NuGet:
+
+```bash
+dotnet add package T2t.Terminal.Gui.XamlLike
+```
+
+Or via Package Manager Console:
+
+```powershell
+Install-Package T2t.Terminal.Gui.XamlLike
+```
+
+Or add it directly to your `.csproj`:
+
+```xml
+<ItemGroup>
+  <PackageReference Include="T2t.Terminal.Gui.XamlLike" Version="1.0.0" />
+  <PackageReference Include="Terminal.Gui" Version="2.0.0" />
+</ItemGroup>
+```
+
+### Requirements
+
+- **.NET 10.0** or later
+- **Terminal.Gui v2.0+**
+
+### From Source (Development)
+
+Clone the repository and add a project reference:
 
 ```xml
 <ItemGroup>
@@ -189,22 +218,54 @@ The generator automatically finds the property with the specified type in your v
 
 ### Supported Controls
 
-- `Window` - Main window
-- `Dialog` - Modal dialog window with button management
-- `Label` - Text label
-- `Button` - Button (with IsDialogButton support for dialogs)
-- `TextField` - Text input field
-- `TextView` - Multiline text area
-- `CheckBox` - Checkbox
-- `RadioGroup` - Radio button group
-- `OptionSelector` - Option selector
-- `ListView` - List view
-- `FrameView` - Container with border
-- `MenuBar` - Menu bar with items
-- `TabView` - Tab container
-- And 50+ more Terminal.Gui controls...
+Terminal.Gui.XamlLike supports **50+ Terminal.Gui v2 controls** organized by category:
 
-See [Quick Reference](docs/QUICK_REFERENCE.md) for complete list.
+#### Basic Controls
+- `Label` - Text display
+- `Button` - Clickable button (with `IsDialogButton` support for dialogs)
+- `TextField` - Single-line text input
+- `CheckBox` - Checkbox control
+- `Link` - Hyperlink control
+- `ProgressBar` - Progress indicator
+
+#### Data Entry
+- `TextView` - Multiline text editor
+- `DatePicker` - Visual date picker with calendar
+- `NumericUpDown` - Numeric input with increment/decrement buttons
+- `RadioGroup` - Radio button group
+- `OptionSelector` - Option selector dropdown
+
+#### Selectors & Lists
+- `ListView` - Scrollable list view
+- `TreeView` - Hierarchical tree structure
+- `TableView` - Tabular data display with scrolling
+- `ComboBox` - Dropdown selection
+
+#### Containers
+- `Window` - Main application window
+- `Dialog` - Modal dialog with button management
+- `FrameView` - Container with border and title
+- `TabView` / `Tab` - Tabbed interface
+- `ScrollView` - Scrollable content area
+- `View` - Generic container
+
+#### Navigation
+- `MenuBar` / `MenuBarItem` / `MenuItem` - Application menu system
+- `StatusBar` / `Shortcut` - Status bar with shortcuts
+
+#### Visual Elements
+- `SpinnerView` - Loading spinner animation
+- `ColorPicker` / `ColorPicker16` - Color selection controls
+
+#### And many more...
+
+See [Quick Reference](docs/QUICK_REFERENCE.md) for the complete list with all properties and events.
+
+**Special Properties:**
+- `IsDialogButton="true"` - Marks a Button to be added via `AddButton()` in dialogs (auto-positioned)
+- `x:Name` - Creates a field for the control
+- `x:DataType` - Specifies ViewModel type for simplified binding syntax
+- `x:Type` - Generic type parameter (e.g., for `OptionSelector<T>`)
 
 ### Dialog Management
 
@@ -227,7 +288,7 @@ See [Dialog Buttons Guide](docs/DIALOG_BUTTONS.md) for complete documentation.
 
 ### Prerequisites
 
-- .NET 8.0 SDK or higher
+- .NET 10.0 SDK or higher
 - Terminal.Gui v2 (included via NuGet)
 
 ### Build the project

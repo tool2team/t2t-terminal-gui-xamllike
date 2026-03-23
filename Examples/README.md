@@ -76,7 +76,7 @@ This folder contains four sample projects demonstrating different architectural 
 ## 🚀 How to Run
 
 ### Prerequisites
-- .NET 8.0 SDK
+- .NET 10.0 SDK or higher
 - Terminal that supports Terminal.Gui
 
 ### Running Each Sample
