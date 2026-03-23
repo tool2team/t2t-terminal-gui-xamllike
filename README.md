@@ -28,6 +28,8 @@ A C# source generator that brings **XAML-like syntax** to [Terminal.Gui v2](http
 - ✅ **IntelliSense support** for `.tui.xaml` files via XSD schema
 - ✅ **Compatible with Terminal.Gui v2**
 
+![logo](docs/images/logo.png)
+
 ## 📦 Installation
 
 ### Via NuGet (Recommended)
