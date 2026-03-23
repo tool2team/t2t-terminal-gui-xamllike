@@ -206,7 +206,7 @@ public static partial class MappingHelpers
 
             if (targetType.FullStartsWith("float"))
             {
-                if (float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out _))
+                if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out _))
                 {
                     // Ensure float literal has 'f' suffix
                     return value.Contains('.') ? $"{value}f" : $"{value}.0f";
@@ -229,7 +229,7 @@ public static partial class MappingHelpers
             {
                 if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
                 {
-                    return $"DateTime.Parse(\"{value}\")";
+                    return $"DateTime.Parse(\"{value}\", System.Globalization.CultureInfo.InvariantCulture)";
                 }
                 return null;
             }
@@ -260,13 +260,13 @@ public static partial class MappingHelpers
                 {
                     return null;
                 }
-                var parts = dims.Select(s => float.TryParse(s.Trim(), out float val) ? val : (float?)null);
+                var parts = dims.Select(s => float.TryParse(s.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out float val) ? val : (float?)null);
                 // If not a valid Point, skip it
                 if (parts.Contains(null))
                 {
                     return null;
                 }
-                return $"new System.Drawing.PointF({string.Join(", ", parts)})";
+                return $"new System.Drawing.PointF({string.Join(", ", dims.Select(d => d.Contains('.') ? $"{d}f" : $"{d}.0f"))})";
             }
 
             if (targetType.FullStartsWith("System.Text.Rune"))

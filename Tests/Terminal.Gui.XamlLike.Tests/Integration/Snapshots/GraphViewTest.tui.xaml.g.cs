@@ -20,6 +20,7 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestGraphView.Y = 2;
             TestGraphView.Width = 30;
             TestGraphView.Height = 5;
+            TestGraphView.CellSize = new System.Drawing.PointF(8.5f,  8.0f);
             TestGraphView.GraphColor = Terminal.Gui.Drawing.Attribute.Default;
         }
     }
