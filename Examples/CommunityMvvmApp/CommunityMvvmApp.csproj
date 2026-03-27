@@ -15,8 +15,8 @@
   <Import Project="..\..\Terminal.Gui.XamlLike\build\T2t.Terminal.Gui.XamlLike.props" />
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
-    <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.5192" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.5203" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
   </ItemGroup>
 

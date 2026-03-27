@@ -1,7 +1,7 @@
-﻿<Border x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.BorderTest"
+﻿<BorderView x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.BorderViewTest"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="TestBorder"
+    x:Name="TestBorderView"
     Diagnostics="ViewDiagnosticFlags.DrawIndicator"
     LineStyle="LineStyle.Dotted"
     Settings="BorderSettings.Gradient"
@@ -9,4 +9,4 @@
   
   <!-- Border with properties: Diagnostics, LineStyle, Parent, Settings, Thickness -->
   
-</Border>
+</BorderView>

@@ -3,11 +3,11 @@
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views;
 
 /// <summary>
-/// Partial class for BorderTest test view
+/// Partial class for MarginTest test view
 /// </summary>
-public partial class BorderTest : Border
+public partial class MarginViewTest : MarginView
 {
-    public BorderTest()
+    public MarginViewTest()
     {
         InitializeComponent();
     }

@@ -1,11 +1,10 @@
-﻿<Margin x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.MarginTest"
+﻿<PaddingView x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.PaddingViewTest"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="TestMargin"
+    x:Name="TestPaddingView"
     Diagnostics="ViewDiagnosticFlags.DrawIndicator"
-    ShadowSize="1, 1"
     Thickness="Thickness.Empty">
   
-  <!-- Margin with properties: Diagnostics, Parent, ShadowSize, Thickness -->
+  <!-- PaddingView with properties: Diagnostics, Parent, Thickness -->
   
-</Margin>
+</PaddingView>

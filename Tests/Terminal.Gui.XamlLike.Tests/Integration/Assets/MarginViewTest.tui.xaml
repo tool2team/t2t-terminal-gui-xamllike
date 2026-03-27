@@ -1,0 +1,11 @@
+﻿<MarginView x:Class="Terminal.Gui.XamlLike.Tests.Integration.Views.MarginViewTest"
+       xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="TestMarginView"
+    Diagnostics="ViewDiagnosticFlags.DrawIndicator"
+    ShadowSize="1, 1"
+    Thickness="Thickness.Empty">
+  
+  <!-- Margin with properties: Diagnostics, Parent, ShadowSize, Thickness -->
+  
+</MarginView>

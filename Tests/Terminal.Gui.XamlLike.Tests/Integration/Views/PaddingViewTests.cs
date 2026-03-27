@@ -2,6 +2,6 @@
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views;
 
-public class AdornmentTests : BaseViewTests<Adornment>
+public class PaddingViewTests : BaseViewTests<PaddingView>
 {
 }
