@@ -136,7 +136,7 @@ public class MappingHelpersTests
     [Theory]
     [InlineData("Button", "Accepting", "EventHandler<Terminal.Gui.Input.CommandEventArgs>")]
     [InlineData("AttributePicker", "Activated", "EventHandler<Terminal.Gui.App.EventArgs<Terminal.Gui.Input.ICommandContext>>")]
-    [InlineData("Border", "Disposing", "EventHandler")]
+    [InlineData("BorderView", "Disposing", "EventHandler")]
     [InlineData("ColorPicker", "FocusedChanged", "EventHandler<Terminal.Gui.ViewBase.HasFocusEventArgs>")]
     public void GetEventMapping_UsualEvents_ReturnCorrectTypes(string controlName, string eventName, string expectedType)
     {
