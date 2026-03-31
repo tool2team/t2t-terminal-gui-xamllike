@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.5203" />
+    <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.5213" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
   </ItemGroup>
 
