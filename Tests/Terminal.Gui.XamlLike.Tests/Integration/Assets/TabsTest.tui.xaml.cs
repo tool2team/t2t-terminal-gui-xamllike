@@ -3,11 +3,11 @@
 namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml;
 
 /// <summary>
-/// Partial class for TabViewTest test view
+/// Partial class for TabTest test view
 /// </summary>
-public partial class TabViewTest : TabView
+public partial class TabsTest : Tabs
 {
-    public TabViewTest()
+    public TabsTest()
     {
         InitializeComponent();
     }

@@ -1,7 +1,7 @@
-﻿<Tab x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.TabTest"
+﻿<Tabs x:Class="Terminal.Gui.XamlLike.Tests.Integration.Xaml.TabsTest"
        xmlns="http://schemas.gui-cs.github.io/tui/2026/xaml"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Name="TestTab"
+    x:Name="TestTabs"
     X="5"
     Y="2"
     Width="30"
@@ -10,4 +10,4 @@
   
   <!-- Tab with properties: DisplayText, View -->
   
-</Tab>
+</Tabs>

@@ -2,6 +2,6 @@
 
 namespace Terminal.Gui.XamlLike.Tests.Integration.Views;
 
-public class TabTests : BaseViewTests<Tab>
+public class TabsTests : BaseViewTests<Tabs>
 {
 }

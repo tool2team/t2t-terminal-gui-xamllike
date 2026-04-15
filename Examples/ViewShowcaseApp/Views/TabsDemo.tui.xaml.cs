@@ -3,9 +3,9 @@ using Terminal.Gui.Views;
 
 namespace ViewShowcaseApp.Views;
 
-public partial class TabViewDemo : View
+public partial class TabsDemo : View
 {
-    public TabViewDemo()
+    public TabsDemo()
     {
         InitializeComponent();
         
