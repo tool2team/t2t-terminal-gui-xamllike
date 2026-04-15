@@ -34,6 +34,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{07C2787E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terminal.Gui.MetadataExtractor", "Tools\Terminal.Gui.MetadataExtractor\Terminal.Gui.MetadataExtractor.csproj", "{FACFEF4F-FED9-4583-A602-1F93A3FEF9DC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{379366AC-A283-4A95-8B26-77413EC4BC31}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\workflows\multi-platform-ci.yml = .github\workflows\multi-platform-ci.yml
+		.github\workflows\pr-validation.yml = .github\workflows\pr-validation.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -152,6 +160,7 @@ Global
 		{44444444-4444-4444-4444-444444444444} = {241F34FE-F77D-45BA-B70A-49B6623C47FF}
 		{D1A25E64-B987-4A04-807A-865D95CC07B3} = {D60756FB-78E4-44DE-9166-39ECAA6F25C9}
 		{FACFEF4F-FED9-4583-A602-1F93A3FEF9DC} = {07C2787E-EAC7-C090-1BA3-A61EC2A24D84}
+		{379366AC-A283-4A95-8B26-77413EC4BC31} = {B465C348-7B36-4719-BE38-4C85D7D696D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1394E978-43A2-4152-BC6D-311CC0F3E867}
