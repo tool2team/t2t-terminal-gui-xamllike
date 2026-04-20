@@ -96,10 +96,10 @@ public static class ViewInfoCollection
         },
         new ViewInfo() 
         { 
-            Name = "TabView", 
+            Name = "Tabs", 
             Category = "Containers",
             Description = "Tab container with multiple pages",
-            CreateView = () => new TabViewDemo() 
+            CreateView = () => new TabsDemo() 
         },
         // Data Display
         new ViewInfo() 
