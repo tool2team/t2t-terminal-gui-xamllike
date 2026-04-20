@@ -65,7 +65,7 @@ public class MappingHelpersTests
     [InlineData("Window", true)]
     [InlineData("Dialog", true)]
     [InlineData("FrameView", true)]
-    [InlineData("TabView", true)]
+    [InlineData("Tabs", true)]
     [InlineData("Button", false)]
     [InlineData("Label", false)]
     public void IsContainer(string controlName, bool expected)

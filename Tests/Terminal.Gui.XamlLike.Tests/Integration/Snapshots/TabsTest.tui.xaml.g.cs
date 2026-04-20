@@ -20,7 +20,6 @@ namespace Terminal.Gui.XamlLike.Tests.Integration.Xaml
             TestTabs.Y = 2;
             TestTabs.Width = 30;
             TestTabs.Height = 5;
-            TestTabs.Text = "Display";
         }
     }
 }
